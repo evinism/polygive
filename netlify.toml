@@ -6,6 +6,3 @@
 
   publish = "client/build/"
   command = "yarn build"
-
-[context.production]
-  environment = { REACT_APP_BACKEND_URL="http://polygive.herokuapp.com/" }
