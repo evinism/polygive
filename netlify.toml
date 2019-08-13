@@ -6,3 +6,6 @@
 
   publish = "client/build/"
   command = "yarn build"
+
+[context.production]
+  REACT_APP_BACKEND_URL=http://api.polygive.com/
