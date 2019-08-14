@@ -1,10 +1,11 @@
 const charitiesController = require('../controllers').charity;
+var cors = require('cors')
 
 module.exports = (app) => {
-  app.get('/', (req, res) => res.status(200).send({
+  app.get('/', cors(), (req, res) => res.status(200).send({
     title: 'Polygive.',
   }));
 
-  app.post('/charities', charitiesController.create);
-  app.get('/charities', charitiesController.list);
+  app.post('/charities', cors(), charitiesController.create);
+  app.get('/charities', cors(), charitiesController.list);
 };
