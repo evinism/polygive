@@ -11,8 +11,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('*', cors(), (req, res) => res.status(200).send({
-  title: 'Polygive.',
+require('./src/routes')(app);
+app.get('*', cors(), (req, res) => res.status(404).send({
+  title: '404 - Not Found',
 }));
 
 module.exports = app;
