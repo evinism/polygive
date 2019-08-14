@@ -1,1 +1,1 @@
-heroku run sequelize db:migrate --env production -m --app polygive
+heroku run sequelize db:migrate --env production --app polygive
