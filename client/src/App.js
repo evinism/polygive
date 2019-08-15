@@ -7,7 +7,7 @@ function App() {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    fetch(apiUrl)
+    fetch(apiUrl, { credentials: 'same-origin' })
       .then(response => response.json())
       .then(data => setTitle(data.title));
   }, []);
@@ -18,6 +18,7 @@ function App() {
         <p>
           {title}
         </p>
+        <a href={apiUrl + "auth/google"}>Sign In with Google</a>
       </header>
     </div>
   );

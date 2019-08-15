@@ -1,10 +1,20 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-var cors = require('cors')
+const passport = require('passport');
+const cors = require('cors')
+require('./src/config/strategies');
 
 // Set up the express app
 const app = express();
+app.use(require('express-session')({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Log requests to the console.
 app.use(logger('dev'));
