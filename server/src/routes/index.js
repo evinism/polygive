@@ -23,4 +23,6 @@ module.exports = (app) => {
   app.get('/user/current', cors(corsConfig), controllers.user.current);
   app.post('/charities', cors(corsConfig), controllers.charity.create);
   app.get('/charities', cors(corsConfig), controllers.charity.list);
+  app.post('/donations', cors(corsConfig), controllers.donation.create);
+  app.get('/donations', cors(corsConfig), controllers.donation.list);
 };

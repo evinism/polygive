@@ -10,7 +10,6 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
   list(req, res) {
-    console.log(Object.entries(require('../models')));
     return Charity
       .findAll()
       .then(charities => res.status(200).send(charities))

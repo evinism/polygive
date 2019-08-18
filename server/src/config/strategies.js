@@ -23,7 +23,10 @@ passport.use(new GoogleStrategy({
     callbackURL: process.env.GOOGLE_CALLBACK_URL,
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({where: {googleId: profile.id}, defaults: {name: profile.displayName}}).then((users) => {
+    User.findOrCreate({
+      where: { googleId: profile.id }, 
+      defaults: { name: profile.displayName } 
+    }).then((users) => {
       return cb(null, users[0]);
     });
   }
