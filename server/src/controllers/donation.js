@@ -2,11 +2,10 @@ const Donation = require('../models').Donation;
 
 module.exports = {
   create(req, res) {
-    console.log(JSON.stringify(Donation.rawAttributes.status));
     return Donation
       .create({
         charityId: req.body.charityId,
-        userId: req.body.userId,
+        userId: req.user.id,
         amount: req.body.donationAmount,
         status: 'pending',
       })
@@ -15,8 +14,12 @@ module.exports = {
   },
   list(req, res) {
     return Donation
-      .findAll()
+      .findAll({
+        where: {
+          userId: req.user.id,
+        }
+      })
       .then(donations => res.status(200).send(donations))
       .catch(error => res.status(400).send(error));
-  }
+  },
 };
