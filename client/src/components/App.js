@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Home from './Home';
 import LoggedOut from './LoggedOut';
+import {getCurrentUser} from '../api.js';
 import './App.css';
 
-const apiUrl = process.env.REACT_APP_BACKEND_URL;
 
 function App() {
   // Impossible states impossible mega-violation below:
@@ -14,8 +14,7 @@ function App() {
   });
 
   useEffect(() => {
-    fetch(apiUrl + '/user/current', { credentials: 'include' })
-      .then(response => response.json())
+    getCurrentUser()
       .then(data => {
         setState({
           loading: false,
@@ -30,7 +29,7 @@ function App() {
   return (
     <div className="App">
       {!state.loading && 
-        (state.loggedIn ? <Home user={state.user}/> : <LoggedOut />)}
+        (state.loggedIn ? <Home user={state.user} tab={state.tab}/> : <LoggedOut />)}
     </div>
   );
 }
