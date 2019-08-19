@@ -10,6 +10,19 @@ function requireLogin(handlerFn){
   }
 }
 
+function ensureSuper(handlerFn){
+  return requireLogin(function(req, res){
+    if (req.user.super) {
+      handlerFn(req, res);
+    } else {
+      res.status(401).send({
+        error: 'unauthorized',
+      });
+    }
+  });
+}
+
 module.exports = {
-  requireLogin
+  requireLogin,
+  ensureSuper,
 };

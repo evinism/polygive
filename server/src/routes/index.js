@@ -1,5 +1,5 @@
 const controllers = require('../controllers');
-const {requireLogin} = require('./util');
+const {requireLogin, ensureSuper} = require('./util');
 
 var cors = require('cors');
 var passport = require('passport');
@@ -26,11 +26,6 @@ module.exports = (app) => {
     controllers.user.current);
   
   /* Routes that 403 when not logged in */
-  app.post(
-    '/charities',
-    cors(corsConfig),
-    requireLogin(controllers.charity.create));
-
   app.get(
     '/charities',
     cors(corsConfig),
@@ -45,4 +40,15 @@ module.exports = (app) => {
     '/donations',
     cors(corsConfig),
     requireLogin(controllers.donation.list));
+
+  /* Super-only routes */
+  app.post(
+    '/charities',
+    cors(corsConfig),
+    ensureSuper(controllers.charity.create));
+
+  app.get(
+    '/all_donations/',
+    cors(corsConfig),
+    ensureSuper(controllers.donation.all));
 };

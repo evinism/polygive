@@ -22,4 +22,10 @@ module.exports = {
       .then(donations => res.status(200).send(donations))
       .catch(error => res.status(400).send(error));
   },
+  all(req, res) {
+    return Donation
+      .findAll()
+      .then(donations => res.status(200).send(donations))
+      .catch(error => res.status(400).send(error));
+  },
 };
