@@ -1,5 +1,5 @@
 const controllers = require('../controllers');
-
+const {requireLogin} = require('./util');
 
 var cors = require('cors');
 var passport = require('passport');
@@ -10,6 +10,7 @@ const corsConfig = ({
 });
 
 module.exports = (app) => {
+  /* Public Routes */
   app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile'] }));
 
@@ -20,9 +21,28 @@ module.exports = (app) => {
       res.redirect(process.env.FRONTEND_URL);
     });
 
-  app.get('/user/current', cors(corsConfig), controllers.user.current);
-  app.post('/charities', cors(corsConfig), controllers.charity.create);
-  app.get('/charities', cors(corsConfig), controllers.charity.list);
-  app.post('/donations', cors(corsConfig), controllers.donation.create);
-  app.get('/donations', cors(corsConfig), controllers.donation.list);
+  app.get('/user/current',
+    cors(corsConfig),
+    controllers.user.current);
+  
+  /* Routes that 403 when not logged in */
+  app.post(
+    '/charities',
+    cors(corsConfig),
+    requireLogin(controllers.charity.create));
+
+  app.get(
+    '/charities',
+    cors(corsConfig),
+    requireLogin(controllers.charity.list));
+
+  app.post(
+    '/donations',
+    cors(corsConfig),
+    requireLogin(controllers.donation.create));
+
+  app.get(
+    '/donations',
+    cors(corsConfig),
+    requireLogin(controllers.donation.list));
 };
