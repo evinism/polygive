@@ -38,7 +38,7 @@ export default function Home({user}) {
       <Router>
         <TabSwitcher />
         {tabs.map(tab => (
-          <Route path={tab.path} component={tab.component} exact={tab.exact} />
+          <Route {...tab} />
         ))}
       </Router>
     </header>
