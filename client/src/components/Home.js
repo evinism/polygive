@@ -1,48 +1,46 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import DonationsList from './DonationsList';
 import CharitiesList from './CharitiesList';
 
-
-export const tabs = {
-  dontations: 'DONATIONS',
-  charities: 'CHARITIES',
-};
-
-const tabMapping = {
-  [tabs.donations]: {
+const tabs = [
+  {
+    path: '/',
+    exact: true,
     name: 'Donations',
     component: DonationsList
   },
-  [tabs.charities]: {
+  {
+    path: '/charities',
     name: 'Charities',
     component: CharitiesList
   },
-}
+];
 
-function TabSwitcher({setTab, tabId}){
+function TabSwitcher(){
   return (
     <div>
-      {Object.entries(tabMapping).map(([id, data]) => (
-        <button onClick={() => setTab(id)}>
-          {(id === tabId) && '*'}
-          {data.name}
-        </button>
+      {tabs.map((tab) => (
+        <Link to={tab.path}>
+          {tab.name}
+        </Link>
       ))}
     </div>
   )
 }
 
 export default function Home({user}) {
-  const [tabId, setTab] = useState(tabs.donations);
-
-  const TabComponent = tabMapping[tabId].component;
   return (
     <header>
       <p>
         Welcome, {user.name}
       </p>
-      <TabSwitcher setTab={setTab} tabId={tabId}/>
-      <TabComponent />
+      <Router>
+        <TabSwitcher />
+        {tabs.map(tab => (
+          <Route path={tab.path} component={tab.component} exact={tab.exact} />
+        ))}
+      </Router>
     </header>
   );
 }
