@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DonationForm from './DonationForm';
+import DonationForm from '../components/DonationForm';
 import {getDonations} from '../api.js';
 
 export default function DonationsList(){

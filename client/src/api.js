@@ -20,14 +20,19 @@ function makeApiRequestFn(requestBuilder){
   }
 };
 
+const jsonPostCfg = (data) => ({
+  method: 'post',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+});
+
 export const getCurrentUser = makeApiRequestFn(() => '/user/current');
 export const getDonations = makeApiRequestFn(() => '/donations');
 export const getCharities = makeApiRequestFn(() => '/charities');
 
 export const createDonation = makeApiRequestFn((charityId, amount) => [
-  '/donations', 
-  {
-    method: 'post',
-    body: { charityId, donationAmount: amount },
-  }
+  '/donations',
+  jsonPostCfg({charityId, donationAmount: amount })
 ]);

@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from 'react-router';
-import DonationsList from './DonationsList';
-import CharitiesList from './CharitiesList';
+import DonationsList from '../pages/DonationsList';
+import CharitiesList from '../pages/CharitiesList';
 import './Home.css';
 import blankAvatar from './blank_avatar.png'
-import Profile from './Profile';
+import Profile from '../pages/Profile';
 
 const tabs = [
   {
