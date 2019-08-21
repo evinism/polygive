@@ -5,11 +5,11 @@ const apiUrl = process.env.REACT_APP_BACKEND_URL;
 
 export default function LoggedOut(){
   return (
-    <header>
-      <p>
+    <>
+      <h1>
         Polygive.
-      </p>
+      </h1>
       <a href={apiUrl + '/auth/google'}>Log in with Google</a>
-    </header>
+    </>
   );
 }

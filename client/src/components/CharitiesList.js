@@ -7,11 +7,13 @@ export default function CharitiesList(){
     getCharities().then(setCharities);
   }, []);
   return (
-    <div>
-      Charities:
+    <article>
+      <h2>Charities</h2>
       {charities.map(charity => (
-        <div>{charity.title}</div>
+        <div key={charity.id}>
+          {charity.title}
+        </div>
       ))}    
-    </div>
+    </article>
   );
 }

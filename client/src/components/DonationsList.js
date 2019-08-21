@@ -8,12 +8,12 @@ export default function DonationsList(){
     getDonations().then(setDonations);
   }, []);
   return (
-    <div>
-      Donations:
+    <article>
+      <h2>Donations</h2>
       {donations.map(donation => (
-        <div>Charity {donation.charityId}: ${donation.amount}</div>
+        <div key={donation.id}>Charity {donation.charityId}: ${donation.amount}</div>
       ))}
       <DonationForm />
-    </div>
+    </article>
   );
 }
