@@ -20,7 +20,7 @@ function App() {
           loading: false,
           loggedIn: data.loggedIn,
           user: data.loggedIn
-            ? { name: data.name }
+            ? data
             : undefined,
         });
       });
