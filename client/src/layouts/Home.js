@@ -36,9 +36,17 @@ const NavBar = withRouter(function NavBar({location}){
       </ul>
     </nav>
   )
-})
+});
 
-export default function Home({user}) {
+const withProps = 
+  props =>
+  Component => 
+  () => 
+  <Component {...props} />;
+
+export default function Home({ state }) {
+  const { user } = state;
+  const withState = withProps({ state });
   return (
     <Router>
       <header>
@@ -53,10 +61,10 @@ export default function Home({user}) {
         <NavBar />
       </header>
       {tabs.map(tab => (
-        <Route {...tab} />
+        <Route {...tab} component={withState(tab.component)} />
       ))}
-      <Route path='/profile' component={Profile} />
-      {user.isSuper && <Route path='/superpanel' component={SuperPanel} />}
+      <Route path='/profile' component={withState(Profile)} />
+      {user.isSuper && <Route path='/superpanel' component={withState(SuperPanel)} />}
     </Router>
   );
 }

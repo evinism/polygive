@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="App">
       {!state.loading && 
-        (state.loggedIn ? <Home user={state.user} tab={state.tab}/> : <LoggedOut />)}
+        (state.loggedIn ? <Home state={state} /> : <LoggedOut />)}
     </div>
   );
 }
