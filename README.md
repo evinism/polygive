@@ -36,7 +36,10 @@ in server folder:
 ```
 yarn
 cp .env.sample .env
+
 yarn start:dev
 ```
 
-
+### Moar info:
+You can set a user as being super by running:
+`yarn set_super your.email@some.domain.fake`
