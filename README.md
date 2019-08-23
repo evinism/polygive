@@ -26,7 +26,7 @@ yarn start
 in server folder:
 ```
 yarn
-cp .env.sample .env # This file doesn't exist but it really should.
+cp .env.sample .env
 yarn start:dev
 ```
 
