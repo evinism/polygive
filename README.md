@@ -12,6 +12,15 @@ Right now, the client is a basic Create React App + React-Router + hooks with a 
 ### Postgres
 You'll want to create and run a local postgres db. Right now this isn't configured well, but soon that'll be parameterized. Look at `server/src/config/config.json` to see what the app is expecting (and change it if you get to it before I fix this).
 
+For now, I think you can do
+
+```
+$ createdb polygive
+$ createuser polygiveuser
+$ psql polygive
+# GRANT ALL PRIVILEGES ON DATABASE polygive TO polygiveuser;
+```
+
 ### Redis
 If you want to make sure logins persist across server restarts (which will happen a lot because nodemon does that), you'll want to have a redis instance locally running (and probably daemonized for convenience). In the `.env` folder of server, you can set `REDIS_HOST=localhost` to enable redis storage in the app.
 

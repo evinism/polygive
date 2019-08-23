@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start:dev": "nodemon ./bin/www",
+    "migrate": "sequelize db:migrate",
     "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
