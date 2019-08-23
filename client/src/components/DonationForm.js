@@ -7,7 +7,7 @@ export default function DonationsForm({charityId: parentCharityId}) {
     event.preventDefault();
     const amount = event.target.amount.value;
     const charityId = parentCharityId || event.target.charityId.value;
-    createDonation(charityId, amount).then(() => setEnabled(true));
+    createDonation(charityId, amount).then(() => setEnabled(false));
   };
 
   return enabled ? (
@@ -23,10 +23,11 @@ export default function DonationsForm({charityId: parentCharityId}) {
         </label>
         <input type="submit" />
       </form>
+      <button onClick={() => setEnabled(false)}>Close</button>
     </div> 
   ) : (
     <button onClick={() => setEnabled(true)}>
-      Create one!
+      Create a Donation!
     </button>
   );
 }

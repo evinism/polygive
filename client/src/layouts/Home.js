@@ -54,7 +54,7 @@ export default function Home({ state }) {
           <h1>Polygive</h1>
           {user.isSuper && <Link to='/superpanel'>Super Panel</Link>}
           <Link class='profile-link' to={'/profile'}>
-            <img src={blankAvatar} />
+            <img src={blankAvatar} alt="Avatar" />
             {user.name}
           </Link>
         </div>

@@ -4,7 +4,7 @@ module.exports = {
   create(req, res) {
     return Charity
       .create({
-        title: req.body.title,
+        title: req.body.name,
       })
       .then(charity => res.status(201).send(charity))
       .catch(error => res.status(400).send(error));
@@ -14,5 +14,5 @@ module.exports = {
       .findAll()
       .then(charities => res.status(200).send(charities))
       .catch(error => res.status(400).send(error));
-  }
+  },
 };
