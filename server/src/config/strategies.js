@@ -24,8 +24,15 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({
-      where: { googleId: profile.id }, 
-      defaults: { name: profile.displayName } 
+      where: {
+        // There's probably something better to do here, like ask
+        // which email someone wants to associate
+        email: profile.emails[0].value,
+      }, 
+      defaults: {
+        name: profile.displayName,
+        googleId: profile.id,
+      } 
     }).then((users) => {
       return cb(null, users[0]);
     });

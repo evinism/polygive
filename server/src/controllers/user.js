@@ -5,6 +5,7 @@ module.exports = {
       const {
         id,
         name,
+        email,
         // this doesn't match db because i think it'd be annoying
         // to work around limitations in js syntax
         super: isSuper,
@@ -12,6 +13,7 @@ module.exports = {
       
       result = {
         id,
+        email,
         name,
         isSuper,
         loggedIn: true,
