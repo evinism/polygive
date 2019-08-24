@@ -49,7 +49,6 @@ function withProps<T>(props: T) {
 
 
 export default function Home({ state }: {state: LoggedInAppState}) {
-  // TS doesn't seem to think so, but user is guaranteed to exist here
   const user = state.user;
   const withState = withProps({ state });
   return (

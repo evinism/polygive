@@ -25,8 +25,8 @@ function App() {
 
   return (
     <div className="App">
-      {!state.loading && 
-        (state.user ? <Home state={state as LoggedInAppState} /> : <LoggedOut />)}
+      {!state.loading && // Wow this is bad typing
+        (state.user!.loggedIn ? <Home state={state as LoggedInAppState} /> : <LoggedOut />)}
     </div>
   );
 }

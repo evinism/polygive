@@ -7,7 +7,7 @@ module.exports = {
         charityId: req.body.charityId,
         userId: req.user.id,
         amount: req.body.donationAmount,
-        status: 'pending',
+        status: 'PENDING',
       })
       .then(donation => res.status(201).send(donation))
       .catch(error => res.status(400).send(error));

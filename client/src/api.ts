@@ -61,5 +61,5 @@ export const createDonation = makeApiRequestFn(
 
 export const createCharity = makeApiRequestFn((charityName: string) => [
   '/charities',
-  jsonPostCfg({ charityName }),
+  jsonPostCfg({ name: charityName }),
 ])
