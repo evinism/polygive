@@ -1,6 +1,6 @@
 import {RequestHandler} from 'express';
 
-function requireLogin(handlerFn: RequestHandler) : RequestHandler{
+export function requireLogin(handlerFn: RequestHandler) : RequestHandler{
   return function(req, res, next){
     if (req.isAuthenticated()) {
       handlerFn(req, res, next);
@@ -12,7 +12,7 @@ function requireLogin(handlerFn: RequestHandler) : RequestHandler{
   }
 }
 
-function ensureSuper(handlerFn: RequestHandler): RequestHandler {
+export function ensureSuper(handlerFn: RequestHandler): RequestHandler {
   return requireLogin(function(req, res, next){
     // Typing issue:
     if ((req.user as any).super) {
@@ -24,8 +24,3 @@ function ensureSuper(handlerFn: RequestHandler): RequestHandler {
     }
   });
 }
-
-module.exports = {
-  requireLogin,
-  ensureSuper,
-};

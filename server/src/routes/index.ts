@@ -1,15 +1,16 @@
-const controllers = require('../controllers');
-const {requireLogin, ensureSuper} = require('./util');
-
-var cors = require('cors');
-var passport = require('passport');
+import {Express} from 'express';
+import cors from 'cors';
+import passport from 'passport';
+import controllers from '../controllers';
+import {requireLogin, ensureSuper} from './util';
+import {FRONTEND_URL} from '../config/env';
 
 const corsConfig = ({
   credentials: true,
-  origin: process.env.FRONTEND_URL,
+  origin: FRONTEND_URL,
 });
 
-module.exports = (app) => {
+export default function ConfigureRoutes(app: Express){
   /* Public Routes */
   app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -18,7 +19,7 @@ module.exports = (app) => {
     passport.authenticate('google', { failureRedirect: '/login' }),
     function(req, res) {
       // Successful authentication, redirect home.
-      res.redirect(process.env.FRONTEND_URL);
+      res.redirect(FRONTEND_URL);
     });
 
   app.get('/user/current',

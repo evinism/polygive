@@ -1,13 +1,12 @@
-import { UserResponse } from './apiTypes';
-
+import { CurrentUserResponse } from './shared/apiTypes';
 
 // The fact that these two are separate is dumb
 export type AppState = {
   loading: boolean,
-  user?: UserResponse,
+  user?: CurrentUserResponse,
 };
 
 export type LoggedInAppState = {
   loading: boolean,
-  user: UserResponse,
+  user: CurrentUserResponse,
 }

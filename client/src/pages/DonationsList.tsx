@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import DonationForm from '../components/DonationForm';
 import {getDonations} from '../api';
-import {DonationsResponse} from '../apiTypes';
+import {ListDonationsResponse} from '../shared/apiTypes';
 import { LoggedInAppState } from '../clientTypes';
 
-const initialState: DonationsResponse = [];
+const initialState: ListDonationsResponse = [];
 
 export default function DonationsList(props: {state: LoggedInAppState}){
   const [donations, setDonations] = useState(initialState);

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   current(req, res) {
     let result;
     if(req.isAuthenticated()){

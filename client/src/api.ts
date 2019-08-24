@@ -1,4 +1,9 @@
-import {UserResponse, CharityResponse, DonationsResponse} from './apiTypes';
+import {
+  CurrentUserResponse,
+  CreateDonationRequest,
+  ListCharitiesResponse, 
+  ListDonationsResponse,
+} from './shared/apiTypes';
 
 const apiUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -42,15 +47,15 @@ const parameterizedByQs = (path: string) => (qs: ({[key: string]: string}|void))
   return path;
 }
 
-export const getCurrentUser: (_: void) => Promise<UserResponse> = 
+export const getCurrentUser: (_: void) => Promise<CurrentUserResponse> = 
   makeApiRequestFn((_: void) => '/user/current');
-export const getDonations: (_: void) => Promise<DonationsResponse> = 
+export const getDonations: (_: void) => Promise<ListDonationsResponse> = 
   makeApiRequestFn((_: void) => '/donations');
-export const getCharities: (_: void) => Promise<CharityResponse> = 
+export const getCharities: (_: void) => Promise<ListCharitiesResponse> = 
   makeApiRequestFn(parameterizedByQs('/charities'));
 
 export const createDonation = makeApiRequestFn(
-  ({charityId, amount}: {charityId: string, amount: string}) => [
+  ({charityId, amount}: CreateDonationRequest) => [
     '/donations',
     jsonPostCfg({
       charityId,

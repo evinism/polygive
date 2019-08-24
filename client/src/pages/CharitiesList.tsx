@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {getCharities} from '../api';
-import {CharityResponse} from '../apiTypes'; 
+import {ListCharitiesResponse} from '../shared/apiTypes'; 
 import DonationForm from '../components/DonationForm';
 import { LoggedInAppState } from '../clientTypes';
 
 
-const initialState: CharityResponse = [];
+const initialState: ListCharitiesResponse = [];
 
 export default function CharitiesList(props: {state: LoggedInAppState}){
   const [charities, setCharities] = useState(initialState);

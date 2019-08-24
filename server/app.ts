@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 import cors from 'cors';
 import session from './src/config/session';
+import configureRoutes from './src/routes';
 import './src/config/strategies';
 
 // Set up the express app
@@ -17,7 +18,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-require('./src/routes')(app);
+configureRoutes(app);
 app.get('*', cors(), (req, res) => res.status(404).send({
   title: '404 - Not Found',
 }));

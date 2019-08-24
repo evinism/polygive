@@ -11,6 +11,7 @@
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "noImplicitAny": false,
     "types": [
       "node"
     ],
