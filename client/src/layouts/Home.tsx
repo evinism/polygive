@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {JSXElementConstructor} from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from 'react-router';
 import DonationsList from '../pages/DonationsList';
 import CharitiesList from '../pages/CharitiesList';
 import SuperPanel from '../pages/SuperPanel';
-import './Home.css';
 import blankAvatar from './blank_avatar.png'
 import Profile from '../pages/Profile';
+import {LoggedInAppState} from '../clientTypes';
+import './Home.css';
+
 
 const tabs = [
   {
@@ -17,6 +19,7 @@ const tabs = [
   },
   {
     path: '/charities',
+    exact: false,
     name: 'Charities',
     component: CharitiesList
   },
@@ -38,14 +41,16 @@ const NavBar = withRouter(function NavBar({location}){
   )
 });
 
-const withProps = 
-  props =>
-  Component => 
-  () => 
-  <Component {...props} />;
+function withProps<T>(props: T) {
+  return (Component: JSXElementConstructor<T>) => 
+    () => 
+    <Component {...props} />;
+}
 
-export default function Home({ state }) {
-  const { user } = state;
+
+export default function Home({ state }: {state: LoggedInAppState}) {
+  // TS doesn't seem to think so, but user is guaranteed to exist here
+  const user = state.user;
   const withState = withProps({ state });
   return (
     <Router>
@@ -53,7 +58,7 @@ export default function Home({ state }) {
         <div className='header-upper'>
           <h1>Polygive</h1>
           {user.isSuper && <Link to='/superpanel'>Super Panel</Link>}
-          <Link class='profile-link' to={'/profile'}>
+          <Link className='profile-link' to={'/profile'}>
             <img src={blankAvatar} alt="Avatar" />
             {user.name}
           </Link>
@@ -61,7 +66,10 @@ export default function Home({ state }) {
         <NavBar />
       </header>
       {tabs.map(tab => (
-        <Route {...tab} component={withState(tab.component)} />
+        <Route 
+          path={tab.path} 
+          exact={tab.exact}
+          component={withState(tab.component)} />
       ))}
       <Route path='/profile' component={withState(Profile)} />
       {user.isSuper && <Route path='/superpanel' component={withState(SuperPanel)} />}

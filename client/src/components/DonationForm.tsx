@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, FormEvent} from 'react';
 import {createDonation} from '../api';
 
-export default function DonationsForm({charityId: parentCharityId}) {
+export default function DonationsForm({charityId: parentCharityId}: {charityId?: string}) {
   const [enabled, setEnabled] = useState(false);
-  const handleSubmit = event => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const amount = event.target.amount.value;
-    const charityId = parentCharityId || event.target.charityId.value;
-    createDonation(charityId, amount).then(() => setEnabled(false));
+    const amount = (event.target as any).amount.value as string;
+    const charityId = parentCharityId || (event.target as any).charityId.value as string;
+    createDonation({charityId, amount}).then(() => setEnabled(false));
   };
 
   return enabled ? (
