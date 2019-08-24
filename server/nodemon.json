@@ -1,0 +1,3 @@
+{
+  "exec": "NODE_ENV=development ts-node ./bin/www"
+}

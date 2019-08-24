@@ -1,14 +1,14 @@
-const express = require('express');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
-const passport = require('passport');
-const cors = require('cors')
-const session = require('./src/config/session');
-require('./src/config/strategies');
+import express from 'express';
+import logger from 'morgan';
+import bodyParser from 'body-parser';
+import passport from 'passport';
+import cors from 'cors';
+import session from './src/config/session';
+import './src/config/strategies';
 
 // Set up the express app
 const app = express();
-app.use(session)
+app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 
