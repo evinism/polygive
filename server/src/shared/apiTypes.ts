@@ -3,12 +3,24 @@
 // client/src/shared/apiTypes.ts
 // server/src/shared/apiTypes.ts
 
-export type CurrentUserResponse = {
+/* Response type for /user/current */
+export type UserRecord = {
   id: string,
-  loggedIn: boolean,
-  isSuper: boolean,
+  email: string,
   name: string,
-};
+  isSuper: boolean,
+}
+
+type LoggedOutResponse = {
+  loggedIn: false,
+}
+
+type LoggedInResponse = {
+  loggedIn: true,
+  user: UserRecord,
+}
+
+export type CurrentUserResponse = LoggedOutResponse | LoggedInResponse;
 
 /* Request/Response pair for POST /charities */
 export type CreateCharityRequest = {
