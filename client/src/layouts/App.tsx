@@ -1,8 +1,8 @@
 import React, { useState, useEffect, ReactElement } from 'react';
-import Home from './layouts/Home';
-import LoggedOut from './layouts/LoggedOut';
-import {getCurrentUser} from './api';
-import {AppState} from './clientTypes';
+import Home from './Home';
+import LoggedOut from './LoggedOut';
+import {getCurrentUser} from '../api';
+import {AppState} from '../clientTypes';
 
 const initialState: AppState = {
   status: 'LOADING_USER',
