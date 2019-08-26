@@ -3,7 +3,7 @@ import {
   CreateDonationRequest,
   ListCharitiesResponse, 
   ListDonationsResponse,
-} from './shared/apiTypes';
+} from '../../server/shared/apiTypes';
 
 const apiUrl = process.env.REACT_APP_BACKEND_URL;
 

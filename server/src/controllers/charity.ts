@@ -3,7 +3,8 @@ import {
   CreateCharityRequest,
   CreateCharityResponse,
   ListCharitiesResponse,
-} from './../shared/apiTypes';
+} from '../../shared/apiTypes';
+
 import models from '../models';
 
 // oof on typing here.

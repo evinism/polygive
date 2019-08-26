@@ -1,5 +1,4 @@
-import { UserRecord } from './shared/apiTypes';
-
+import { UserRecord } from '../../server/shared/apiTypes';
 
 export type LoadingUserAppState = {
   status: 'LOADING_USER',

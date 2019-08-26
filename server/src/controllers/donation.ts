@@ -3,7 +3,7 @@ import {
   ListDonationsResponse, 
   CreateDonationRequest, 
   CreateDonationResponse,  
-} from '../shared/apiTypes';
+} from '../../shared/apiTypes';
 import models from '../models';
 const Donation: any = models.Donation;
 

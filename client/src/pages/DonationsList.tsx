@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DonationForm from '../components/DonationForm';
-import {getDonations} from '../api';
-import {ListDonationsResponse} from '../shared/apiTypes';
+import { getDonations } from '../api';
+import { ListDonationsResponse } from '../../../server/shared/apiTypes';
 import { LoggedInAppState } from '../clientTypes';
 
 const initialState: ListDonationsResponse = [];

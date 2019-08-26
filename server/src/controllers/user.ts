@@ -1,5 +1,5 @@
 import {RequestHandler} from 'express';
-import {CurrentUserResponse} from '../shared/apiTypes';
+import {CurrentUserResponse} from '../../shared/apiTypes';
 
 const current: RequestHandler = (req, res) => {
   let result: CurrentUserResponse;
