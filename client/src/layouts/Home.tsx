@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import DonationsList from '../pages/DonationsList';
 import CharitiesList from '../pages/CharitiesList';
 import SuperPanel from '../pages/SuperPanel';
-import blankAvatar from './blank_avatar.png'
+import blankAvatar from './../assets/blank_avatar.png'
 import Profile from '../pages/Profile';
 import {LoggedInAppState} from '../clientTypes';
 import './Home.css';

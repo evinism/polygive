@@ -1,32 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import Home from './layouts/Home';
 import LoggedOut from './layouts/LoggedOut';
 import {getCurrentUser} from './api';
-import {AppState, LoggedInAppState} from './clientTypes';
+import {AppState} from './clientTypes';
 
 const initialState: AppState = {
-  loading: true,
-  user: undefined,
+  status: 'LOADING_USER',
 }
 
 function App() {
-  // Impossible states impossible mega-violation below:
   const [state, setState] = useState(initialState);
 
   useEffect(() => {
     getCurrentUser()
       .then(data => {
-        setState({
-          loading: false,
-          user: data,
-        });
+        if (!data.loggedIn) {
+          setState({
+            status: 'LOGGED_OUT',
+          })
+        } else {
+          setState({
+            status: 'LOGGED_IN',
+            user: data.user,
+          });
+        }
       });
   }, []);
 
+  let page : ReactElement;
+  switch(state.status) {
+    case 'LOADING_USER':
+      page = <div>Loading...</div>;
+      break;
+    case 'LOGGED_OUT':
+      page = <LoggedOut />;
+      break;
+    case 'LOGGED_IN':
+      page = <Home state={state} />;
+      break;
+    default: 
+      page = <div>wat</div>;
+      break;
+  }
+
   return (
     <div className="App">
-      {!state.loading && // Wow this is bad typing
-        (state.user!.loggedIn ? <Home state={state as LoggedInAppState} /> : <LoggedOut />)}
+      {page}
     </div>
   );
 }

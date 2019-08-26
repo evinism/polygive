@@ -1,12 +1,17 @@
-import { CurrentUserResponse } from './shared/apiTypes';
+import { UserRecord } from './shared/apiTypes';
 
-// The fact that these two are separate is dumb
-export type AppState = {
-  loading: boolean,
-  user?: CurrentUserResponse,
+
+export type LoadingUserAppState = {
+  status: 'LOADING_USER',
+}
+
+export type LoggedOutAppState = {
+  status: 'LOGGED_OUT',
 };
 
 export type LoggedInAppState = {
-  loading: boolean,
-  user: CurrentUserResponse,
+  status: 'LOGGED_IN',
+  user: UserRecord,
 }
+
+export type AppState = LoadingUserAppState | LoggedOutAppState | LoggedInAppState;
