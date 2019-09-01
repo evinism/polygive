@@ -1,5 +1,5 @@
-import DonationsList from './pages/DonationsList';
-import CharitiesList from './pages/CharitiesList';
+import DonationsList from '../pages/DonationsList';
+import CharitiesList from '../pages/CharitiesList';
 
 export default [
   {

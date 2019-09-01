@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import tabs from '../tabs';
+import tabs from '../app/tabs';
 import blankAvatar from '../assets/blank_avatar.png';
 import { LoggedInAppState } from '../clientTypes';
 import './Header.css';
