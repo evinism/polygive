@@ -1,9 +1,9 @@
 
 import React from 'react';
 import CharityForm from '../components/CharityForm';
-import { LoggedInAppState } from '../clientTypes';
+import { PageProps } from '../clientTypes';
 
-export default function SuperPanel(props: {state: LoggedInAppState}){
+export default function SuperPanel(_: PageProps){
   return (
     <article>
       <h2>SuperUser controls</h2>
