@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import tabs from '../tabs';
 import blankAvatar from '../assets/blank_avatar.png';
 import { LoggedInAppState } from '../clientTypes';
+import './Header.css';
 
 const NavBar = withRouter(function NavBar({location}){
   return (
