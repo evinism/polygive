@@ -1,44 +1,44 @@
 {
-  "name": "polygive-server",
-  "version": "0.0.1",
-  "description": "polygive api",
-  "main": "app.js",
-  "scripts": {
-    "start:dev": "nodemon ./bin/www --config ./nodemon.json",
-    "migrate": "sequelize db:migrate",
-    "setsuper": "node ./bin/set_super",
-    "start": "ts-node ./bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "evinism",
-  "license": "MIT",
-  "dependencies": {
-    "@types/connect-redis": "^0.0.11",
-    "@types/cors": "^2.8.6",
-    "@types/express": "^4.17.1",
-    "@types/express-session": "^1.15.14",
-    "@types/morgan": "^1.7.37",
-    "@types/passport": "^1.0.1",
-    "body-parser": "^1.19.0",
-    "connect-redis": "^3.4.2",
-    "cors": "^2.8.5",
-    "dotenv": "^8.0.0",
-    "express": "^4.17.1",
-    "express-session": "^1.16.2",
-    "morgan": "^1.9.1",
-    "passport": "^0.4.0",
-    "passport-google-oauth": "^2.0.0",
-    "passport-google-oauth20": "^2.0.0",
-    "passport-http-bearer": "^1.0.1",
-    "pg": "^7.12.1",
-    "pg-hstore": "^2.3.3",
-    "sequelize": "^5.13.1",
-    "sequelize-cli": "^5.5.0",
-    "ts-node": "^8.3.0",
-    "tslint": "^5.19.0",
-    "typescript": "^3.5.3"
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.1"
-  }
+   "name": "polygive-server",
+   "version": "0.0.1",
+   "description": "polygive api",
+   "main": "app.js",
+   "scripts": {
+      "start:dev": "nodemon ./bin/www --config ./nodemon.json",
+      "setsuper": "ts-node ./bin/set_super",
+      "start": "ts-node src/index.ts",
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "author": "evinism",
+   "license": "MIT",
+   "dependencies": {
+      "@types/connect-redis": "^0.0.11",
+      "@types/cors": "^2.8.6",
+      "@types/express": "^4.17.1",
+      "@types/express-session": "^1.15.14",
+      "@types/morgan": "^1.7.37",
+      "@types/passport": "^1.0.1",
+      "@types/passport-google-oauth": "^1.0.41",
+      "body-parser": "^1.19.0",
+      "connect-redis": "^3.4.2",
+      "cors": "^2.8.5",
+      "dotenv": "^8.0.0",
+      "express": "^4.17.1",
+      "express-session": "^1.16.2",
+      "morgan": "^1.9.1",
+      "passport": "^0.4.0",
+      "passport-google-oauth": "^2.0.0",
+      "passport-http-bearer": "^1.0.1",
+      "pg": "^7.3.0",
+      "pg-hstore": "^2.3.3",
+      "reflect-metadata": "^0.1.10",
+      "ts-node": "^8.3.0",
+      "tslint": "^5.19.0",
+      "typeorm": "0.2.18",
+      "typescript": "^3.5.3"
+   },
+   "devDependencies": {
+      "@types/node": "^12.7.3",
+      "nodemon": "^1.19.1"
+   }
 }

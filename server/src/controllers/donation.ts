@@ -1,40 +1,44 @@
 import {RequestHandler} from 'express';
+import {getRepository} from 'typeorm';
+import Donation, {DonationStatus} from '../entity/Donation';
 import {
   ListDonationsResponse, 
   CreateDonationRequest, 
   CreateDonationResponse,  
 } from '../../shared/apiTypes';
-import models from '../models';
-const Donation: any = models.Donation;
+import ensureConnection from '../connection';
 
-export const create: RequestHandler = (req, res) => {
+export const create: RequestHandler = async (req, res) => {
   const body: CreateDonationRequest = req.body;
-  return Donation
-    .create({
-      charityId: req.body.charityId,
-      userId: (req.user as any).id,
-      amount: req.body.donationAmount,
-      status: 'PENDING',
-    })
-    .then((donation: CreateDonationResponse) => res.status(201).send(donation))
+  await ensureConnection();
+  const donation = new Donation();
+  donation.charityId = parseInt(body.charityId, 10);
+  donation.userId = (req.user as any).id;
+  donation.amount = parseFloat(req.body.donationAmount);
+  donation.status = DonationStatus.PENDING;
+  getRepository(Donation)
+    .save(donation)
+    .then((donation) => res.status(201).send(donation))
     .catch((error: any) => res.status(400).send(error));
 };
 
-export const list: RequestHandler = (req, res) => {
-  return Donation
-    .findAll({
+export const list: RequestHandler = async (req, res) => {
+  await ensureConnection();
+  getRepository(Donation)
+    .find(({
       where: {
         userId: (req.user as any).id,
       }
-    })
-    .then((donations: ListDonationsResponse) => res.status(200).send(donations))
+    }))
+    .then((donations) => res.status(200).send(donations))
     .catch((error: any) => res.status(400).send(error));
 };
 
-export const all: RequestHandler = (req, res) => {
-  return Donation
-    .findAll()
-    .then((donations: ListDonationsResponse) => res.status(200).send(donations))
+export const all: RequestHandler =  async (req, res) => {
+  await ensureConnection();
+  getRepository(Donation)
+    .find()
+    .then((donations) => res.status(200).send(donations))
     .catch((error: any) => res.status(400).send(error));
 };
 
