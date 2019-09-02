@@ -6,3 +6,4 @@ export const REDIS_DB = parseInt(process.env.REDIS_PORT || '0', 10);
 export const REDIS_PASS = process.env.REDIS_PASS;
 export const REDIS_SOCKET = process.env.REDIS_SOCKET;
 export const SESSION_SECRET = process.env.SESSION_SECRET || 'keyboard cat';
+export const DATABASE_URL = process.env.DATABASE_URL || 'postgres://polygiveuser@localhost:5432/polygive';
