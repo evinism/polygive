@@ -1,4 +1,6 @@
 import {RequestHandler} from 'express';
+import {getRepository} from 'typeorm';
+import Donation, {DonationStatus} from '../entity/Donation';
 import {
   ListDonationsResponse, 
   CreateDonationRequest, 
@@ -6,40 +8,37 @@ import {
 } from '../../shared/apiTypes';
 import ensureConnection from '../connection';
 
-import models from '../../src2/models';
-const OldDonation: any = models.Donation;
-
 export const create: RequestHandler = async (req, res) => {
   const body: CreateDonationRequest = req.body;
   await ensureConnection();
-  return OldDonation
-    .create({
-      charityId: body.charityId,
-      userId: (req.user as any).id,
-      amount: body.amount,
-      status: 'PENDING',
-    })
-    .then((donation: CreateDonationResponse) => res.status(201).send(donation))
+  const donation = new Donation();
+  donation.charityId = parseInt(body.charityId, 10);
+  donation.userId = (req.user as any).id;
+  donation.amount = parseFloat(req.body.donationAmount);
+  donation.status = DonationStatus.PENDING;
+  getRepository(Donation)
+    .save(donation)
+    .then((donation) => res.status(201).send(donation))
     .catch((error: any) => res.status(400).send(error));
 };
 
 export const list: RequestHandler = async (req, res) => {
   await ensureConnection();
-  return OldDonation
-    .findAll({
+  getRepository(Donation)
+    .find(({
       where: {
         userId: (req.user as any).id,
       }
-    })
-    .then((donations: ListDonationsResponse) => res.status(200).send(donations))
+    }))
+    .then((donations) => res.status(200).send(donations))
     .catch((error: any) => res.status(400).send(error));
 };
 
 export const all: RequestHandler =  async (req, res) => {
   await ensureConnection();
-  return OldDonation
-    .findAll()
-    .then((donations: ListDonationsResponse) => res.status(200).send(donations))
+  getRepository(Donation)
+    .find()
+    .then((donations) => res.status(200).send(donations))
     .catch((error: any) => res.status(400).send(error));
 };
 

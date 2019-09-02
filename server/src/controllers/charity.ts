@@ -26,7 +26,8 @@ export const list: RequestHandler = async (req, res) => {
   getRepository(Charity)
     .find()
     // Get this to typecheck
-    .then(charities => res.status(201).send(charities.map(cty => ({title: cty.name}))))
+    .then(charities => res.status(201).send(
+      charities.map(cty => ({id: cty.id, title: cty.name}))))
     .catch((error: any) => res.status(400).send(error));
 };
 
