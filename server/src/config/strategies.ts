@@ -1,8 +1,10 @@
-var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('../../src2/models').User;
+import passport from 'passport';
+import Strategies from 'passport-google-oauth';
+import models from '../../src2/models';
+const User = models.User;
+const GoogleStrategy = Strategies.OAuth2Strategy;
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function(user: any, done) {
   done(null, user.id);
 });
 
