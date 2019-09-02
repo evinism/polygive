@@ -4,24 +4,28 @@ import {
   CreateDonationRequest, 
   CreateDonationResponse,  
 } from '../../shared/apiTypes';
-import models from '../models';
-const Donation: any = models.Donation;
+import ensureConnection from '../connection';
 
-export const create: RequestHandler = (req, res) => {
+import models from '../../src2/models';
+const OldDonation: any = models.Donation;
+
+export const create: RequestHandler = async (req, res) => {
   const body: CreateDonationRequest = req.body;
-  return Donation
+  await ensureConnection();
+  return OldDonation
     .create({
-      charityId: req.body.charityId,
+      charityId: body.charityId,
       userId: (req.user as any).id,
-      amount: req.body.donationAmount,
+      amount: body.amount,
       status: 'PENDING',
     })
     .then((donation: CreateDonationResponse) => res.status(201).send(donation))
     .catch((error: any) => res.status(400).send(error));
 };
 
-export const list: RequestHandler = (req, res) => {
-  return Donation
+export const list: RequestHandler = async (req, res) => {
+  await ensureConnection();
+  return OldDonation
     .findAll({
       where: {
         userId: (req.user as any).id,
@@ -31,8 +35,9 @@ export const list: RequestHandler = (req, res) => {
     .catch((error: any) => res.status(400).send(error));
 };
 
-export const all: RequestHandler = (req, res) => {
-  return Donation
+export const all: RequestHandler =  async (req, res) => {
+  await ensureConnection();
+  return OldDonation
     .findAll()
     .then((donations: ListDonationsResponse) => res.status(200).send(donations))
     .catch((error: any) => res.status(400).send(error));

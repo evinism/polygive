@@ -1,29 +1,32 @@
 import {RequestHandler} from 'express';
+import {getRepository} from 'typeorm';
+import ensureConnection from '../connection';
+import Charity from '../entity/Charity';
 import {
   CreateCharityRequest,
   CreateCharityResponse,
   ListCharitiesResponse,
 } from '../../shared/apiTypes';
 
-import models from '../models';
-
-// oof on typing here.
-const Charity = models.Charity;
-
-export const create: RequestHandler =  (req, res) => {
+export const create: RequestHandler =  async (req, res) => {
+  await ensureConnection();
   const body: CreateCharityRequest = req.body;
-  return Charity
-    .create({
-      title: body.name,
-    })
-    .then((charity: CreateCharityResponse) => res.status(201).send(charity))
+
+  const newCharity = new Charity();
+  newCharity.name = body.name;
+  getRepository(Charity)
+    .save(newCharity)
+    .then(charity => res.status(201).send(charity))
     .catch((error: any) => res.status(400).send(error));
 };
 
-export const list: RequestHandler = (req, res) => {
-  return Charity
-    .findAll()
-    .then((charities: ListCharitiesResponse) => res.status(200).send(charities))
+export const list: RequestHandler = async (req, res) => {
+  await ensureConnection();
+
+  getRepository(Charity)
+    .find()
+    // Get this to typecheck
+    .then(charities => res.status(201).send(charities.map(cty => ({title: cty.name}))))
     .catch((error: any) => res.status(400).send(error));
 };
 

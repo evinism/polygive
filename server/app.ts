@@ -3,6 +3,7 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import cors from 'cors';
+import "reflect-metadata";
 import session from './src/config/session';
 import configureRoutes from './src/routes';
 import './src/config/strategies';
