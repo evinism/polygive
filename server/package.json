@@ -6,7 +6,7 @@
    "scripts": {
       "start:dev": "nodemon ./bin/www --config ./nodemon.json",
       "setsuper": "ts-node ./bin/set_super",
-      "start": "ts-node src/index.ts",
+      "start": "ts-node ./bin/www",
       "test": "echo \"Error: no test specified\" && exit 1"
    },
    "author": "evinism",
