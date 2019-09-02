@@ -1,17 +1,20 @@
 import passport from 'passport';
 import Strategies from 'passport-google-oauth';
-import models from '../../src2/models';
-const User = models.User;
+import User from '../entity/User';
+import {getRepository} from 'typeorm';
 const GoogleStrategy = Strategies.OAuth2Strategy;
+import ensureConnection from '../connection';
 
-passport.serializeUser(function(user: any, done) {
+passport.serializeUser(function(user: User, done) {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-  User.findAll({where: {id}})
-    .then((users) => {
-      done(null, users[0])
+passport.deserializeUser(async function(id, done) {
+  await ensureConnection();
+  getRepository(User)
+    .findOne({where: {id}})
+    .then(user => {
+      done(null, user)
     });
 });
 
@@ -24,19 +27,29 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK_URL,
   },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({
-      where: {
-        // There's probably something better to do here, like ask
-        // which email someone wants to associate
-        email: profile.emails[0].value,
-      }, 
-      defaults: {
-        name: profile.displayName,
-        googleId: profile.id,
-      } 
-    }).then((users) => {
-      return cb(null, users[0]);
-    });
+  async function(accessToken, refreshToken, profile, cb) {
+    await ensureConnection();
+    getRepository(User)
+      .findOne({      
+        where: {
+          // There's probably something better to do here, like ask
+          // which email someone wants to associate
+          email: profile.emails[0].value,
+        }
+      })
+      .then((user) => {
+        if (user) {
+          return user;
+        }
+        const newUser = new User();
+        newUser.email = profile.emails[0].value;
+        newUser.name = profile.displayName,
+        newUser.googleId = profile.id;
+        newUser.super = false;
+        return getRepository(User).save(newUser);
+      })
+      .then((user) => {
+        return cb(null, user);
+      });
   }
 ));
