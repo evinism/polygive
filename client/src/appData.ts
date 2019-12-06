@@ -1,17 +1,18 @@
-import DonationsList from './pages/DonationsList';
-import CharitiesList from './pages/CharitiesList';
-import Profile from './pages/Profile';
+
 import Home from './layouts/Home';
 import { PageManifest } from './clientTypes';
 import SuperPanel from './pages/SuperPanel';
+import IndexPage from './pages/IndexPage';
+import CharitiesList from './pages/CharitiesList';
+import Profile from './pages/Profile';
 
 export const pageManifest: PageManifest = {
-  donations: {
+  index: {
+    public: true,
     path: '/',
     exact: true,
     name: 'Donations',
-    component: DonationsList,
-    layout: Home,
+    component: IndexPage,
   },
   charities: {
     path: '/charities',
@@ -37,6 +38,6 @@ export const pageManifest: PageManifest = {
 };
 
 export const tabList = [
-  'donations',
+  'index',
   'charities',
 ];

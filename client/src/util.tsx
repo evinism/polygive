@@ -1,5 +1,5 @@
 import React, {JSXElementConstructor} from 'react';
-import { PageProps, LayoutProps, AppState } from './clientTypes';
+import { AppState, PageComponent, LayoutComponent } from './clientTypes';
 
 export function withProps<T>(props: T) {
   return (Component: JSXElementConstructor<T>) => 
@@ -8,8 +8,8 @@ export function withProps<T>(props: T) {
 };
 
 export const makeLayoutFn = function<T extends AppState = AppState>
-    (Layout: JSXElementConstructor<LayoutProps<T>>){
-  return (Component: JSXElementConstructor<PageProps<T>>, state: T) =>
+    (Layout: LayoutComponent<T>){
+  return (Component: PageComponent<T>, state: T) =>
     () => (
       <Layout state={state}>
         <Component state={state} />
@@ -18,6 +18,7 @@ export const makeLayoutFn = function<T extends AppState = AppState>
 }
 
 // I'd declare this more normally but this is a tsx file
-export const identity = function<T>(x: T){
-  return x;
+export const emptyLayoutFn = function<T extends AppState = AppState>
+  (Component: PageComponent<T>, state: T){
+  return () => (<Component state={state} />);
 }

@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { pageManifest } from '../appData';
-import { makeLayoutFn, identity } from '../util';
+import { makeLayoutFn, emptyLayoutFn } from '../util';
 import PageNotFound from '../pages/PageNotFound';
-import { AppState, LoggedOutPageMetadata, LoggedInPageMetadata, PageMetadata } from '../clientTypes';
+import LogInToContinue from '../pages/LogInToContinue';
+import { AppState, LoggedOutPageMetadata, LoggedInPageMetadata, PageComponent, LoggedInAppState } from '../clientTypes';
 
 const pageManifestArr = Object.values(pageManifest);
 
@@ -18,36 +19,41 @@ const superPages = pageManifestArr
 
 // Okay there is SO MUCH repetition in here to ensure that the types line up.
 // It's a good thing I like playing around with types so much.
+// This format isn't SUPER good but it works for now.
 export default function Routes({ state }: {state: AppState}) {
   return (
     <Router>
       <Switch>
-        {publicPages.map(page => {
-          const layoutFn = page.layout
-            ? makeLayoutFn(page.layout)
-            : identity;
-          return (
-            <Route 
-              path={page.path} 
-              exact={page.exact}
-              component={layoutFn(page.component, state)} />
-          );
-        })}
-        {state.status === 'LOGGED_IN' && loggedInPages.map(page => {
-          const layoutFn = page.layout
-            ? makeLayoutFn(page.layout)
-            : identity;
-          return (
-            <Route 
-              path={page.path} 
-              exact={page.exact}
-              component={layoutFn(page.component, state)} />
-          );
-        })}
         { state.status === 'LOGGED_IN' && state.user.isSuper === true && superPages.map(page => {
           const layoutFn = page.layout
             ? makeLayoutFn(page.layout)
-            : identity;
+            : emptyLayoutFn;
+          return (
+            <Route 
+              path={page.path} 
+              exact={page.exact}
+              component={layoutFn(page.component, state)} />
+          );
+        })}
+        {loggedInPages.map(page => {
+          const layoutFn = page.layout
+            ? makeLayoutFn(page.layout)
+            : emptyLayoutFn;
+          const component: PageComponent<LoggedInAppState> = state.status === 'LOGGED_IN'
+            ? layoutFn(page.component, state)
+            : LogInToContinue
+
+          return (
+            <Route 
+              path={page.path} 
+              exact={page.exact}
+              component={component} />
+          );
+        })}
+        {publicPages.map(page => {
+          const layoutFn = page.layout
+            ? makeLayoutFn(page.layout)
+            : emptyLayoutFn;
           return (
             <Route 
               path={page.path} 

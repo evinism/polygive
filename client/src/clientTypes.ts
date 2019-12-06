@@ -53,7 +53,6 @@ export interface LoggedOutPageMetadata {
   name: string,
   component: PageComponent<AppState>,
   layout?: LayoutComponent<AppState>,
-  super?: boolean,
 }
 
 export type PageMetadata = (LoggedInPageMetadata|LoggedOutPageMetadata);

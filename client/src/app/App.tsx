@@ -1,6 +1,5 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import Routes from './Routes';
-import LoggedOut from '../layouts/LoggedOut/LoggedOut';
 import {getCurrentUser} from '../api';
 import {AppState} from '../clientTypes';
 import './App.css';
