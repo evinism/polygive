@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import Routes from './Routes';
-import LoggedOut from '../layouts/LoggedOut';
+import LoggedOut from '../layouts/LoggedOut/LoggedOut';
 import {getCurrentUser} from '../api';
 import {AppState} from '../clientTypes';
 import './App.css';
@@ -29,20 +29,7 @@ function App() {
   }, []);
 
   let page : ReactElement;
-  switch(state.status) {
-    case 'LOADING_USER':
-      page = <div>Loading...</div>;
-      break;
-    case 'LOGGED_OUT':
-      page = <LoggedOut />;
-      break;
-    case 'LOGGED_IN':
-      page = <Routes state={state} />;
-      break;
-    default: 
-      page = <div>wat</div>;
-      break;
-  }
+  page = <Routes state={state} />;
 
   return (
     <div className="App">

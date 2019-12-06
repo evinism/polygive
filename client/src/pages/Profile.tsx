@@ -1,8 +1,7 @@
-
 import React from 'react';
-import { PageProps } from '../clientTypes';
+import { PageProps, LoggedInAppState } from '../clientTypes';
 
-export default function Profile({state: {user}}: PageProps){
+export default function Profile({state: {user}}: PageProps<LoggedInAppState>){
   return (
     <article>
       <h2>Profile Page for {user.name} </h2>

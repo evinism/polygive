@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react';
 import { getCharities } from '../api';
 import { ListCharitiesResponse } from '../../../server/shared/apiTypes';
 import DonationForm from '../components/DonationForm';
-import { PageProps } from '../clientTypes';
+import { PageProps, LoggedInAppState } from '../clientTypes';
 
 
 const initialState: ListCharitiesResponse = [];
 
-export default function CharitiesList(_: PageProps){
+export default function CharitiesList(_: PageProps<LoggedInAppState>){
   const [charities, setCharities] = useState(initialState);
   useEffect(() => {
     getCharities().then(data => setCharities(data));

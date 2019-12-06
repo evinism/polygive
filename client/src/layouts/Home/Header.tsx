@@ -1,22 +1,25 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import tabs from '../app/tabs';
-import blankAvatar from '../assets/blank_avatar.png';
-import { LoggedInAppState } from '../clientTypes';
+import {tabList, pageManifest} from '../../appData';
+import blankAvatar from '../../assets/blank_avatar.png';
+import { LoggedInAppState } from '../../clientTypes';
 import './Header.css';
 
 const NavBar = withRouter(function NavBar({location}){
   return (
     <nav>
       <ul>
-        {tabs.map(tab => (
-          <li key={tab.path} className={tab.path === location.pathname ? 'active' : undefined}>
-            <Link to={tab.path}>
-              {tab.name}
-            </Link>
-          </li>
-        ))}
+        {tabList.map(tabId => {
+          const page = pageManifest[tabId];
+          return (
+            <li key={page.path} className={page.path === location.pathname ? 'active' : undefined}>
+              <Link to={page.path}>
+                {page.name}
+              </Link>
+            </li>
+          )
+        })}
       </ul>
     </nav>
   )
