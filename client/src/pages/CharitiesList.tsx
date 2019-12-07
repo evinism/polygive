@@ -13,7 +13,7 @@ export default function CharitiesList(_: PageProps<LoggedInAppState>){
     getCharities().then(data => setCharities(data));
   }, []);
   return (
-    <article>
+    <>
       <h2>Charities</h2>
       {charities.map(charity => (
         <div key={charity.id}>
@@ -21,6 +21,6 @@ export default function CharitiesList(_: PageProps<LoggedInAppState>){
           <DonationForm charityId={charity.id} />
         </div>
       ))}    
-    </article>
+    </>
   );
 }

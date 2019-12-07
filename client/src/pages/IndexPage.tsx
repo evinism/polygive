@@ -1,5 +1,5 @@
 import React from 'react';
-import DonationsList from './DonationsList';
+import Portfolio from './Portfolio';
 import LandingPage from './LandingPage';
 import { PageProps, AppState } from '../clientTypes';
 import Home from '../layouts/Home';
@@ -10,7 +10,7 @@ export default function IndexPage(props: PageProps<AppState>){
   if(props.state && props.state.status === 'LOGGED_IN') {
     return (
       <Home state={props.state}>
-        <DonationsList state={props.state} />
+        <Portfolio state={props.state} />
       </Home>
     )
   }

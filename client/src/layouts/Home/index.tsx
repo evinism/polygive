@@ -1,12 +1,15 @@
 import React from 'react';
 import { LayoutProps, LoggedInAppState } from '../../clientTypes';
 import Header from './Header';
+import './Home.css';
 
 export default function Home({children, state}: LayoutProps<LoggedInAppState>){
   return (
-    <div>
+    <div className="home-layout">
       <Header state={state} />
-      {children}
+      <article>
+        {children}
+      </article>
     </div>
   );
 }

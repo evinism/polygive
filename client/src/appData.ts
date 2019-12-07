@@ -11,7 +11,7 @@ export const pageManifest: PageManifest = {
     public: true,
     path: '/',
     exact: true,
-    name: 'Donations',
+    name: 'Portfolio',
     component: IndexPage,
   },
   charities: {
