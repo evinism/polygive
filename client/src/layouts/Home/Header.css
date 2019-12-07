@@ -1,24 +1,27 @@
 header {
   padding: 0;
-  background-color: #222522;
+  background-color: lightgreen;
+  height: 50px;
+  box-shadow: black 0 -1px 5px;
 }
 
 .header-upper {
-  color: #bbb;
   display: flex;
   align-items: center;
 }
 
 .header-upper > h1 {
-  flex-grow: 1;
-  margin: 15px;
+  margin: 0px 10px;
+  font-family: satisfy;
+  font-weight: normal;
+  font-size: 1.7rem;
 }
 
 .profile-link {
   height: 30px;
   padding: 10px;
   text-decoration: none;
-  color: lightgray;
+  color: #333333;
   display: flex;
   align-items: center;
 }
@@ -26,6 +29,10 @@ header {
 .profile-link img {
   height: 100%;
   margin: 10px;
+}
+
+nav {
+  flex-grow: 1;
 }
 
 nav > ul {
@@ -40,16 +47,17 @@ nav li {
 }
 
 nav a {
-  padding: 10px 20px;
-  color: lightgray;
+  padding: 0 10px;
+  height: 50px;
+  line-height: 50px;
+  color: black;
   text-decoration: none;
   display: block;
   border-bottom: transparent 5px solid;
-
+  box-sizing: border-box;
 }
 
 
 nav li.active a {
-  color: white;
   border-color: #33aa33;
 }
