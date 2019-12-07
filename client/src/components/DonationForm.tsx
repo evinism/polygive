@@ -7,7 +7,7 @@ export default function DonationsForm({charityId: parentCharityId}: {charityId?:
     event.preventDefault();
     const amount = (event.target as any).amount.value as string;
     const charityId = parentCharityId || (event.target as any).charityId.value as string;
-    createDonation({charityId, amount}).then(() => setEnabled(false));
+    createDonation(charityId, amount).then(() => setEnabled(false));
   };
 
   return enabled ? (

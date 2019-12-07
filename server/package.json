@@ -32,6 +32,7 @@
       "pg": "^7.3.0",
       "pg-hstore": "^2.3.3",
       "reflect-metadata": "^0.1.10",
+      "restyped-express-async": "^0.6.1",
       "ts-node": "^8.3.0",
       "tslint": "^5.19.0",
       "typeorm": "0.2.18",

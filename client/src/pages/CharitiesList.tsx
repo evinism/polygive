@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { getCharities } from '../api';
-import { ListCharitiesResponse } from '../../../server/shared/apiTypes';
+import { ListCharitiesResponse } from '../../../server/shared/polygiveApi';
 import DonationForm from '../components/DonationForm';
 import { PageProps, LoggedInAppState } from '../clientTypes';
 
