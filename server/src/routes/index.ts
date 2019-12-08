@@ -3,7 +3,7 @@ import RestypedRouter from 'restyped-express-async'
 import cors from 'cors';
 import passport from 'passport';
 import controllers from '../controllers';
-import {requireLogin, ensureSuper} from './util';
+import {requireLogin, requireSuper} from './util';
 import { FRONTEND_URL } from '../config/env';
 import PolygiveApi from '../../shared/polygiveApi';
 
@@ -12,8 +12,6 @@ const corsConfig = ({
   credentials: true,
   origin: FRONTEND_URL,
 });
-
-const curr = controllers.user.current;
 
 export default function ConfigureRoutes(app: Express){
 
@@ -37,31 +35,18 @@ export default function ConfigureRoutes(app: Express){
   api.get('/user/current', controllers.user.current);
   
   /* Routes that 403 when not logged in */
-  apiRouter.get('/charities', requireLogin);
-  api.get('/charities', controllers.charity.list);
-
-  apiRouter.get('/donations', requireLogin);
-  api.get('/donations', controllers.donation.list);
-
-  apiRouter.post('/donations', requireLogin);
-  api.post('/donations', controllers.donation.create);
+  //apiRouter.get('/charities', requireLogin);
+  api.get('/charities', requireLogin(controllers.charity.list));
+  api.get('/donations', requireLogin(controllers.donation.list));
+  api.post('/donations', requireLogin(controllers.donation.create));
 
   /* Super-only routes */
-  apiRouter.post('/charities', ensureSuper);
-  api.post(
-    '/charities',
-    controllers.charity.create);
-  
-  apiRouter.get('all_donations', ensureSuper);
-  api.get(
-    '/all_donations',
-    controllers.donation.all);
+  api.post('/charities', requireSuper(controllers.charity.create));
+  api.get('/all_donations', requireSuper(controllers.donation.all));
 
   app.options("/*", cors(corsConfig), function(req, res, next){
     res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    //res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-    //res.header('Access-Control-Max-Age', '1000');
     res.sendStatus(200);
   });
 };

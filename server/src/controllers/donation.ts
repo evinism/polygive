@@ -1,4 +1,4 @@
-import {getRepository, LessThanOrEqual} from 'typeorm';
+import {getRepository} from 'typeorm';
 import Donation, {DonationStatus} from '../entity/Donation';
 import PolygiveApi from '../../shared/polygiveApi';
 import {RTHandler, success, error} from './util';

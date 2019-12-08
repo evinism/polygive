@@ -26,6 +26,9 @@ export default async function ensureConnection(){
         migrationsDir: "src/migration",
         subscribersDir: "src/subscriber"
       }
+    }).then((conn) => {
+      console.log('Successfully connected to DB!');
+      return conn;
     }).catch(error => console.log(error));
   }
   return connectionPromise;
