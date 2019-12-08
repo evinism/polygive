@@ -1,6 +1,5 @@
 import React from 'react';
-
-const apiUrl = process.env.REACT_APP_BACKEND_URL;
+import LoginWidget from '../components/LoginWidget';
 
 export default function LogInToContinue(){
   return (
@@ -9,7 +8,7 @@ export default function LogInToContinue(){
         Polygive.
       </h1>
       <h2>Log in to continue</h2>
-      <a href={apiUrl + '/auth/google'}>Log in with Google</a>
+      <LoginWidget />
     </>
   );
 }

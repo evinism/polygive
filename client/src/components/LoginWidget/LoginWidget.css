@@ -1,0 +1,9 @@
+.login-widget {
+  padding: 10px;
+  border-radius: 5px;
+  
+}
+
+.signin-form > * {
+  display: block;
+}
