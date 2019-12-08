@@ -1,3 +1,5 @@
+import ApiResponse from './workarounds/ApiResponse';
+
 /* Response type for /user/current */
 type UserRecord = {
   id: string,
@@ -57,30 +59,46 @@ type ListDonationsResponse = {
 export default interface PolygiveApi {
   '/charities': {
     GET: {
-      response: ListCharitiesResponse,
+      query: void,
+      body: void,
+      params: void,
+      response: ApiResponse<ListCharitiesResponse>,
     },
     POST: {
-      body: CreateCharityRequest
-      response: CreateCharityResponse,
+      query: void,
+      params: void,
+      body: CreateCharityRequest,
+      response: ApiResponse<CreateCharityResponse>,
     },
   }
   '/donations': {
     GET: {
-      response: ListDonationsResponse
+      query: void,
+      params: void,
+      body: void,
+      response: ApiResponse<ListDonationsResponse>,
     }
     POST: {
+      query: void,
+      params: void,
       body: CreateDonationRequest,
-      response: CreateDonationResponse,
+      response: ApiResponse<CreateDonationResponse>,
     }
   },
   '/all_donations': {
     GET: {
-      response: ListDonationsResponse
+      query: void,
+      params: void,
+      body: void,
+      response: ApiResponse<ListDonationsResponse>,
     },
   },
   '/user/current': {
     GET: {
-      response: CurrentUserResponse
+      query: void,
+      params: void,
+      body: void,
+      response: ApiResponse<CurrentUserResponse>,
     },
   }
 }

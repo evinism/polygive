@@ -1,7 +1,8 @@
-import {RequestHandler} from 'express';
-import {CurrentUserResponse} from '../../shared/apiTypes';
+import PolygiveApi, {CurrentUserResponse} from '../../shared/polygiveApi';
+import {RTHandler, success} from './util';
 
-const current: RequestHandler = (req, res) => {
+type GetCurrentUser = PolygiveApi['/user/current']['GET'];
+const current: RTHandler<GetCurrentUser> = (req, res) => {
   let result: CurrentUserResponse;
   if(req.isAuthenticated()){
     const {
@@ -30,7 +31,7 @@ const current: RequestHandler = (req, res) => {
       loggedIn: false,
     }
   }
-  return res.status(200).send(result);
+  return Promise.resolve(success()(result));
 };
 
 export default { current };

@@ -1,34 +1,39 @@
-import {RequestHandler} from 'express';
 import {getRepository} from 'typeorm';
 import ensureConnection from '../connection';
 import Charity from '../entity/Charity';
-import {
-  CreateCharityRequest,
-  CreateCharityResponse,
-  ListCharitiesResponse,
-} from '../../shared/apiTypes';
+import PolygiveApi from '../../shared/polygiveApi';
+import {RTHandler, success, error} from './util';
 
-export const create: RequestHandler =  async (req, res) => {
+/** TODO: Remove the toStrings here */
+type CreateCharity = PolygiveApi['/charities']['POST'];
+export const create: RTHandler<CreateCharity> = async (req, res) => {
   await ensureConnection();
-  const body: CreateCharityRequest = req.body;
+  const body = req.body;
 
   const newCharity = new Charity();
   newCharity.name = body.name;
-  getRepository(Charity)
+  return getRepository(Charity)
     .save(newCharity)
-    .then(charity => res.status(201).send(charity))
-    .catch((error: any) => res.status(400).send(error));
+    .then((charity) => ({
+      name: charity.name,
+      id: charity.id.toString(),
+    }))
+    .then(success(res, 201))
+    .catch(error(res, 400));
 };
 
-export const list: RequestHandler = async (req, res) => {
+type ListCharity = PolygiveApi['/charities']['GET'];
+export const list: RTHandler<ListCharity> = async (_, res) => {
   await ensureConnection();
 
-  getRepository(Charity)
+  return getRepository(Charity)
     .find()
-    // Get this to typecheck
-    .then(charities => res.status(201).send(
-      charities.map(cty => ({id: cty.id, title: cty.name}))))
-    .catch((error: any) => res.status(400).send(error));
+    .then(charities => charities.map(cty => ({
+      id: cty.id.toString(),
+      title: cty.name
+    })))
+    .then(success())
+    .catch(error());
 };
 
 export default { create, list };

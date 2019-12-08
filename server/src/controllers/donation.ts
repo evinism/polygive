@@ -1,45 +1,56 @@
-import {RequestHandler} from 'express';
-import {getRepository} from 'typeorm';
+import {getRepository, LessThanOrEqual} from 'typeorm';
 import Donation, {DonationStatus} from '../entity/Donation';
-import {
-  ListDonationsResponse, 
-  CreateDonationRequest, 
-  CreateDonationResponse,  
-} from '../../shared/apiTypes';
+import PolygiveApi from '../../shared/polygiveApi';
+import {RTHandler, success, error} from './util';
 import ensureConnection from '../connection';
 
-export const create: RequestHandler = async (req, res) => {
-  const body: CreateDonationRequest = req.body;
+// This is a nasty workaround
+const castDonationIdsToStrings = (donation: Donation) => ({
+  id: donation.id.toString(),
+  userId: donation.userId.toString(),
+  charityId: donation.charityId.toString(), 
+  amount: donation.amount.toString(),
+  status: donation.status,
+});
+
+type CreateDonation = PolygiveApi['/donations']['POST'];
+export const create: RTHandler<CreateDonation> = async (req, res) => {
+  const body = req.body;
   await ensureConnection();
   const donation = new Donation();
   donation.charityId = parseInt(body.charityId, 10);
   donation.userId = (req.user as any).id;
-  donation.amount = parseFloat(req.body.donationAmount);
+  donation.amount = parseFloat(req.body.amount);
   donation.status = DonationStatus.PENDING;
-  getRepository(Donation)
+  return getRepository(Donation)
     .save(donation)
-    .then((donation) => res.status(201).send(donation))
-    .catch((error: any) => res.status(400).send(error));
+    .then(castDonationIdsToStrings)
+    .then(success(res, 201))
+    .catch(error());
 };
 
-export const list: RequestHandler = async (req, res) => {
+type ListDonations = PolygiveApi['/donations']['GET'];
+export const list: RTHandler<ListDonations> = async (req) => {
   await ensureConnection();
-  getRepository(Donation)
+  return getRepository(Donation)
     .find(({
       where: {
         userId: (req.user as any).id,
       }
     }))
-    .then((donations) => res.status(200).send(donations))
-    .catch((error: any) => res.status(400).send(error));
+    .then(list => list.map(castDonationIdsToStrings))
+    .then(success())
+    .catch(error());
 };
 
-export const all: RequestHandler =  async (req, res) => {
+type ListAllDonations = PolygiveApi['/all_donations']['GET'];
+export const all: RTHandler<ListAllDonations> = async () => {
   await ensureConnection();
-  getRepository(Donation)
+  return getRepository(Donation)
     .find()
-    .then((donations) => res.status(200).send(donations))
-    .catch((error: any) => res.status(400).send(error));
+    .then(list => list.map(castDonationIdsToStrings))
+    .then(success())
+    .catch(error());
 };
 
 export default {create, list, all};

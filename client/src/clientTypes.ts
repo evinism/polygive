@@ -1,4 +1,4 @@
-import { UserRecord } from '../../server/shared/apiTypes';
+import { UserRecord } from '../../server/shared/polygiveApi';
 import { ReactNode } from 'react';
 
 /** App State stuff */

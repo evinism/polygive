@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DonationForm from '../components/DonationForm';
 import { getDonations } from '../api';
-import { ListDonationsResponse } from '../../../server/shared/apiTypes';
+import { ListDonationsResponse }from '../../../server/shared/polygiveApi';
 import { PageProps, LoggedInAppState } from '../clientTypes';
 
 const initialState: ListDonationsResponse = [];
