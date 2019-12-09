@@ -21,11 +21,16 @@ passport.deserializeUser(async function(id, done) {
     });
 });
 
-passport.use(new LocalStrategy(
-  function(email: string, password: string, done) {
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  async function(email: string, password: string, done) {
+    await ensureConnection();
     getRepository(User)
       .findOne({ where: { email } })
       .then((user) => {
+        console.log('Got yere!!');
         // Every user has a password, but sometimes
         if (!user || !user.password || !bcrypt.compareSync(password, user.password)) {
           return done(null, false, { message: 'Incorrect username or password.' });

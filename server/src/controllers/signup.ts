@@ -1,8 +1,10 @@
 import {RequestHandler} from 'express';
-import {error} from './util';
+import {error, success} from './util';
 import User from '../entity/User';
 import {getRepository} from 'typeorm';
 import ensureConnection from '../connection';
+import bcrypt from 'bcrypt';
+
 
 // TODO(evinism): There's no strong reason this isn't strongly typed through the API.
 const signup: RequestHandler = async (req, res) => {
@@ -33,7 +35,7 @@ const signup: RequestHandler = async (req, res) => {
     return;
   }
 
-  ensureConnection();
+  await ensureConnection();
 
   const count = await getRepository(User).count({ where: { email } })
   if (count !== 0) {
@@ -44,10 +46,11 @@ const signup: RequestHandler = async (req, res) => {
   const newUser = new User();
   newUser.email = email;
   newUser.name = name,
-  newUser.password = password;
+  newUser.password = bcrypt.hashSync(password, 10);
   newUser.super = false;
   await getRepository(User).save(newUser);
-  res.redirect(302, '/login');
+  // We should sign in the user after this, not do whatever the hell this is.
+  res.send(success(res, 200)({}));
 }
 
 export default signup;

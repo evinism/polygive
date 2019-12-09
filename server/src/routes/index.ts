@@ -27,7 +27,7 @@ export default function ConfigureRoutes(app: Express){
     });
 
   app.post('/login', 
-    passport.authenticate('local', { failureRedirect: '/login' }),
+    passport.authenticate('local', { failureRedirect: FRONTEND_URL }),
     function(req, res) {
       res.redirect(FRONTEND_URL);
     });

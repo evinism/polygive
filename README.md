@@ -16,10 +16,12 @@ For now, I think you can do
 
 ```
 $ createdb polygive
-$ createuser polygiveuser
 $ psql polygive
+# CREATE USER polygiveuser;
 # GRANT ALL PRIVILEGES ON DATABASE polygive TO polygiveuser;
 ```
+
+After doing this, you'll want to migrate your DB
 
 ### Redis
 If you want to make sure logins persist across server restarts (which will happen a lot because nodemon does that), you'll want to have a redis instance locally running (and probably daemonized for convenience). In the `.env` folder of server, you can set `REDIS_HOST=localhost` to enable redis storage in the app.
