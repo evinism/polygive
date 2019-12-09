@@ -45,3 +45,6 @@ yarn start:dev
 ### Moar info:
 You can set a user as being super by running:
 `yarn set_super your.email@some.domain.fake`
+
+### Getting data??
+Getting data is not something I have good stories around.
