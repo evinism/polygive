@@ -15,7 +15,7 @@ const corsConfig = ({
 
 export default function ConfigureRoutes(app: Express){
 
-  /* Public Routes */
+  /* Auth, non-api routes */
   app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
 
@@ -25,6 +25,14 @@ export default function ConfigureRoutes(app: Express){
       // Successful authentication, redirect home.
       res.redirect(FRONTEND_URL);
     });
+
+  app.post('/login', 
+    passport.authenticate('local', { failureRedirect: '/login' }),
+    function(req, res) {
+      res.redirect(FRONTEND_URL);
+    });
+  
+  app.post('/signup', controllers.signup);
 
   const apiRouter = Router();
   apiRouter.all('*', cors(corsConfig));

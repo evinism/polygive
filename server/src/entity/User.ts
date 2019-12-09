@@ -13,6 +13,9 @@ export default class User {
   name: string;
 
   @Column()
+  password: string;
+
+  @Column({nullable: true})
   googleId: string;
 
   @Column()
