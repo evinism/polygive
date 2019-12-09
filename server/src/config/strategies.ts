@@ -30,7 +30,6 @@ passport.use(new LocalStrategy({
     getRepository(User)
       .findOne({ where: { email } })
       .then((user) => {
-        console.log('Got yere!!');
         // Every user has a password, but sometimes
         if (!user || !user.password || !bcrypt.compareSync(password, user.password)) {
           return done(null, false, { message: 'Incorrect username or password.' });
