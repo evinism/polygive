@@ -1,4 +1,6 @@
 import ApiResponse from './workarounds/ApiResponse';
+import DonationSchedule from '../src/entity/DonationSchedule';
+import {ShortCharityRecord} from '../src/projections';
 
 /* Response type for /user/current */
 type UserRecord = {
@@ -56,6 +58,14 @@ type ListDonationsResponse = {
   amount: string,
 }[];
 
+type ListDonationSchedules = {
+  id: string,
+  userId: string,
+  charity: ShortCharityRecord,
+  schedule: DonationSchedule,
+  date: Date,
+}
+
 export default interface PolygiveApi {
   '/charities': {
     GET: {
@@ -72,6 +82,20 @@ export default interface PolygiveApi {
     },
   }
   '/donations': {
+    GET: {
+      query: void,
+      params: void,
+      body: void,
+      response: ApiResponse<ListDonationsResponse>,
+    }
+    POST: {
+      query: void,
+      params: void,
+      body: CreateDonationRequest,
+      response: ApiResponse<CreateDonationResponse>,
+    }
+  },
+  '/donationschedules': {
     GET: {
       query: void,
       params: void,
