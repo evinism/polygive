@@ -50,7 +50,7 @@ export default function ConfigureRoutes(app: Express){
   /* Routes that 403 when not logged in */
   api.get('/charities', requireLogin(controllers.charity.list));
   api.get('/donations', requireLogin(controllers.donation.list));
-  api.post('/donations', (controllers.donation.create));
+  api.post('/donations', requireLogin(controllers.donation.create));
 
   /* Super-only routes */
   api.post('/charities', requireSuper(controllers.charity.create));
