@@ -8,7 +8,7 @@ export enum DonationRecurrence {
 }
 
 @Entity()
-export default class Donation {
+export default class DonationSchedule {
   @PrimaryGeneratedColumn()
   id: number;
 

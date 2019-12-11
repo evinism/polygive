@@ -1,5 +1,7 @@
 
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn} from "typeorm";
+import User from './User';
+import Charity from "./Charity";
 
 export enum DonationStatus {
   PENDING = 'PENDING',
@@ -15,11 +17,19 @@ export default class Donation {
   @Column('decimal', { precision: 11, scale: 2 })
   amount: number;
 
-  @Column('int')
+  @Column()
   charityId: number;
 
-  @Column('int')
+  @ManyToOne(type => Charity)
+  @JoinColumn()
+  charity: Charity;
+
+  @Column()
   userId: number;
+
+  @ManyToOne(type => User)
+  @JoinColumn()
+  user: User;
 
   @Column({
     type: "enum",

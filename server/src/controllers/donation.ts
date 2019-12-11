@@ -1,8 +1,10 @@
 import {getRepository} from 'typeorm';
 import Donation, {DonationStatus} from '../entity/Donation';
+import User from '../entity/User';
 import PolygiveApi from '../../shared/polygiveApi';
 import {RTHandler, success, error} from './util';
 import ensureConnection from '../connection';
+
 
 // This is a nasty workaround
 const castDonationIdsToStrings = (donation: Donation) => ({
@@ -19,7 +21,9 @@ export const create: RTHandler<CreateDonation> = async (req, res) => {
   await ensureConnection();
   const donation = new Donation();
   donation.charityId = parseInt(body.charityId, 10);
-  donation.userId = (req.user as any).id;
+  // We don't know that the User corresponds to a User obj natively.
+  // But we can be kinda sure.t
+  donation.userId = (req.user as User).id;
   donation.amount = parseFloat(req.body.amount);
   donation.status = DonationStatus.PENDING;
   return getRepository(Donation)
@@ -30,7 +34,7 @@ export const create: RTHandler<CreateDonation> = async (req, res) => {
 };
 
 type ListDonations = PolygiveApi['/donations']['GET'];
-export const list: RTHandler<ListDonations> = async (req) => {
+export const list: RTHandler<ListDonations> = async (req, res) => {
   await ensureConnection();
   return getRepository(Donation)
     .find(({
@@ -40,17 +44,17 @@ export const list: RTHandler<ListDonations> = async (req) => {
     }))
     .then(list => list.map(castDonationIdsToStrings))
     .then(success())
-    .catch(error());
+    .catch(error(res, 400));
 };
 
 type ListAllDonations = PolygiveApi['/all_donations']['GET'];
-export const all: RTHandler<ListAllDonations> = async () => {
+export const all: RTHandler<ListAllDonations> = async (_, res) => {
   await ensureConnection();
   return getRepository(Donation)
     .find()
     .then(list => list.map(castDonationIdsToStrings))
     .then(success())
-    .catch(error());
+    .catch(error(res, 400));
 };
 
 export default {create, list, all};
