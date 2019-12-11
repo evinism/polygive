@@ -3,13 +3,13 @@ import ensureConnection from '../connection';
 import Charity from '../entity/Charity';
 import PolygiveApi from '../../shared/polygiveApi';
 import {RTHandler, success, error} from './util';
+import {RTSuperHandler} from '../types/RestypedHelpers';
 
 /** TODO: Remove the toStrings here */
 type CreateCharity = PolygiveApi['/charities']['POST'];
-export const create: RTHandler<CreateCharity> = async (req, res) => {
+export const create: RTSuperHandler<CreateCharity> = async (req, res) => {
   await ensureConnection();
   const body = req.body;
-
   const newCharity = new Charity();
   newCharity.name = body.name;
   return getRepository(Charity)

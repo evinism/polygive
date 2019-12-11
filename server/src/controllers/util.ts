@@ -1,10 +1,6 @@
 import { Response } from 'express';
-import { TypedRequest } from 'restyped-express-async';
-import { RestypedRoute } from 'restyped';
 import { ApiSuccess, ApiError } from '../../shared/workarounds/ApiResponse';
-
-export type RTHandler<T extends RestypedRoute> = 
-  (req: TypedRequest<T>, res: Response) => Promise<T['response']>;
+export {RTHandler} from '../types/RestypedHelpers';
 
 export const success = (res?: Response, status = 200) => <T>(successData: T): ApiSuccess<T> => {
   if (res){

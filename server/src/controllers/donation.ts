@@ -1,8 +1,8 @@
 import {getRepository} from 'typeorm';
 import Donation, {DonationStatus} from '../entity/Donation';
-import User from '../entity/User';
 import PolygiveApi from '../../shared/polygiveApi';
-import {RTHandler, success, error} from './util';
+import {success, error} from './util';
+import {RTAuthedHandler, RTSuperHandler} from '../types/RestypedHelpers';
 import ensureConnection from '../connection';
 
 
@@ -16,14 +16,12 @@ const castDonationIdsToStrings = (donation: Donation) => ({
 });
 
 type CreateDonation = PolygiveApi['/donations']['POST'];
-export const create: RTHandler<CreateDonation> = async (req, res) => {
+export const create: RTAuthedHandler<CreateDonation> = async (req, res) => {
   const body = req.body;
   await ensureConnection();
   const donation = new Donation();
   donation.charityId = parseInt(body.charityId, 10);
-  // We don't know that the User corresponds to a User obj natively.
-  // But we can be kinda sure.t
-  donation.userId = (req.user as User).id;
+  donation.userId = req.pgUser.id;
   donation.amount = parseFloat(req.body.amount);
   donation.status = DonationStatus.PENDING;
   return getRepository(Donation)
@@ -34,12 +32,12 @@ export const create: RTHandler<CreateDonation> = async (req, res) => {
 };
 
 type ListDonations = PolygiveApi['/donations']['GET'];
-export const list: RTHandler<ListDonations> = async (req, res) => {
+export const list: RTAuthedHandler<ListDonations> = async (req, res) => {
   await ensureConnection();
   return getRepository(Donation)
     .find(({
       where: {
-        userId: (req.user as any).id,
+        userId: req.pgUser.id,
       }
     }))
     .then(list => list.map(castDonationIdsToStrings))
@@ -48,7 +46,7 @@ export const list: RTHandler<ListDonations> = async (req, res) => {
 };
 
 type ListAllDonations = PolygiveApi['/all_donations']['GET'];
-export const all: RTHandler<ListAllDonations> = async (_, res) => {
+export const all: RTSuperHandler<ListAllDonations> = async (_, res) => {
   await ensureConnection();
   return getRepository(Donation)
     .find()

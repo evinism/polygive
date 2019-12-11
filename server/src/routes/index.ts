@@ -1,11 +1,13 @@
-import { Express, Router } from 'express';
-import RestypedRouter from 'restyped-express-async'
+import { Express, Router, Request } from 'express';
+import RestypedRouter, { TypedRequest } from 'restyped-express-async'
 import cors from 'cors';
 import passport from 'passport';
 import controllers from '../controllers';
-import {requireLogin, requireSuper} from './util';
+import {requireLogin, requireSuper} from './accessControl';
 import { FRONTEND_URL } from '../config/env';
 import PolygiveApi from '../../shared/polygiveApi';
+import { RTHandler } from '../types/RestypedHelpers';
+import { RestypedRoute } from 'restyped';
 
 
 const corsConfig = ({
@@ -39,14 +41,16 @@ export default function ConfigureRoutes(app: Express){
   app.use('/', apiRouter);
 
   const api = RestypedRouter<PolygiveApi>(apiRouter);
+  const proof = <T extends RestypedRoute> 
+    (handler: RTHandler<T, TypedRequest<T>>) => (handler);
+
 
   api.get('/user/current', controllers.user.current);
   
   /* Routes that 403 when not logged in */
-  //apiRouter.get('/charities', requireLogin);
   api.get('/charities', requireLogin(controllers.charity.list));
   api.get('/donations', requireLogin(controllers.donation.list));
-  api.post('/donations', requireLogin(controllers.donation.create));
+  api.post('/donations', (controllers.donation.create));
 
   /* Super-only routes */
   api.post('/charities', requireSuper(controllers.charity.create));
