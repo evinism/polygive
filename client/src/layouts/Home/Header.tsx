@@ -28,7 +28,7 @@ const NavBar = withRouter(function NavBar({location}){
 const Header = ({state: {user}}: {state: LoggedInAppState}) => (
   <header>
     <div className='header-upper'>
-      <h1>Polygive</h1>
+      <h1><Link to={'/'}>Polygive</Link></h1>
       <NavBar />
       {user.isSuper && <Link to='/superpanel'>Super Panel</Link>}
       <Link className='profile-link' to={'/profile'}>

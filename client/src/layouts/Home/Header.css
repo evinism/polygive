@@ -17,6 +17,11 @@ header {
   font-size: 1.7rem;
 }
 
+.header-upper > h1 > a {
+  text-decoration: none;
+  color: #333333;
+}
+
 .profile-link {
   height: 30px;
   padding: 10px;

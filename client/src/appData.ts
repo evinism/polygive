@@ -46,7 +46,6 @@ export const pageManifest: PageManifest = {
 };
 
 export const tabList = [
-  'index',
   'donations',
   'charities',
 ];
