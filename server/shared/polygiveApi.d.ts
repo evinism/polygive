@@ -67,12 +67,28 @@ type ListDonationSchedulesResponse = {
     charityId: string,
     recurrence: DonationRecurrence,
     amount: string,
-    date: Date,
+    anchorDate: Date,
   }[],
   charities: {
     [id: string]: ShortCharityRecord,
   },
 };
+
+type CreateDonationScheduleRequest = {
+  charityId: string,
+  amount: string
+  recurrence: DonationRecurrence,
+};
+
+type CreateDonationScheduleResponse = {
+  id: string,
+  charityId: string,
+  recurrence: DonationRecurrence,
+  amount: string,
+  anchorDate: Date,
+  charity: ShortCharityRecord,
+};
+
 
 export default interface PolygiveApi {
   '/charities': {
@@ -110,12 +126,12 @@ export default interface PolygiveApi {
       body: void,
       response: ApiResponse<ListDonationSchedulesResponse>,
     }
-    /*POST: {
+    POST: {
       query: void,
       params: void,
-      body: CreateDonationRequest,
-      response: ApiResponse<CreateDonationResponse>,
-    }*/
+      body: CreateDonationScheduleRequest,
+      response: ApiResponse<CreateDonationScheduleResponse>,
+    }
   },
   '/all_donations': {
     GET: {
