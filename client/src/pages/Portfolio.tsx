@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DonationScheduleForm from '../components/DonationScheduleForm';
+import Card from '../components/Card';
 import { getDonationSchedules } from '../api';
 import { ListDonationSchedulesResponse } from '../../../server/shared/polygiveApi';
 import { PageProps, LoggedInAppState } from '../clientTypes';
@@ -17,15 +18,18 @@ export default function Portfolio(_: PageProps<LoggedInAppState>){
   return (
     <>
       <h2>Portfolio</h2>
-      {state.donationSchedules.map(donation => {
-        const charity = state.charities[donation.charityId];
-        return (
-          <div key={donation.id}>
-            Recurring donation to {charity.name}: ${donation.amount}
-          </div>
-        );
-      })}
-      <DonationScheduleForm />
+      <Card>
+        <h3>Recurring Donations</h3>
+        {state.donationSchedules.map(donation => {
+          const charity = state.charities[donation.charityId];
+          return (
+            <div key={donation.id}>
+              Recurring donation to {charity.name}: ${donation.amount}
+            </div>
+          );
+        })}
+        <DonationScheduleForm />
+      </Card>
     </>
   );
 }

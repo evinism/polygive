@@ -3,6 +3,8 @@ import DonationForm from '../components/DonationForm';
 import { getDonations } from '../api';
 import { ListDonationsResponse }from '../../../server/shared/polygiveApi';
 import { PageProps, LoggedInAppState } from '../clientTypes';
+import Card from '../components/Card';
+
 
 const initialState: ListDonationsResponse = {
   donations: [],
@@ -17,15 +19,17 @@ export default function DonationsList(_: PageProps<LoggedInAppState>){
   return (
     <>
       <h2>Donations</h2>
-      {state.donations.map(donation => {
-        const charity = state.charities[donation.charityId];
-        return (
-          <div key={donation.id}>
-            Donation to {charity.name}: ${donation.amount}
-          </div>
-        );
-      })}
-      <DonationForm />
+      <Card>
+        {state.donations.map(donation => {
+          const charity = state.charities[donation.charityId];
+          return (
+            <div key={donation.id}>
+              Donation to {charity.name}: ${donation.amount}
+            </div>
+          );
+        })}
+        <DonationForm />
+      </Card>
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { getCharities } from '../api';
 import { ListCharitiesResponse } from '../../../server/shared/polygiveApi';
 import DonationForm from '../components/DonationForm';
+import Card from '../components/Card';
 import { PageProps, LoggedInAppState } from '../clientTypes';
 
 
@@ -16,10 +17,12 @@ export default function CharitiesList(_: PageProps<LoggedInAppState>){
     <>
       <h2>Charities</h2>
       {charities.map(charity => (
-        <div key={charity.id}>
-          {charity.name}
-          <DonationForm charityId={charity.id} />
-        </div>
+        <Card>
+          <div key={charity.id}>
+            <h3>{charity.name}</h3>
+            <DonationForm charityId={charity.id} />
+          </div>
+        </Card>
       ))}    
     </>
   );
