@@ -1,5 +1,13 @@
 
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  ManyToOne,
+  JoinColumn
+} from "typeorm";
+import Charity from './Charity';
 
 export enum DonationRecurrence {
   WEEKLY = 'WEEKLY',
@@ -17,6 +25,10 @@ export default class DonationSchedule {
 
   @Column('int')
   charityId: number;
+
+  @ManyToOne(type => Charity)
+  @JoinColumn()
+  charity: Charity;
 
   @Column('int')
   userId: number;

@@ -20,6 +20,10 @@ export const getDonations = () => client.request({
   url: '/donations',
 }).then(x => getSuccess(x.data));
 
+export const getDonationSchedules = () => client.request({
+  url: '/donation_schedules',
+}).then(x => getSuccess(x.data));
+
 export const getCharities = () => client.request({
   url: '/charities',
 }).then(x => getSuccess(x.data));

@@ -3,6 +3,7 @@ import ensureConnection from '../connection';
 import Charity from '../entity/Charity';
 import PolygiveApi from '../../shared/polygiveApi';
 import {RTHandler, success, error} from '../util';
+import {grabAllCharities} from './controllerHelpers';
 import {RTSuperHandler} from '../types/RestypedHelpers';
 import { shortCharity } from '../projections';
 

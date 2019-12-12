@@ -1,12 +1,11 @@
-import {getRepository} from 'typeorm';
-import Donation, {DonationStatus} from '../entity/Donation';
-import Charity from '../entity/Charity';
+import { getRepository } from 'typeorm';
+import Donation, { DonationStatus } from '../entity/Donation';
 import PolygiveApi from '../../shared/polygiveApi';
-import {success, error, mapValues} from '../util';
-import {RTAuthedHandler, RTSuperHandler} from '../types/RestypedHelpers';
+import { success, error, mapValues } from '../util';
+import { RTAuthedHandler, RTSuperHandler } from '../types/RestypedHelpers';
 import ensureConnection from '../connection';
 import { shortCharity } from '../projections';
-
+import { grabAllCharities } from './controllerHelpers';
 
 // This is a nasty workaround
 const castDonationIdsToStrings = (donation: Donation) => ({
@@ -16,14 +15,6 @@ const castDonationIdsToStrings = (donation: Donation) => ({
   amount: donation.amount.toString(),
   status: donation.status,
 });
-
-const grabAllCharities = (donations: Donation[]) => 
-  donations.reduce(
-    (acc, cur) => { 
-      acc[cur.charityId] = cur.charity;
-      return acc;
-    }, {} as { [key: string]: Charity }
-  );
 
 type CreateDonation = PolygiveApi['/donations']['POST'];
 export const create: RTAuthedHandler<CreateDonation> = async (req, res) => {

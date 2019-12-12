@@ -4,6 +4,7 @@ import { PageManifest } from './clientTypes';
 import SuperPanel from './pages/SuperPanel';
 import IndexPage from './pages/IndexPage';
 import CharitiesList from './pages/CharitiesList';
+import DonationsList from './pages/DonationsList';
 import Profile from './pages/Profile';
 
 export const pageManifest: PageManifest = {
@@ -13,6 +14,13 @@ export const pageManifest: PageManifest = {
     exact: true,
     name: 'Portfolio',
     component: IndexPage,
+  },
+  donations: {
+    path: '/donations',
+    exact: false,
+    name: 'Donations',
+    component: DonationsList,
+    layout: Home,
   },
   charities: {
     path: '/charities',
@@ -39,5 +47,6 @@ export const pageManifest: PageManifest = {
 
 export const tabList = [
   'index',
+  'donations',
   'charities',
 ];

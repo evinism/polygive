@@ -52,6 +52,10 @@ export default function ConfigureRoutes(app: Express){
   api.get('/donations', requireLogin(controllers.donation.list));
   api.post('/donations', requireLogin(controllers.donation.create));
 
+  api.get('/donation_schedules',
+    requireLogin(controllers.donationSchedule.list));
+
+
   /* Super-only routes */
   api.post('/charities', requireSuper(controllers.charity.create));
   api.get('/all_donations', requireSuper(controllers.donation.all));
