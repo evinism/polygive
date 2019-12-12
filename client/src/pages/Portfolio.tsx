@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import DonationForm from '../components/DonationForm';
+import DonationScheduleForm from '../components/DonationScheduleForm';
 import { getDonationSchedules } from '../api';
-import { ListDonationSchedulesResponse }from '../../../server/shared/polygiveApi';
+import { ListDonationSchedulesResponse } from '../../../server/shared/polygiveApi';
 import { PageProps, LoggedInAppState } from '../clientTypes';
 
 const initialState: ListDonationSchedulesResponse = {
@@ -25,6 +25,7 @@ export default function Portfolio(_: PageProps<LoggedInAppState>){
           </div>
         );
       })}
+      <DonationScheduleForm />
     </>
   );
 }

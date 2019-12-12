@@ -1,7 +1,9 @@
 import ApiResponse from './workarounds/ApiResponse';
-import { DonationRecurrence } from '../src/entity/DonationSchedule';
-import {ShortCharityRecord} from '../src/projections';
+import { ShortCharityRecord } from '../src/projections';
 import Charity from '../src/entity/Charity';
+import { DonationRecurrence as Yee } from '../src/entity/DonationSchedule';
+
+type DonationRecurrence = Yee;
 
 /* Response type for /user/current */
 type UserRecord = {
