@@ -1,5 +1,5 @@
 import PolygiveApi, {CurrentUserResponse} from '../../shared/polygiveApi';
-import {RTHandler, success} from './util';
+import {RTHandler, success} from '../util';
 import {proveAuthed} from '../routes/accessControl';
 
 type GetCurrentUser = PolygiveApi['/user/current']['GET'];

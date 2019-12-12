@@ -2,8 +2,9 @@ import {getRepository} from 'typeorm';
 import ensureConnection from '../connection';
 import Charity from '../entity/Charity';
 import PolygiveApi from '../../shared/polygiveApi';
-import {RTHandler, success, error} from './util';
+import {RTHandler, success, error} from '../util';
 import {RTSuperHandler} from '../types/RestypedHelpers';
+import { shortCharity } from '../projections';
 
 /** TODO: Remove the toStrings here */
 type CreateCharity = PolygiveApi['/charities']['POST'];
@@ -28,12 +29,9 @@ export const list: RTHandler<ListCharity> = async (_, res) => {
 
   return getRepository(Charity)
     .find()
-    .then(charities => charities.map(cty => ({
-      id: cty.id.toString(),
-      title: cty.name
-    })))
+    .then(charities => charities.map(shortCharity))
     .then(success())
-    .catch(error());
+    .catch(error(res, 400));
 };
 
 export default { create, list };

@@ -1,5 +1,5 @@
 import {RequestHandler} from 'express';
-import {error, success} from './util';
+import {error, success} from '../util';
 import User from '../entity/User';
 import {getRepository} from 'typeorm';
 import ensureConnection from '../connection';

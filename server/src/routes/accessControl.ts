@@ -1,5 +1,5 @@
 import { RestypedRoute } from 'restyped';
-import { error } from '../controllers/util';
+import { error } from '../util';
 import { TypedRequest } from 'restyped-express-async';
 import User from '../entity/User';
 import {RTR, AuthenticatedRequest, SuperRequest, RTHandler, RTSuperHandler, RTAuthedHandler} from '../types/RestypedHelpers';
@@ -11,8 +11,6 @@ export function proveAuthed<T extends RTR>(req: TypedRequest<T>): AuthenticatedR
   return newReq;
 }
 
-// The following are entirely untyped, which is just a little horrifying given
-// that it's core auth stuff.
 export function requireLogin<T extends RestypedRoute>(handlerFn: RTAuthedHandler<T>): RTHandler<T, TypedRequest<T>> {
   return function(req, res){
     if (req.isAuthenticated()) {
@@ -22,7 +20,6 @@ export function requireLogin<T extends RestypedRoute>(handlerFn: RTAuthedHandler
     }
   };
 }
-
 
 export function proveSuper<T extends RTR>(req: AuthenticatedRequest<T>): SuperRequest<T>{
   const newReq = req as SuperRequest<T>;

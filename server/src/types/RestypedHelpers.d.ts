@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { RestypedRoute } from 'restyped';
-import { RTHandler, error } from '../controllers/util';
+import { RTHandler, error } from '../util';
 import { TypedRequest } from 'restyped-express-async';
 import User from '../entity/User';
 

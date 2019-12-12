@@ -4,19 +4,27 @@ import { getDonations } from '../api';
 import { ListDonationsResponse }from '../../../server/shared/polygiveApi';
 import { PageProps, LoggedInAppState } from '../clientTypes';
 
-const initialState: ListDonationsResponse = [];
+const initialState: ListDonationsResponse = {
+  donations: [],
+  charities: {},
+};
 
 export default function Portfolio(_: PageProps<LoggedInAppState>){
-  const [donations, setDonations] = useState(initialState);
+  const [state, setState] = useState(initialState);
   useEffect(() => {
-    getDonations().then(data => setDonations(data));
+    getDonations().then(data => setState(data));
   }, []);
   return (
     <>
       <h2>Donations</h2>
-      {donations.map(donation => (
-        <div key={donation.id}>Charity {donation.charityId}: ${donation.amount}</div>
-      ))}
+      {state.donations.map(donation => {
+        const charity = state.charities[donation.charityId];
+        return (
+          <div key={donation.id}>
+            Donation to {charity.name}: ${donation.amount}
+          </div>
+        );
+      })}
       <DonationForm />
     </>
   );

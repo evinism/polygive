@@ -17,7 +17,7 @@ export default function CharitiesList(_: PageProps<LoggedInAppState>){
       <h2>Charities</h2>
       {charities.map(charity => (
         <div key={charity.id}>
-          {charity.title}
+          {charity.name}
           <DonationForm charityId={charity.id} />
         </div>
       ))}    

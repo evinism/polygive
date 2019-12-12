@@ -1,9 +1,11 @@
 import {getRepository} from 'typeorm';
 import Donation, {DonationStatus} from '../entity/Donation';
+import Charity from '../entity/Charity';
 import PolygiveApi from '../../shared/polygiveApi';
-import {success, error} from './util';
+import {success, error, mapValues} from '../util';
 import {RTAuthedHandler, RTSuperHandler} from '../types/RestypedHelpers';
 import ensureConnection from '../connection';
+import { shortCharity } from '../projections';
 
 
 // This is a nasty workaround
@@ -14,6 +16,14 @@ const castDonationIdsToStrings = (donation: Donation) => ({
   amount: donation.amount.toString(),
   status: donation.status,
 });
+
+const grabAllCharities = (donations: Donation[]) => 
+  donations.reduce(
+    (acc, cur) => { 
+      acc[cur.charityId] = cur.charity;
+      return acc;
+    }, {} as { [key: string]: Charity }
+  );
 
 type CreateDonation = PolygiveApi['/donations']['POST'];
 export const create: RTAuthedHandler<CreateDonation> = async (req, res) => {
@@ -35,12 +45,16 @@ type ListDonations = PolygiveApi['/donations']['GET'];
 export const list: RTAuthedHandler<ListDonations> = async (req, res) => {
   await ensureConnection();
   return getRepository(Donation)
-    .find(({
+    .find({
       where: {
         userId: req.pgUser.id,
-      }
+      },
+      relations: ['charity'],
+    })
+    .then(donations => ({
+      donations: donations.map(castDonationIdsToStrings),
+      charities: mapValues(grabAllCharities(donations), shortCharity),
     }))
-    .then(list => list.map(castDonationIdsToStrings))
     .then(success())
     .catch(error(res, 400));
 };
@@ -50,7 +64,10 @@ export const all: RTSuperHandler<ListAllDonations> = async (_, res) => {
   await ensureConnection();
   return getRepository(Donation)
     .find()
-    .then(list => list.map(castDonationIdsToStrings))
+    .then(donations => ({
+      donations: donations.map(castDonationIdsToStrings),
+      charities: mapValues(grabAllCharities(donations), shortCharity),
+    }))
     .then(success())
     .catch(error(res, 400));
 };
