@@ -3,6 +3,7 @@ header {
   background-color: lightgreen;
   height: 50px;
   box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px;
+  padding-right: 5px;
 }
 
 .header-upper {
@@ -22,16 +23,16 @@ header {
   color: #333333;
 }
 
-.profile-link {
-  height: 30px;
-  padding: 10px;
+.header-profile {
+  height: 26px;
+  padding: 10px 10px 10px 0;
   text-decoration: none;
   color: #333333;
   display: flex;
   align-items: center;
 }
 
-.profile-link img {
+.header-profile img {
   height: 100%;
   margin: 10px;
 }

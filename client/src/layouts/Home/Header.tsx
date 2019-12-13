@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import {tabList, pageManifest} from '../../appData';
 import blankAvatar from '../../assets/blank_avatar.png';
 import { LoggedInAppState } from '../../clientTypes';
+import Dropdown, {DropdownLink} from '../../components/Dropdown';
 import './Header.css';
 
 const NavBar = withRouter(function NavBar({location}){
@@ -30,11 +31,18 @@ const Header = ({state: {user}}: {state: LoggedInAppState}) => (
     <div className='header-upper'>
       <h1><Link to={'/'}>Polygive</Link></h1>
       <NavBar />
-      {user.isSuper && <Link to='/superpanel'>Super Panel</Link>}
-      <Link className='profile-link' to={'/profile'}>
-        <img src={blankAvatar} alt="Avatar" />
-        {user.name}
-      </Link>
+      <Dropdown contents={(
+        <>
+          <DropdownLink to='/profile'>Profile</DropdownLink>
+          <DropdownLink to='/payment'>Payment</DropdownLink>
+          {user.isSuper && <DropdownLink to='/superpanel'>Super Panel</DropdownLink>}
+        </>
+      )}>
+        <div className="header-profile">
+          <img src={blankAvatar} alt="Avatar" />
+          {user.name}
+        </div>
+      </Dropdown>
     </div>
   </header>
 );
