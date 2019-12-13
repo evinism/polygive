@@ -1,0 +1,16 @@
+.donation-schedule {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15pt;
+  align-items: center;
+}
+
+.donation-schedule h4 {
+  font-weight: normal;
+  margin: 5pt 0;
+}
+
+.donation-schedule .recurrence {
+  color: gray; 
+  font-size: 10pt;
+}

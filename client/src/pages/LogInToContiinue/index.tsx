@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginWidget from '../components/LoginWidget';
+import LoginWidget from '../../components/LoginWidget';
 
 export default function LogInToContinue(){
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageProps, LoggedInAppState } from '../clientTypes';
+import { PageProps, LoggedInAppState } from '../../clientTypes';
 
 export default function Profile({state: {user}}: PageProps<LoggedInAppState>){
   return (

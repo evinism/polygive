@@ -1,0 +1,13 @@
+.padded-list {
+  list-style: none;
+  padding: 0;
+}
+
+.padded-li {
+  padding: 15px 5px;
+  border-bottom: 1px lightgray solid;
+}
+
+.padded-li:first-child {
+  border-top: 1px lightgray solid;
+}

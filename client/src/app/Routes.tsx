@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { pageManifest } from '../appData';
 import { makeLayoutFn, emptyLayoutFn } from '../util';
 import PageNotFound from '../pages/PageNotFound';
-import LogInToContinue from '../pages/LogInToContinue';
+import LogInToContinue from '../pages/LogInToContiinue';
 import { AppState, LoggedOutPageMetadata, LoggedInPageMetadata, PageComponent, LoggedInAppState } from '../clientTypes';
 
 const pageManifestArr = Object.values(pageManifest);

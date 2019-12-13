@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { getCharities } from '../api';
-import { ListCharitiesResponse } from '../../../server/shared/polygiveApi';
-import DonationForm from '../components/DonationForm';
-import Card from '../components/Card';
-import { PageProps, LoggedInAppState } from '../clientTypes';
+import { getCharities } from '../../api';
+import { ListCharitiesResponse } from '../../../../server/shared/polygiveApi';
+import DonationForm from '../../components/DonationForm';
+import { Card } from '../../components/UIElements';
+import { PageProps, LoggedInAppState } from '../../clientTypes';
 
 
 const initialState: ListCharitiesResponse = [];

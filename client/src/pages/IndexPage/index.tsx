@@ -1,8 +1,8 @@
 import React from 'react';
-import Portfolio from './Portfolio';
-import LandingPage from './LandingPage';
-import { PageProps, AppState } from '../clientTypes';
-import Home from '../layouts/Home';
+import Portfolio from '../Portfolio';
+import LandingPage from '../LandingPage';
+import { PageProps, AppState } from '../../clientTypes';
+import Home from '../../layouts/Home';
 
 export default function IndexPage(props: PageProps<AppState>){
 
