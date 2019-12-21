@@ -7,20 +7,17 @@ header {
   box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px;
   padding-right: 5px;
   z-index: 2;
-}
-
-.header-upper {
   display: flex;
   align-items: center;
 }
 
-.header-upper > h1 {
+header > h1 {
   margin: 0px 10px;
   font-family: satisfy;
   font-size: 1.7rem;
 }
 
-.header-upper > h1 > a {
+header > h1 > a {
   text-decoration: none;
   color: #333333;
 }

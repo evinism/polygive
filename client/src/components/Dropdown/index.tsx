@@ -19,6 +19,12 @@ export const DropdownLink: FunctionComponent<{to: string}> = ({to, children}) =>
   </Link>
 );
 
+export const DropdownExternalLink: FunctionComponent<{href: string}> = ({href, children}) => (
+  <a className="dropdown-link" href={href}>
+    {children}
+  </a>
+);
+
 export const ControlledDropdown: FunctionComponent<ControlledDropdownProps> = 
 ({children, onContainerClick, onClose, isOpen, contents}) => {
   // TODO: Make it so that the dropdown doesn't always trigger on onClose on

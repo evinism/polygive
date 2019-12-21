@@ -36,6 +36,11 @@ export default function ConfigureRoutes(app: Express){
   
   app.post('/signup', controllers.signup);
 
+  app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect(FRONTEND_URL);
+  });
+
   const apiRouter = Router();
   apiRouter.all('*', cors(corsConfig));
   app.use('/', apiRouter);

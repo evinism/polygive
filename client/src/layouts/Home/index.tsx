@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayoutProps, LoggedInAppState } from '../../clientTypes';
-import Header from './Header';
+import Header from '../shared/Header';
 import SingleColumnArticle from '../shared/SingleColumn';
 import './Home.css';
 
