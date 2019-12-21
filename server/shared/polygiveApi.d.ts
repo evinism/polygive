@@ -1,9 +1,10 @@
 import ApiResponse from './workarounds/ApiResponse';
-import { ShortCharityRecord } from '../src/projections';
+import { ShortCharityRecord as Temp1 } from '../src/projections';
 import Charity from '../src/entity/Charity';
-import { DonationRecurrence as Yee } from '../src/entity/DonationSchedule';
+import { DonationRecurrence as Temp2 } from '../src/entity/DonationSchedule';
 
-type DonationRecurrence = Yee;
+type ShortCharityRecord = Temp1;
+type DonationRecurrence = Temp2;
 
 /* Response type for /user/current */
 type UserRecord = {
@@ -11,6 +12,20 @@ type UserRecord = {
   email: string,
   name: string,
   isSuper: boolean,
+}
+
+type DonationRecord = {
+  id: string,
+  charityId: string,
+  amount: string,
+}
+
+type DonationScheduleRecord = {
+  id: string,
+  charityId: string,
+  recurrence: DonationRecurrence,
+  amount: string,
+  anchorDate: Date,
 }
 
 type LoggedOutResponse = {
@@ -53,24 +68,14 @@ type ListCharitiesResponse = ShortCharityRecord[];
 
 /* Request/Response pair for GET /donations */
 type ListDonationsResponse = {
-  donations: {
-    id: string,
-    charityId: string,
-    amount: string,
-  }[],
+  donations: DonationRecord[],
   charities: {
     [id: string]: ShortCharityRecord,
   },
 };
 
 type ListDonationSchedulesResponse = {
-  donationSchedules: {
-    id: string,
-    charityId: string,
-    recurrence: DonationRecurrence,
-    amount: string,
-    anchorDate: Date,
-  }[],
+  donationSchedules: DonationScheduleRecord[],
   charities: {
     [id: string]: ShortCharityRecord,
   },
@@ -90,7 +95,6 @@ type CreateDonationScheduleResponse = {
   anchorDate: Date,
   charity: ShortCharityRecord,
 };
-
 
 export default interface PolygiveApi {
   '/charities': {
@@ -150,5 +154,13 @@ export default interface PolygiveApi {
       body: void,
       response: ApiResponse<CurrentUserResponse>,
     },
-  }
+  },
+  '/unflushed_donations': {
+    GET: {
+      query: void,
+      params: void,
+      body: void,
+      response: ApiResponse<ListDonationsResponse>,
+    },
+  },
 }

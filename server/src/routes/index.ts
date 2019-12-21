@@ -60,6 +60,7 @@ export default function ConfigureRoutes(app: Express){
   /* Super-only routes */
   api.post('/charities', requireSuper(controllers.charity.create));
   api.get('/all_donations', requireSuper(controllers.donation.all));
+  api.get('/unflushed_donations', requireSuper(controllers.donation.unflushed));
 
   app.options("/*", cors(corsConfig), function(req, res, next){
     res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL);

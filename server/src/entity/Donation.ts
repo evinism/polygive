@@ -4,10 +4,11 @@ import User from './User';
 import Charity from "./Charity";
 
 export enum DonationStatus {
-  PENDING = 'PENDING',
-  SUBMITTED = 'SUBMITTED',
+  DRAFT = 'DRAFT', // To the user, this hasn't been processed yet
+  SUBMITTED = 'SUBMITTED', // To the user, this is a completed donation
+  PAID = 'PAID', // The user's payment has processed
+  FLUSHED = 'FLUSHED', // We have sent out the charity
 }
-
 
 @Entity()
 export default class Donation {
@@ -34,7 +35,7 @@ export default class Donation {
   @Column({
     type: "enum",
     enum: DonationStatus,
-    default: [DonationStatus.PENDING],
+    default: [DonationStatus.DRAFT],
   })
   status: DonationStatus;
   

@@ -24,7 +24,7 @@ export const create: RTAuthedHandler<CreateDonation> = async (req, res) => {
   donation.charityId = parseInt(body.charityId, 10);
   donation.userId = req.pgUser.id;
   donation.amount = parseFloat(req.body.amount);
-  donation.status = DonationStatus.PENDING;
+  donation.status = DonationStatus.DRAFT;
   return getRepository(Donation)
     .save(donation)
     .then(castDonationIdsToStrings)
@@ -63,4 +63,21 @@ export const all: RTSuperHandler<ListAllDonations> = async (_, res) => {
     .catch(error(res, 400));
 };
 
-export default {create, list, all};
+type ListUnflushedDonations = PolygiveApi['/unflushed_donations']['GET'];
+export const unflushed: RTSuperHandler<ListUnflushedDonations> = async (_, res) => {
+  await ensureConnection();
+  return getRepository(Donation)
+    .find({
+      where: {
+        status: DonationStatus.PAID,
+      },
+    })
+    .then(donations => ({
+      donations: donations.map(castDonationIdsToStrings),
+      charities: mapValues(grabAllCharities(donations), shortCharity),
+    }))
+    .then(success())
+    .catch(error(res, 400));
+};
+
+export default {create, list, all, unflushed};
