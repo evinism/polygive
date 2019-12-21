@@ -1,14 +1,9 @@
 .portfolio-page h3 {
-  font-weight: normal;
   margin: 0 0 10px 0;
 }
 
-.portfolio-page .card-inner {
-  padding: 10px 10px
-}
-
 .yearly-contributions {
-  border-bottom: 2px lightgray solid;
+  border-bottom: 1px lightgray solid;
   padding-bottom: 20px;
 }
 
@@ -16,11 +11,14 @@
   margin-left: 15px;
 }
 
-.donation-schedule-amount .recurrence {
-  color: gray; 
-  font-size: 10pt;
+.donation-schedule-amount {
+  color: green;
+  white-space: nowrap;
 }
 
+.donation-schedule-amount .recurrence {
+  font-size: 10pt;
+}
 
 .donation-schedule {
   display: flex;
@@ -32,7 +30,7 @@
 
 .donation-schedule h4 {
   font-weight: normal;
-  margin: 5pt 0;
+  margin: 5px 0;
 }
 
 .donation-schedule-amount {

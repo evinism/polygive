@@ -1,0 +1,8 @@
+.single-column {
+  margin: auto;
+  max-width: 800px;
+}
+
+.single-column h2 {
+  margin-top: 0;
+}

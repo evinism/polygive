@@ -2,3 +2,7 @@
   min-height: 100vh;
   background-color: aliceblue;
 }
+
+.home-layout-sub-header {
+  padding-top: 50px;
+}

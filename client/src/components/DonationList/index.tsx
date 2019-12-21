@@ -1,7 +1,6 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import DonationForm from '../DonationForm';
 import { ListDonationsResponse, DonationRecord, ShortCharityRecord }from '../../../../server/shared/polygiveApi';
-import { Card } from '../UIElements';
+import {PaddedList} from '../UIElements';
 
 interface DonationListProps {
   charities: {
@@ -11,18 +10,16 @@ interface DonationListProps {
 }
 
 export const DonationsList: FunctionComponent<DonationListProps> = ({donations, charities}) => (
-  <>
-    {
-      donations.map(donation => {
-        const charity = charities[parseInt(donation.charityId, 10)];
-        return (
-          <div key={donation.id}>
-            Donation to {charity.name}: ${donation.amount}
-          </div>
-        );
-      })
-    }
-  </>
+  <PaddedList items={
+    donations.map(donation => {
+      const charity = charities[parseInt(donation.charityId, 10)];
+      return (
+        <div className="donation-li" key={donation.id}>
+          Donation to {charity.name}: ${donation.amount}
+        </div>
+      );
+    })
+  } />
 );
 
 interface DonationListFromApiFnProps {
