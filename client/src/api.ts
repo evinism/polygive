@@ -40,6 +40,11 @@ export const createDonationSchedule = (charityId: string, amount: string, recurr
     { charityId, amount, recurrence }
   ).then(x => getSuccess(x.data));
 
+// Super routes
+export const getUnflushedDonations = () => client.request({
+    url: '/unflushed_donations',
+  }).then(x => getSuccess(x.data));
+
 export const createCharity = (name: string) => 
   client.post<'/charities'>(
     '/charities',

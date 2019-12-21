@@ -46,7 +46,7 @@ export default function DonationScheduleForm({charityId: parentCharityId}: {char
     </div> 
   ) : (
     <button onClick={() => setEnabled(true)}>
-      Create a Donation!
+      Start a Recurring Donation
     </button>
   );
 }
