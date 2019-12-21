@@ -9,7 +9,6 @@
 
 .dropdown-child-container {
   position: relative;
-  z-index: 1;
   border: 1px solid transparent;
   cursor: pointer;
 }
@@ -17,6 +16,7 @@
 .dropdown-wrapper.dropdown-open > .dropdown-child-container {
   border-radius: 4px 4px 0 0;
   background-color: white;
+  z-index: 1;
   
 }
 

@@ -1,0 +1,10 @@
+.donation-schedule-amount {
+  color: green;
+  white-space: nowrap;
+  font-size: 15pt;
+
+}
+
+.donation-schedule-amount .recurrence {
+  font-size: 10pt;
+}
