@@ -1,5 +1,5 @@
 import ApiResponse from './workarounds/ApiResponse';
-import { ShortCharityRecord as Temp1 } from '../src/projections';
+import { ShortCharityRecord as Temp1, } from '../src/projections';
 import Charity from '../src/entity/Charity';
 import { DonationRecurrence as Temp2 } from '../src/entity/DonationSchedule';
 
@@ -109,6 +109,14 @@ export default interface PolygiveApi {
       params: void,
       body: CreateCharityRequest,
       response: ApiResponse<CreateCharityResponse>,
+    },
+  },
+  '/charities/:id': {
+    GET: {
+      query: void,
+      body: void,
+      params: void,
+      response: ApiResponse<ListCharitiesResponse>,
     },
   }
   '/donations': {

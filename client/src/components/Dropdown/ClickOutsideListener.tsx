@@ -16,8 +16,6 @@ export default class ClickOutsideListener extends React.Component<COProps> {
   windowClick = (e: MouseEvent) => {
     const wrapperElem = this.wrapper.current;
     if (wrapperElem && !wrapperElem.contains(e.target as HTMLElement)) {
-      console.log(e.target);
-      console.log('Clickoutside!');
       this.props.onClickOutside(e);
     }
   }
