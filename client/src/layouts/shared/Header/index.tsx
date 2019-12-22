@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import {tabList, pageManifest} from '../../../appData';
+import { tabList, pageManifest } from '../../../appData';
 import blankAvatar from '../../../assets/blank_avatar.png';
 import { LoggedInAppState } from '../../../clientTypes';
 import Dropdown, {DropdownLink, DropdownExternalLink} from '../../../components/Dropdown';
@@ -28,7 +28,17 @@ const NavBar = withRouter(function NavBar({location}){
   )
 });
 
-const Header = ({state: {user}}: {state: LoggedInAppState}) => (
+export const PublicHeader = () => (
+  <header>
+    <h1><Link to={'/'}>Polygive</Link></h1>
+    <NavBar />
+    <div className="header-profile">
+      <Link to="/login">Log In to PolyGive</Link>
+    </div>
+  </header>
+);
+
+export const LoggedInHeader = ({state: {user}}: {state: LoggedInAppState}) => (
   <header>
     <h1><Link to={'/'}>Polygive</Link></h1>
     <NavBar />
@@ -48,4 +58,4 @@ const Header = ({state: {user}}: {state: LoggedInAppState}) => (
   </header>
 );
 
-export default Header;
+export default LoggedInHeader;

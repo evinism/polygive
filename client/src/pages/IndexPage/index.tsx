@@ -3,6 +3,7 @@ import Portfolio from '../Portfolio';
 import LandingPage from '../LandingPage';
 import { PageProps, AppState } from '../../clientTypes';
 import Home from '../../layouts/Home';
+import PublicBarebones from '../../layouts/PublicBarebones';
 
 export default function IndexPage(props: PageProps<AppState>){
 
@@ -15,6 +16,8 @@ export default function IndexPage(props: PageProps<AppState>){
     )
   }
   return (
-    <LandingPage state={props.state} />
+    <PublicBarebones state={props.state}>
+      <LandingPage state={props.state} />
+    </PublicBarebones>
   )
 }

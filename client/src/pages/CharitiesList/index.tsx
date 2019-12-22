@@ -6,6 +6,7 @@ import { PaddedList } from '../../components/UIElements';
 import { PageProps, LoggedInAppState } from '../../clientTypes';
 import DonationScheduleForm from '../../components/DonationScheduleForm';
 import './CharitiesList.css';
+import { Link } from 'react-router-dom';
 
 const initialState: ListCharitiesResponse = [];
 
@@ -20,7 +21,11 @@ export default function CharitiesList(_: PageProps<LoggedInAppState>){
       <PaddedList items={
         charities.map(charity => (
             <div key={charity.id}>
-              <h3>{charity.name}</h3>
+              <h3>
+                <Link to={`/charities/${charity.id}`}>
+                  {charity.name}
+                </Link>
+              </h3>
               <DonationForm charityId={charity.id} />
               <DonationScheduleForm charityId={charity.id} />
             </div>

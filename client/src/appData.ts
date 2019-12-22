@@ -6,6 +6,9 @@ import IndexPage from './pages/IndexPage';
 import CharitiesList from './pages/CharitiesList';
 import DonationsList from './pages/DonationsList';
 import Profile from './pages/Profile';
+import LogInToContinue from './pages/LogInToContiinue';
+import PublicBarebones from './layouts/PublicBarebones';
+import CharityDescription from './pages/CharityDescription';
 
 export const pageManifest: PageManifest = {
   index: {
@@ -24,10 +27,17 @@ export const pageManifest: PageManifest = {
   },
   charities: {
     path: '/charities',
-    exact: false,
+    exact: true,
     name: 'Charities',
     component: CharitiesList,
     layout: Home,
+  },
+  charityDescription: {
+    path: '/charities/:id',
+    exact: true,
+    name: 'Charity',
+    component: CharityDescription,
+    layout: PublicBarebones,
   },
   profile: {
     path: '/profile',
@@ -35,6 +45,14 @@ export const pageManifest: PageManifest = {
     component: Profile,
     name: 'Profile',
     layout: Home,
+  },
+  login: {
+    public: true,
+    path: '/login',
+    exact: false,
+    name: 'Login',
+    component: LogInToContinue,
+    layout: PublicBarebones,
   },
   superPanel: {
     path: '/superpanel',
@@ -49,3 +67,4 @@ export const tabList = [
   'donations',
   'charities',
 ];
+
