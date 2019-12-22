@@ -10,14 +10,18 @@ export default function IndexPage(props: PageProps<AppState>){
   // How is this getting past typescript?
   if(props.state && props.state.status === 'LOGGED_IN') {
     return (
-      <Home state={props.state}>
-        <Portfolio state={props.state} />
+      <Home state={props.state} match={props.match}>
+        <Portfolio
+          state={props.state}
+          match={props.match} />
       </Home>
     )
   }
   return (
-    <PublicBarebones state={props.state}>
-      <LandingPage state={props.state} />
+    <PublicBarebones state={props.state} match={props.match}>
+      <LandingPage
+        state={props.state}
+        match={props.match} />
     </PublicBarebones>
   )
 }

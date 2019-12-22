@@ -1,10 +1,11 @@
 import React from 'react';
 import { PageProps, LoggedInAppState } from '../../clientTypes';
 
-export default function CharityDescription(_: PageProps<LoggedInAppState>){
+export default function CharityDescription(props: PageProps<LoggedInAppState>){
+  const id = props.match.params.id as string; // oof on this 
   return (
-    <div className="charities-list">
-      <h2>Charity ID: ???</h2>
+    <div className="charity-description">
+      <h2>Charity ID: {id}</h2>
     </div>
   );
 }

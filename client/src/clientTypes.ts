@@ -22,10 +22,12 @@ export type AppState = LoadingUserAppState | LoggedOutAppState | LoggedInAppStat
 export type LayoutProps<T extends AppState> =  {
   children: ReactNode
   state: T,
+  match: { [key: string]: any }, // oof @ these types
 };
 
 export type PageProps<T extends AppState> = {
   state: T,
+  match: { [key: string]: any },
 };
 
 export type LayoutComponent<T extends AppState = AppState> =
