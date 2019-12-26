@@ -3,6 +3,7 @@ import Routes from './Routes';
 import {getCurrentUser} from '../api';
 import {AppState} from '../clientTypes';
 import './App.css';
+import { WaitForLoaded } from '../components/UIElements';
 
 const initialState: AppState = {
   status: 'LOADING_USER',
@@ -32,7 +33,9 @@ function App() {
 
   return (
     <div className="App">
-      {page}
+      <WaitForLoaded item={state.status !== 'LOADING_USER'}>
+        {() => page}
+      </WaitForLoaded>
     </div>
   );
 }

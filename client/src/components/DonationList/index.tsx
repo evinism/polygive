@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
 import { ListDonationsResponse, DonationRecord, ShortCharityRecord }from '../../../../server/shared/polygiveApi';
-import {PaddedList} from '../UIElements';
+import {PaddedList, WaitForLoaded} from '../UIElements';
 
 interface DonationListProps {
   charities: {
@@ -26,18 +26,21 @@ interface DonationListFromApiFnProps {
   apiFn: () => Promise<ListDonationsResponse>
 }
 
-const initialState: ListDonationsResponse = {
-  donations: [],
-  charities: {},
-};
 
 export const DonationsListFromApiFn: FunctionComponent<DonationListFromApiFnProps> = ({ apiFn }) => {
-  const [state, setState] = useState(initialState);
+  const [state, setState] =
+    useState<ListDonationsResponse | undefined>(undefined);
   useEffect(() => {
     apiFn().then(data => setState(data));
   }, []);
   return (
-    <DonationsList donations={state.donations} charities={state.charities} />
+    <WaitForLoaded item={state} >
+      {(state) => 
+        <DonationsList
+          donations={state.donations}
+          charities={state.charities} />
+      }
+    </WaitForLoaded>
   );
 };
 
