@@ -28,6 +28,10 @@ export const getCharities = () => client.request({
   url: '/charities',
 }).then(x => getSuccess(x.data));
 
+export const getCharity = (charityId: string) => client
+  .get<'/charities/:id'>(`/charities/${charityId}`)
+  .then(x => getSuccess(x.data));
+
 export const createDonation = (charityId: string, amount: string) => 
   client.post<'/donations'>(
     '/donations', 

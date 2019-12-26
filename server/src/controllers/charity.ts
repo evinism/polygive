@@ -3,7 +3,6 @@ import ensureConnection from '../connection';
 import Charity from '../entity/Charity';
 import PolygiveApi from '../../shared/polygiveApi';
 import {RTHandler, success, error} from '../util';
-import {grabAllCharities} from './controllerHelpers';
 import {RTSuperHandler} from '../types/RestypedHelpers';
 import { shortCharity } from '../projections';
 
@@ -35,4 +34,19 @@ export const list: RTHandler<ListCharity> = async (_, res) => {
     .catch(error(res, 400));
 };
 
-export default { create, list };
+type GetCharity = PolygiveApi['/charities/:id']['GET'];
+export const getCharity: RTHandler<GetCharity> = async (req, res) => {
+  await ensureConnection();
+
+  return getRepository(Charity)
+    .findOne({
+      where: {
+        id: req.params.id,
+      }
+    })
+    .then(shortCharity)
+    .then(success())
+    .catch(error(res, 400));
+};
+
+export default { create, list, getCharity };

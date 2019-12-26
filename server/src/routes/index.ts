@@ -54,6 +54,7 @@ export default function ConfigureRoutes(app: Express){
   
   /* Routes that 403 when not logged in */
   api.get('/charities', requireLogin(controllers.charity.list));
+  api.get('/charities/:id', requireLogin(controllers.charity.getCharity));
   api.get('/donations', requireLogin(controllers.donation.list));
   api.post('/donations', requireLogin(controllers.donation.create));
   api.get('/donation_schedules',

@@ -115,8 +115,10 @@ export default interface PolygiveApi {
     GET: {
       query: void,
       body: void,
-      params: void,
-      response: ApiResponse<ListCharitiesResponse>,
+      params: {
+        id: string,
+      },
+      response: ApiResponse<ShortCharityRecord>,
     },
   }
   '/donations': {
