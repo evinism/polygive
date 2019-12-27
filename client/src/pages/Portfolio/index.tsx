@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import DonationScheduleForm from '../../components/DonationScheduleForm';
 import { getDonationSchedules } from '../../api';
-import { ListDonationSchedulesResponse, DonationRecurrence } from '../../../../server/shared/polygiveApi';
+import { ListDonationSchedulesResponse, DonationRecurrence, DonationScheduleRecord } from '../../../../server/shared/polygiveApi';
 import { PageProps, LoggedInAppState } from '../../clientTypes';
 import { PaddedList, WaitForLoaded } from '../../components/UIElements';
 import DonationScheduleAmount from './DonationScheduleAmount';
+import DSLineItem from './DSLineItem';
 import './Portfolio.css';
-import Dropdown, { DropdownLink } from '../../components/Dropdown';
 
 const timeMultiplier: { [key in DonationRecurrence]: number } = {
   WEEKLY: 52,
@@ -45,23 +45,16 @@ export default function Portfolio(_: PageProps<LoggedInAppState>){
                   amount={yearlyContributions}
                   recurrence={'YEARLY' as any} />
               </div>
-              <PaddedList items={state.donationSchedules.map(donation => {
-                const charity = state.charities[donation.charityId];
+              <PaddedList items={state.donationSchedules.map(donationSchedule => {
+                const charity = state.charities[donationSchedule.charityId];
                 return (
-                  <div key={donation.id} className="donation-schedule">
-                    <h4>{charity.name}</h4>
-                    <DonationScheduleAmount 
-                      amount={parseFloat(donation.amount)}
-                      recurrence={donation.recurrence} />
-                    <Dropdown contents={[
-                      <>
-                        <DropdownLink to='/profile'>Edit</DropdownLink>
-                        <DropdownLink to='/payment'>Delete</DropdownLink>
-                      </>]
-                    }>
-                      <div className='triple-dot'>⋮</div>
-                    </Dropdown>
-                  </div>
+                  <DSLineItem
+                    onEdit={(donationSchedule: DonationScheduleRecord) => {
+                      return Promise.resolve();
+                    }}
+                    key={donationSchedule.id}
+                    charity={charity}
+                    donationSchedule={donationSchedule} />
                 );
               })} />
               <div className="schedule-form-wrapper">

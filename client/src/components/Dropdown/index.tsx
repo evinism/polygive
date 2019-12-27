@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState, ReactNode} from 'react';
+import React, {FunctionComponent, useState, MouseEvent, ReactNode} from 'react';
 import ClickOutsideListener from './ClickOutsideListener';
 import { Link } from 'react-router-dom';
 import './Dropdown.css';
@@ -23,6 +23,16 @@ export const DropdownExternalLink: FunctionComponent<{href: string}> = ({href, c
   <a className="dropdown-link" href={href}>
     {children}
   </a>
+);
+
+type DropdownButtonProps = {
+  onClick?: (arg: MouseEvent) => void,
+};
+
+export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({onClick, children})  => (
+  <button onClick={onClick} className='dropdown-button'>
+    {children}
+  </button>
 );
 
 export const ControlledDropdown: FunctionComponent<ControlledDropdownProps> = 
