@@ -1,6 +1,6 @@
 cd client
 yarn start &
 cd ../server
-yarn start
+yarn start:dev
 cd ../
 kill %1

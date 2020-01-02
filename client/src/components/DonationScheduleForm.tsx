@@ -9,12 +9,13 @@ const recurrenceLabel: { [key in DonationRecurrence]: string } = {
 };
 
 
-export default function DonationScheduleForm({charityId: parentCharityId}: {charityId?: string}) {
+export default function DonationScheduleForm({charityId: parentCharityId}: {charityId?: number}) {
   const [enabled, setEnabled] = useState(false);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const amount = (event.target as any).amount.value as string;
-    const charityId = parentCharityId || (event.target as any).charityId.value as string;
+    const charityId = parentCharityId ||
+      parseInt((event.target as any).charityId.value as string, 10);
     const recurrence = (event.target as any).recurrence.value as DonationRecurrence;
     createDonationSchedule(charityId, amount, recurrence).then(() => setEnabled(false));
   };

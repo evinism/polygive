@@ -12,7 +12,7 @@ interface DonationListProps {
 export const DonationsList: FunctionComponent<DonationListProps> = ({donations, charities}) => (
   <PaddedList items={
     donations.map(donation => {
-      const charity = charities[parseInt(donation.charityId, 10)];
+      const charity = charities[donation.charityId];
       return (
         <div className="donation-li" key={donation.id}>
           Donation to {charity.name}: ${donation.amount}

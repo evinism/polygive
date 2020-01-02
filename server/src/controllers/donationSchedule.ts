@@ -20,8 +20,8 @@ export const list: RTAuthedHandler<ListDonationSchedules> = async (req, res) => 
     })
     .then(donationSchedules => ({
       donationSchedules: donationSchedules.map(schedule => ({
-        id: schedule.id.toString(),
-        charityId: schedule.charityId.toString(),
+        id: schedule.id,
+        charityId: schedule.charityId,
         recurrence: schedule.recurrence,
         amount: schedule.amount.toString(),
         anchorDate: schedule.anchorDate,
@@ -37,7 +37,7 @@ export const create: RTAuthedHandler<CreateDonationSchedule> = async (req, res) 
   const body = req.body;
   await ensureConnection();
   const donationSchedule = new DonationSchedule();
-  donationSchedule.charityId = parseInt(body.charityId, 10);
+  donationSchedule.charityId = body.charityId;
   donationSchedule.userId = req.pgUser.id;
   donationSchedule.amount = parseFloat(req.body.amount);
   donationSchedule.anchorDate = new Date();
@@ -51,8 +51,8 @@ export const create: RTAuthedHandler<CreateDonationSchedule> = async (req, res) 
       return {donationSchedule, charity};
     })
     .then(({donationSchedule, charity}) => ({
-      id: donationSchedule.id.toString(),
-      charityId: donationSchedule.id.toString(),
+      id: donationSchedule.id,
+      charityId: donationSchedule.id,
       recurrence: donationSchedule.recurrence,
       anchorDate: donationSchedule.anchorDate,
       amount: donationSchedule.amount.toString(),
@@ -67,7 +67,7 @@ export const patch: RTAuthedHandler<PatchDonationSchedule> = async (req, res) =>
   const body = req.body;
   await ensureConnection();
   const donationSchedule = new DonationSchedule();
-  donationSchedule.charityId = parseInt(body.charityId, 10);
+  donationSchedule.charityId = body.charityId;
   donationSchedule.userId = req.pgUser.id;
   donationSchedule.amount = parseFloat(req.body.amount);
   donationSchedule.anchorDate = new Date();
@@ -80,7 +80,7 @@ export const patch: RTAuthedHandler<PatchDonationSchedule> = async (req, res) =>
       }
     })
     .then(donationSchedule => {
-      donationSchedule.charityId = parseInt(body.charityId);
+      donationSchedule.charityId = body.charityId;
       donationSchedule.recurrence = body.recurrence;
       donationSchedule.anchorDate = body.anchorDate;
       donationSchedule.amount = parseFloat(body.amount);
@@ -93,8 +93,8 @@ export const patch: RTAuthedHandler<PatchDonationSchedule> = async (req, res) =>
       return {donationSchedule, charity};
     })
     .then(({donationSchedule, charity}) => ({
-      id: donationSchedule.id.toString(),
-      charityId: donationSchedule.charityId.toString(),
+      id: donationSchedule.id,
+      charityId: donationSchedule.charityId,
       recurrence: donationSchedule.recurrence,
       anchorDate: donationSchedule.anchorDate,
       amount: donationSchedule.amount.toString(),

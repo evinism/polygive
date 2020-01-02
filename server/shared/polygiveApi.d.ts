@@ -8,21 +8,21 @@ type DonationRecurrence = Temp2;
 
 /* Response type for /user/current */
 type UserRecord = {
-  id: string,
+  id: number,
   email: string,
   name: string,
   isSuper: boolean,
 }
 
 type DonationRecord = {
-  id: string,
-  charityId: string,
+  id: number,
+  charityId: number,
   amount: string,
 }
 
 type DonationScheduleRecord = {
-  id: string,
-  charityId: string,
+  id: number,
+  charityId: number,
   recurrence: DonationRecurrence,
   amount: string,
   anchorDate: Date,
@@ -45,20 +45,20 @@ type CreateCharityRequest = {
 }
 
 type CreateCharityResponse = {
-  id: string,
+  id: number,
   name: string,
 }
 
 /* Request/Response pair for POST /donations */
 type CreateDonationRequest = {
-  charityId: string,
+  charityId: number,
   amount: string
 };
 
 type CreateDonationResponse = {
-  id: string,
-  userId: string,
-  charityId: string,
+  id: number,
+  userId: number,
+  charityId: number,
   amount: string,
   status: string,
 };
@@ -70,26 +70,26 @@ type ListCharitiesResponse = ShortCharityRecord[];
 type ListDonationsResponse = {
   donations: DonationRecord[],
   charities: {
-    [id: string]: ShortCharityRecord,
+    [id: number]: ShortCharityRecord,
   },
 };
 
 type ListDonationSchedulesResponse = {
   donationSchedules: DonationScheduleRecord[],
   charities: {
-    [id: string]: ShortCharityRecord,
+    [id: number]: ShortCharityRecord,
   },
 };
 
 type CreateDonationScheduleRequest = {
-  charityId: string,
+  charityId: number,
   amount: string
   recurrence: DonationRecurrence,
 };
 
 type CreateDonationScheduleResponse = {
-  id: string,
-  charityId: string,
+  id: number,
+  charityId: number,
   recurrence: DonationRecurrence,
   amount: string,
   anchorDate: Date,
@@ -116,7 +116,7 @@ export default interface PolygiveApi {
       query: void,
       body: void,
       params: {
-        id: string,
+        id: number,
       },
       response: ApiResponse<ShortCharityRecord>,
     },
@@ -154,7 +154,7 @@ export default interface PolygiveApi {
       query: void,
       body: DonationScheduleRecord,
       params: {
-        id: string,
+        id: number,
       },
       response: ApiResponse<DonationScheduleRecord>,
     },

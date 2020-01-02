@@ -3,7 +3,7 @@ import {RTHandler, success} from '../util';
 import {proveAuthed} from '../routes/accessControl';
 
 type GetCurrentUser = PolygiveApi['/user/current']['GET'];
-const current: RTHandler<GetCurrentUser> = (req, res) => {
+const current: RTHandler<GetCurrentUser> = (req) => {
   let result: CurrentUserResponse;
   if(req.isAuthenticated()){
     const {
@@ -16,7 +16,7 @@ const current: RTHandler<GetCurrentUser> = (req, res) => {
     result = {
       loggedIn: true,
       user: {
-        id: id.toString(),
+        id: id,
         email,
         name,
         isSuper,

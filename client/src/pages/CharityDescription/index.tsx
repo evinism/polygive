@@ -7,7 +7,7 @@ import { WaitForLoaded } from '../../components/UIElements';
 type State = ShortCharityRecord | undefined;
 
 export default function CharityDescription(props: PageProps<LoggedInAppState>){
-  const charityId = props.match.params.id as string; // oof on this 
+  const charityId = parseInt(props.match.params.id as string, 10); // oof on this 
   const [charity, setCharity] = useState<State>(undefined);
   useEffect(() => {
     getCharity(charityId).then(data => setCharity(data));

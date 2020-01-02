@@ -8,10 +8,10 @@ import { shortCharity } from '../projections';
 import { grabAllCharities } from './controllerHelpers';
 
 // This is a nasty workaround
-const castDonationIdsToStrings = (donation: Donation) => ({
-  id: donation.id.toString(),
-  userId: donation.userId.toString(),
-  charityId: donation.charityId.toString(), 
+const castAmountToString = (donation: Donation) => ({
+  id: donation.id,
+  userId: donation.userId,
+  charityId: donation.charityId, 
   amount: donation.amount.toString(),
   status: donation.status,
 });
@@ -21,13 +21,13 @@ export const create: RTAuthedHandler<CreateDonation> = async (req, res) => {
   const body = req.body;
   await ensureConnection();
   const donation = new Donation();
-  donation.charityId = parseInt(body.charityId, 10);
+  donation.charityId = body.charityId;
   donation.userId = req.pgUser.id;
   donation.amount = parseFloat(req.body.amount);
   donation.status = DonationStatus.DRAFT;
   return getRepository(Donation)
     .save(donation)
-    .then(castDonationIdsToStrings)
+    .then(castAmountToString)
     .then(success(res, 201))
     .catch(error());
 };
@@ -43,7 +43,7 @@ export const list: RTAuthedHandler<ListDonations> = async (req, res) => {
       relations: ['charity'],
     })
     .then(donations => ({
-      donations: donations.map(castDonationIdsToStrings),
+      donations: donations.map(castAmountToString),
       charities: mapValues(grabAllCharities(donations), shortCharity),
     }))
     .then(success())
@@ -56,7 +56,7 @@ export const all: RTSuperHandler<ListAllDonations> = async (_, res) => {
   return getRepository(Donation)
     .find()
     .then(donations => ({
-      donations: donations.map(castDonationIdsToStrings),
+      donations: donations.map(castAmountToString),
       charities: mapValues(grabAllCharities(donations), shortCharity),
     }))
     .then(success())
@@ -73,7 +73,7 @@ export const unflushed: RTSuperHandler<ListUnflushedDonations> = async (_, res) 
       },
     })
     .then(donations => ({
-      donations: donations.map(castDonationIdsToStrings),
+      donations: donations.map(castAmountToString),
       charities: mapValues(grabAllCharities(donations), shortCharity),
     }))
     .then(success())

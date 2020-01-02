@@ -17,7 +17,7 @@ export const create: RTSuperHandler<CreateCharity> = async (req, res) => {
     .save(newCharity)
     .then((charity) => ({
       name: charity.name,
-      id: charity.id.toString(),
+      id: charity.id,
     }))
     .then(success(res, 201))
     .catch(error(res, 400));

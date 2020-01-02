@@ -28,17 +28,17 @@ export const getCharities = () => client.request({
   url: '/charities',
 }).then(x => getSuccess(x.data));
 
-export const getCharity = (charityId: string) => client
+export const getCharity = (charityId: number) => client
   .get<'/charities/:id'>(`/charities/${charityId}`)
   .then(x => getSuccess(x.data));
 
-export const createDonation = (charityId: string, amount: string) => 
+export const createDonation = (charityId: number, amount: string) => 
   client.post<'/donations'>(
     '/donations', 
     { charityId, amount }
   ).then(x => getSuccess(x.data));
 
-export const createDonationSchedule = (charityId: string, amount: string, recurrence: DonationRecurrence) => 
+export const createDonationSchedule = (charityId: number, amount: string, recurrence: DonationRecurrence) => 
   client.post<'/donation_schedules'>(
     '/donation_schedules', 
     { charityId, amount, recurrence }
