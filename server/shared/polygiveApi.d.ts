@@ -1,7 +1,7 @@
 import ApiResponse from './workarounds/ApiResponse';
 import { ShortCharityRecord as Temp1, } from '../src/projections';
 import Charity from '../src/entity/Charity';
-import { DonationRecurrence as Temp2 } from '../src/entity/DonationSchedule';
+import DonationSchedule, { DonationRecurrence as Temp2 } from '../src/entity/DonationSchedule';
 
 type ShortCharityRecord = Temp1;
 type DonationRecurrence = Temp2;
@@ -148,6 +148,16 @@ export default interface PolygiveApi {
       body: CreateDonationScheduleRequest,
       response: ApiResponse<CreateDonationScheduleResponse>,
     }
+  },
+  '/donation_schedules/:id': {
+    PATCH: {
+      query: void,
+      body: DonationScheduleRecord,
+      params: {
+        id: string,
+      },
+      response: ApiResponse<DonationScheduleRecord>,
+    },
   },
   '/all_donations': {
     GET: {

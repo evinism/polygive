@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DonationScheduleForm from '../../components/DonationScheduleForm';
-import { getDonationSchedules } from '../../api';
+import { getDonationSchedules, patchDonationSchedule } from '../../api';
 import { ListDonationSchedulesResponse, DonationRecurrence, DonationScheduleRecord } from '../../../../server/shared/polygiveApi';
 import { PageProps, LoggedInAppState } from '../../clientTypes';
 import { PaddedList, WaitForLoaded } from '../../components/UIElements';
@@ -49,8 +49,19 @@ export default function Portfolio(_: PageProps<LoggedInAppState>){
                 const charity = state.charities[donationSchedule.charityId];
                 return (
                   <DSLineItem
-                    onEdit={(donationSchedule: DonationScheduleRecord) => {
-                      return Promise.resolve();
+                    onEdit={async (record: DonationScheduleRecord) => {
+                      const newRecord = await patchDonationSchedule(record);
+                      // We really should make donation schedules into a setlike
+                      const newState: ComponentState = {
+                        donationSchedules: [
+                          ...state.donationSchedules
+                            .filter(record => record.id !== newRecord.id),
+                          newRecord,
+                        ],
+                        charities: state.charities,
+                      }
+                      debugger;
+                      setState(newState);
                     }}
                     key={donationSchedule.id}
                     charity={charity}

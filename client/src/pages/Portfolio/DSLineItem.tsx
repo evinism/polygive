@@ -8,8 +8,8 @@ interface DSLineItemProps {
   donationSchedule: DonationScheduleRecord;
   charity: ShortCharityRecord;
   // 
-  onEdit: (donationSchedule: DonationScheduleRecord) => Promise<void>;
-  onDelete?: () => Promise<void>;
+  onEdit: (donationSchedule: DonationScheduleRecord) => Promise<unknown>;
+  onDelete?: () => Promise<unknown>;
 };
 
 type DSLineItemState = {
@@ -20,7 +20,7 @@ type DSLineItemState = {
   donationSchedule: DonationScheduleRecord,
 };
 
-const DSLineItem = ({donationSchedule, charity}: DSLineItemProps) => {
+const DSLineItem = ({donationSchedule, charity, onEdit}: DSLineItemProps) => {
   const [state, setState] = useState<DSLineItemState>({ editing: false });
 
   const contents = !state.editing
@@ -45,9 +45,12 @@ const DSLineItem = ({donationSchedule, charity}: DSLineItemProps) => {
     </>)
     : (<>
       <form onSubmit={
-        (event) => {
+        async (event) => {
           event.preventDefault();
-          
+          await onEdit(state.donationSchedule);
+          setState({
+            editing: false
+          });
         }
       }>
         <input

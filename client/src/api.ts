@@ -1,5 +1,5 @@
 import restypedAxios from 'restyped-axios'
-import PolygiveApi, { DonationRecurrence } from '../../server/shared/polygiveApi';
+import PolygiveApi, { DonationRecurrence, DonationScheduleRecord } from '../../server/shared/polygiveApi';
 import ApiResponse from '../../server/shared/workarounds/ApiResponse';
 
 export const baseURL = process.env.REACT_APP_BACKEND_URL;
@@ -42,6 +42,12 @@ export const createDonationSchedule = (charityId: string, amount: string, recurr
   client.post<'/donation_schedules'>(
     '/donation_schedules', 
     { charityId, amount, recurrence }
+  ).then(x => getSuccess(x.data));
+
+export const patchDonationSchedule = (record: DonationScheduleRecord) => 
+  client.patch<'/donation_schedules/:id'>(
+    `/donation_schedules/${record.id}`,
+    record,
   ).then(x => getSuccess(x.data));
 
 // Super routes

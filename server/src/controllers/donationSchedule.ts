@@ -62,4 +62,46 @@ export const create: RTAuthedHandler<CreateDonationSchedule> = async (req, res) 
     .catch(error());
 };
 
-export default {list, create};
+type PatchDonationSchedule = PolygiveApi['/donation_schedules/:id']['PATCH'];
+export const patch: RTAuthedHandler<PatchDonationSchedule> = async (req, res) => {
+  const body = req.body;
+  await ensureConnection();
+  const donationSchedule = new DonationSchedule();
+  donationSchedule.charityId = parseInt(body.charityId, 10);
+  donationSchedule.userId = req.pgUser.id;
+  donationSchedule.amount = parseFloat(req.body.amount);
+  donationSchedule.anchorDate = new Date();
+
+  const dsRepository = getRepository(DonationSchedule);
+
+  return dsRepository.findOneOrFail({
+      where: {
+        id: req.params.id,
+      }
+    })
+    .then(donationSchedule => {
+      donationSchedule.charityId = parseInt(body.charityId);
+      donationSchedule.recurrence = body.recurrence;
+      donationSchedule.anchorDate = body.anchorDate;
+      donationSchedule.amount = parseFloat(body.amount);
+      return dsRepository.save(donationSchedule)
+    })
+    .then(async donationSchedule => {
+      const charity = await getRepository(Charity).findOne({ where: {
+        id: donationSchedule.charityId,
+      }});
+      return {donationSchedule, charity};
+    })
+    .then(({donationSchedule, charity}) => ({
+      id: donationSchedule.id.toString(),
+      charityId: donationSchedule.charityId.toString(),
+      recurrence: donationSchedule.recurrence,
+      anchorDate: donationSchedule.anchorDate,
+      amount: donationSchedule.amount.toString(),
+      charity: shortCharity(charity),
+    }))
+    .then(success(res, 201))
+    .catch(error());
+};
+
+export default {list, create, patch};
