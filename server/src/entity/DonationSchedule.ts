@@ -8,6 +8,7 @@ import {
   JoinColumn
 } from "typeorm";
 import Charity from './Charity';
+import {Currency} from '../../shared/currency';
 
 export enum DonationRecurrence {
   WEEKLY = 'WEEKLY',
@@ -22,6 +23,13 @@ export default class DonationSchedule {
 
   @Column('decimal', { precision: 11, scale: 2 })
   amount: number;
+
+  @Column({
+    type: "enum",
+    enum: Currency,
+    default: [Currency.USD]
+  })
+  currency: Currency
 
   @Column('int')
   charityId: number;

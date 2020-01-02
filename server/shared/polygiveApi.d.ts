@@ -2,6 +2,8 @@ import ApiResponse from './workarounds/ApiResponse';
 import { ShortCharityRecord as Temp1, } from '../src/projections';
 import Charity from '../src/entity/Charity';
 import DonationSchedule, { DonationRecurrence as Temp2 } from '../src/entity/DonationSchedule';
+import {Currency} from './currency';
+
 
 type ShortCharityRecord = Temp1;
 type DonationRecurrence = Temp2;
@@ -18,6 +20,7 @@ type DonationRecord = {
   id: number,
   charityId: number,
   amount: string,
+  currency: Currency,
 }
 
 type DonationScheduleRecord = {
@@ -25,6 +28,7 @@ type DonationScheduleRecord = {
   charityId: number,
   recurrence: DonationRecurrence,
   amount: string,
+  currency: Currency,
   anchorDate: Date,
 }
 

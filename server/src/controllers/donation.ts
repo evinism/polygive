@@ -13,6 +13,7 @@ const castAmountToString = (donation: Donation) => ({
   userId: donation.userId,
   charityId: donation.charityId, 
   amount: donation.amount.toString(),
+  currency: donation.currency,
   status: donation.status,
 });
 

@@ -24,6 +24,7 @@ export const list: RTAuthedHandler<ListDonationSchedules> = async (req, res) => 
         charityId: schedule.charityId,
         recurrence: schedule.recurrence,
         amount: schedule.amount.toString(),
+        currency: schedule.currency,
         anchorDate: schedule.anchorDate,
       })),
       charities: mapValues(grabAllCharities(donationSchedules), shortCharity),
@@ -84,6 +85,7 @@ export const patch: RTAuthedHandler<PatchDonationSchedule> = async (req, res) =>
       donationSchedule.recurrence = body.recurrence;
       donationSchedule.anchorDate = body.anchorDate;
       donationSchedule.amount = parseFloat(body.amount);
+      donationSchedule.currency = body.currency
       return dsRepository.save(donationSchedule)
     })
     .then(async donationSchedule => {
@@ -98,6 +100,7 @@ export const patch: RTAuthedHandler<PatchDonationSchedule> = async (req, res) =>
       recurrence: donationSchedule.recurrence,
       anchorDate: donationSchedule.anchorDate,
       amount: donationSchedule.amount.toString(),
+      currency: donationSchedule.currency,
       charity: shortCharity(charity),
     }))
     .then(success(res, 201))

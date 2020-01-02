@@ -2,6 +2,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn} from "typeorm";
 import User from './User';
 import Charity from "./Charity";
+import {Currency} from '../../shared/currency';
 
 export enum DonationStatus {
   DRAFT = 'DRAFT', // To the user, this hasn't been processed yet
@@ -15,8 +16,16 @@ export default class Donation {
   @PrimaryGeneratedColumn()
   id: number;
 
+  // TODO: change this to integers
   @Column('decimal', { precision: 11, scale: 2 })
   amount: number;
+
+  @Column({
+    type: "enum",
+    enum: Currency,
+    default: [Currency.USD]
+  })
+  currency: Currency
 
   @Column()
   charityId: number;
