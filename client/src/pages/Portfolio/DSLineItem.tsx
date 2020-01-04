@@ -27,6 +27,7 @@ const DSLineItem = ({donationSchedule, charity, onEdit}: DSLineItemProps) => {
     ? (<>
       <DonationScheduleAmount 
         amount={parseFloat(donationSchedule.amount)}
+        currency={donationSchedule.currency}
         recurrence={donationSchedule.recurrence} />
       <Dropdown contents={[
         <>

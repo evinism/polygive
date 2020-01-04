@@ -7,11 +7,33 @@ import { PaddedList, WaitForLoaded } from '../../components/UIElements';
 import DonationScheduleAmount from './DonationScheduleAmount';
 import DSLineItem from './DSLineItem';
 import './Portfolio.css';
+import { Currency } from '../../../../server/shared/currency';
 
 const timeMultiplier: { [key in DonationRecurrence]: number } = {
   WEEKLY: 52,
   MONTHLY: 12,
   YEARLY: 1,
+}
+
+
+const getYearlyContributions = (donationSchedules: DonationScheduleRecord[]) => {
+  const hashOfTotals = donationSchedules.reduce(
+    (acc: { [key: string]: number}, cur) => {
+      if (!acc[cur.currency]) {
+        acc[cur.currency] = 0;
+      }
+      acc[cur.currency] +=
+        parseFloat(cur.amount) * timeMultiplier[cur.recurrence];
+      return acc;
+    },
+    {}
+  );
+  const totals = Object.entries(hashOfTotals).map(([currency, amount]) => ({
+    currency,
+    amount,
+  } as {currency: Currency, amount: number}));
+  totals.sort(({amount: a}, {amount: b}) => a - b);
+  return totals;
 }
 
 type ComponentState = ListDonationSchedulesResponse|undefined;
@@ -28,22 +50,17 @@ export default function Portfolio(_: PageProps<LoggedInAppState>){
       <WaitForLoaded item={state}>
         {(state) => {
           // TODO: Convert the over-the-wire numbers to be in cents or something
-          const yearlyContributions = 
-            state
-            .donationSchedules
-            .reduce(
-              (acc, cur) => acc
-                + parseFloat(cur.amount)
-                * timeMultiplier[cur.recurrence],
-              0
-            );
+          const contribs = getYearlyContributions(state.donationSchedules)
           return (
             <>
               <div className="yearly-contributions">
                 <h3>Your yearly contributions:</h3>
-                <DonationScheduleAmount 
-                  amount={yearlyContributions}
-                  recurrence={'YEARLY' as any} />
+                {contribs.map(({currency, amount}) => (
+                  <DonationScheduleAmount 
+                    amount={amount}
+                    currency={currency}
+                    recurrence={'YEARLY' as any} />
+                ))}
               </div>
               <PaddedList items={state.donationSchedules.map(donationSchedule => {
                 const charity = state.charities[donationSchedule.charityId];
@@ -60,7 +77,6 @@ export default function Portfolio(_: PageProps<LoggedInAppState>){
                         ],
                         charities: state.charities,
                       }
-                      debugger;
                       setState(newState);
                     }}
                     key={donationSchedule.id}
