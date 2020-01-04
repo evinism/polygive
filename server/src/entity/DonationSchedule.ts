@@ -1,19 +1,17 @@
-
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
   ManyToOne,
   JoinColumn
 } from "typeorm";
-import Charity from './Charity';
-import {Currency} from '../../shared/currency';
+import Charity from "./Charity";
+import { Currency } from "../../shared/currency";
 
 export enum DonationRecurrence {
-  WEEKLY = 'WEEKLY',
-  MONTHLY = 'MONTHLY',
-  YEARLY = 'YEARLY',
+  WEEKLY = "WEEKLY",
+  MONTHLY = "MONTHLY",
+  YEARLY = "YEARLY"
 }
 
 @Entity()
@@ -21,7 +19,7 @@ export default class DonationSchedule {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('decimal', { precision: 11, scale: 2 })
+  @Column("decimal", { precision: 11, scale: 2 })
   amount: number;
 
   @Column({
@@ -29,33 +27,31 @@ export default class DonationSchedule {
     enum: Currency,
     default: [Currency.USD]
   })
-  currency: Currency
+  currency: Currency;
 
-  @Column('int')
+  @Column("int")
   charityId: number;
 
   @ManyToOne(type => Charity)
   @JoinColumn()
   charity: Charity;
 
-  @Column('int')
+  @Column("int")
   userId: number;
 
   @Column({
     type: "enum",
     enum: DonationRecurrence,
-    default: [DonationRecurrence.MONTHLY],
+    default: [DonationRecurrence.MONTHLY]
   })
   recurrence: DonationRecurrence;
 
-  /* This is a hint weird of a data model, but it's the simplest one I can come 
-   * up with right now.
-   *
-   * First order operations:
-   * 1. For daily, weekly, monthly, yearly, changing when in that 
-   *    interval to send the donation.
-   * 2. Disabling single occurrences of recurring donations, not implemented yet
+  /* This is a hint weird of a data model, but it's the simplest one I can come
+   * up with right now. This value represents when the next donation is
+   * scheduled to take place. After update
    */
-  @CreateDateColumn({type:'date'})
-  anchorDate: Date;
+  @Column({
+    type: "timestamp with time zone"
+  })
+  nextScheduledDonation: Date;
 }

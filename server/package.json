@@ -8,7 +8,8 @@
       "setsuper": "ts-node ./bin/set_super",
       "start": "ts-node ./bin/www",
       "test": "echo \"Error: no test specified\" && exit 1",
-      "populate_charities": "ts-node ./bin/populate_charities.ts ../data/datasets/charities.tsv"
+      "populate_charities": "ts-node ./bin/populate_charities.ts ../data/datasets/charities.tsv",
+      "task:trigger_scheduled_donation": "ts-node ./tasks/trigger_scheduled_donation.ts"
    },
    "author": "evinism",
    "license": "MIT",

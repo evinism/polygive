@@ -1,14 +1,20 @@
-
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn} from "typeorm";
-import User from './User';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  ManyToOne,
+  JoinColumn
+} from "typeorm";
+import User from "./User";
 import Charity from "./Charity";
-import {Currency} from '../../shared/currency';
+import { Currency } from "../../shared/currency";
 
 export enum DonationStatus {
-  DRAFT = 'DRAFT', // To the user, this hasn't been processed yet
-  SUBMITTED = 'SUBMITTED', // To the user, this is a completed donation
-  PAID = 'PAID', // The user's payment has processed
-  FLUSHED = 'FLUSHED', // We have sent out the charity
+  DRAFT = "DRAFT", // To the user, this hasn't been processed yet
+  SUBMITTED = "SUBMITTED", // To the user, this is a completed donation
+  PAID = "PAID", // The user's payment has processed
+  FLUSHED = "FLUSHED" // We have sent out the charity
 }
 
 @Entity()
@@ -17,7 +23,7 @@ export default class Donation {
   id: number;
 
   // TODO: change this to integers
-  @Column('decimal', { precision: 11, scale: 2 })
+  @Column("decimal", { precision: 11, scale: 2 })
   amount: number;
 
   @Column({
@@ -25,7 +31,7 @@ export default class Donation {
     enum: Currency,
     default: [Currency.USD]
   })
-  currency: Currency
+  currency: Currency;
 
   @Column()
   charityId: number;
@@ -44,10 +50,10 @@ export default class Donation {
   @Column({
     type: "enum",
     enum: DonationStatus,
-    default: [DonationStatus.DRAFT],
+    default: [DonationStatus.DRAFT]
   })
   status: DonationStatus;
-  
-  @CreateDateColumn({type:'date'})
+
+  @CreateDateColumn({ type: "date" })
   donatedAt: Date;
 }
