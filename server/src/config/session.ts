@@ -1,14 +1,21 @@
-import session, {SessionOptions} from 'express-session';
-import redisStoreConstructor from 'connect-redis';
-import {REDIS_HOST, REDIS_PORT, REDIS_DB, REDIS_PASS, REDIS_SOCKET, SESSION_SECRET} from './env';
+import session, { SessionOptions } from "express-session";
+import redisStoreConstructor from "connect-redis";
+import {
+  REDIS_HOST,
+  REDIS_PORT,
+  REDIS_DB,
+  REDIS_PASS,
+  REDIS_SOCKET,
+  SESSION_SECRET
+} from "./env";
 
 const RedisStore = redisStoreConstructor(session);
 
-let sessionConfig : SessionOptions = {
+let sessionConfig: SessionOptions = {
   secret: SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
-  store: undefined,
+  store: undefined
 };
 
 if (process.env.REDIS_HOST) {
@@ -17,7 +24,7 @@ if (process.env.REDIS_HOST) {
     port: REDIS_PORT,
     db: REDIS_DB,
     pass: REDIS_PASS,
-    socket: REDIS_SOCKET,
+    socket: REDIS_SOCKET
   });
 }
 

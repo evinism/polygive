@@ -3,13 +3,13 @@
 // status codes in user space.
 
 export interface ApiError {
-  success: false
+  success: false;
   errorData: any;
 }
 
 export interface ApiSuccess<T> {
-  success: true,
-  successData: T,
+  success: true;
+  successData: T;
 }
 
 type ApiResponse<T> = ApiSuccess<T> | ApiError;

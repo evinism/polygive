@@ -1,70 +1,65 @@
-
-import Home from './layouts/Home';
-import { PageManifest } from './clientTypes';
-import SuperPanel from './pages/SuperPanel';
-import IndexPage from './pages/IndexPage';
-import CharitiesList from './pages/CharitiesList';
-import DonationsList from './pages/DonationsList';
-import Profile from './pages/Profile';
-import LogInToContinue from './pages/LogInToContiinue';
-import PublicBarebones from './layouts/PublicBarebones';
-import CharityDescription from './pages/CharityDescription';
+import Home from "./layouts/Home";
+import { PageManifest } from "./clientTypes";
+import SuperPanel from "./pages/SuperPanel";
+import IndexPage from "./pages/IndexPage";
+import CharitiesList from "./pages/CharitiesList";
+import DonationsList from "./pages/DonationsList";
+import Profile from "./pages/Profile";
+import LogInToContinue from "./pages/LogInToContiinue";
+import PublicBarebones from "./layouts/PublicBarebones";
+import CharityDescription from "./pages/CharityDescription";
 
 export const pageManifest: PageManifest = {
   index: {
     public: true,
-    path: '/',
+    path: "/",
     exact: true,
-    name: 'Portfolio',
-    component: IndexPage,
+    name: "Portfolio",
+    component: IndexPage
   },
   donations: {
-    path: '/donations',
+    path: "/donations",
     exact: false,
-    name: 'Donations',
+    name: "Donations",
     component: DonationsList,
-    layout: Home,
+    layout: Home
   },
   charities: {
-    path: '/charities',
+    path: "/charities",
     exact: true,
-    name: 'Charities',
+    name: "Charities",
     component: CharitiesList,
-    layout: Home,
+    layout: Home
   },
   charityDescription: {
-    path: '/charities/:id',
+    path: "/charities/:id",
     exact: true,
-    name: 'Charity',
+    name: "Charity",
     component: CharityDescription,
-    layout: PublicBarebones,
+    layout: PublicBarebones
   },
   profile: {
-    path: '/profile',
+    path: "/profile",
     exact: true,
     component: Profile,
-    name: 'Profile',
-    layout: Home,
+    name: "Profile",
+    layout: Home
   },
   login: {
     public: true,
-    path: '/login',
+    path: "/login",
     exact: false,
-    name: 'Login',
+    name: "Login",
     component: LogInToContinue,
-    layout: PublicBarebones,
+    layout: PublicBarebones
   },
   superPanel: {
-    path: '/superpanel',
+    path: "/superpanel",
     component: SuperPanel,
-    name: 'Super Panel',
+    name: "Super Panel",
     layout: Home,
-    super: true,
-  },
+    super: true
+  }
 };
 
-export const tabList = [
-  'donations',
-  'charities',
-];
-
+export const tabList = ["donations", "charities"];

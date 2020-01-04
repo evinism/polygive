@@ -1,11 +1,10 @@
+import React from "react";
+import CharityForm from "../../components/CharityForm";
+import { PageProps, LoggedInAppState } from "../../clientTypes";
+import { DonationsListFromApiFn } from "../../components/DonationList";
+import { getUnflushedDonations } from "../../api";
 
-import React from 'react';
-import CharityForm from '../../components/CharityForm';
-import { PageProps, LoggedInAppState } from '../../clientTypes';
-import { DonationsListFromApiFn } from '../../components/DonationList';
-import {getUnflushedDonations} from '../../api';
-
-export default function SuperPanel(_: PageProps<LoggedInAppState>){
+export default function SuperPanel(_: PageProps<LoggedInAppState>) {
   return (
     <>
       <h2>SuperUser controls</h2>

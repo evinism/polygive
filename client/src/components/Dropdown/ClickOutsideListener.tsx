@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 interface COProps {
-  className?: string,
-  onClickOutside: (e: MouseEvent) => unknown
+  className?: string;
+  onClickOutside: (e: MouseEvent) => unknown;
 }
 
 export default class ClickOutsideListener extends React.Component<COProps> {
@@ -18,17 +18,17 @@ export default class ClickOutsideListener extends React.Component<COProps> {
     if (wrapperElem && !wrapperElem.contains(e.target as HTMLElement)) {
       this.props.onClickOutside(e);
     }
-  }
+  };
 
   componentDidMount = () => {
-    window.addEventListener('click', this.windowClick);
-  }
+    window.addEventListener("click", this.windowClick);
+  };
 
   componentWillUnmount() {
-    window.removeEventListener('click', this.windowClick);
+    window.removeEventListener("click", this.windowClick);
   }
 
-  render(){
+  render() {
     return (
       <div ref={this.wrapper} className={this.props.className}>
         {this.props.children}

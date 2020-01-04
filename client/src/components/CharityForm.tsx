@@ -1,5 +1,5 @@
-import React, {useState, FormEvent} from 'react';
-import {createCharity} from '../api';
+import React, { useState, FormEvent } from "react";
+import { createCharity } from "../api";
 
 export default function CharityForm() {
   const [enabled, setEnabled] = useState(false);
@@ -20,10 +20,8 @@ export default function CharityForm() {
         <input type="submit" />
       </form>
       <button onClick={() => setEnabled(false)}>Close</button>
-    </div> 
+    </div>
   ) : (
-    <button onClick={() => setEnabled(true)}>
-      Create a charity!
-    </button>
+    <button onClick={() => setEnabled(true)}>Create a charity!</button>
   );
 }

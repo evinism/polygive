@@ -1,31 +1,26 @@
-import PolygiveApi, {CurrentUserResponse} from '../../shared/polygiveApi';
-import {RTHandler, success} from '../util';
-import {proveAuthed} from '../routes/accessControl';
+import PolygiveApi, { CurrentUserResponse } from "../../shared/polygiveApi";
+import { RTHandler, success } from "../util";
+import { proveAuthed } from "../routes/accessControl";
 
-type GetCurrentUser = PolygiveApi['/user/current']['GET'];
-const current: RTHandler<GetCurrentUser> = (req) => {
+type GetCurrentUser = PolygiveApi["/user/current"]["GET"];
+const current: RTHandler<GetCurrentUser> = req => {
   let result: CurrentUserResponse;
-  if(req.isAuthenticated()){
-    const {
-      id,
-      name,
-      email,
-      super: isSuper,
-    } = proveAuthed(req).pgUser;
-    
+  if (req.isAuthenticated()) {
+    const { id, name, email, super: isSuper } = proveAuthed(req).pgUser;
+
     result = {
       loggedIn: true,
       user: {
         id: id,
         email,
         name,
-        isSuper,
+        isSuper
       }
     };
   } else {
     result = {
-      loggedIn: false,
-    }
+      loggedIn: false
+    };
   }
   return Promise.resolve(success()(result));
 };

@@ -1,9 +1,9 @@
-import React from 'react';
-import { AppState, LayoutProps } from '../../clientTypes';
-import { PublicHeader } from '../../layouts/shared/Header';
-import './PublicBarebones.css';
+import React from "react";
+import { AppState, LayoutProps } from "../../clientTypes";
+import { PublicHeader } from "../../layouts/shared/Header";
+import "./PublicBarebones.css";
 
-export default function PublicBarebones({children}: LayoutProps<AppState>){
+export default function PublicBarebones({ children }: LayoutProps<AppState>) {
   return (
     <>
       <PublicHeader />

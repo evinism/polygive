@@ -1,38 +1,48 @@
-import { Response } from 'express';
-import { ApiSuccess, ApiError } from '../shared/workarounds/ApiResponse';
-import { DonationRecurrence } from './entity/DonationSchedule';
-export {RTHandler} from './types/RestypedHelpers';
+import { Response } from "express";
+import { ApiSuccess, ApiError } from "../shared/workarounds/ApiResponse";
+import { DonationRecurrence } from "./entity/DonationSchedule";
+export { RTHandler } from "./types/RestypedHelpers";
 
-export const success = (res?: Response, status = 200) => <T>(successData: T): ApiSuccess<T> => {
-  if (res){
+export const success = (res?: Response, status = 200) => <T>(
+  successData: T
+): ApiSuccess<T> => {
+  if (res) {
     res.status(status);
   }
   return {
     success: true,
-    successData,
-  }
-}
+    successData
+  };
+};
 
-export const error = (res?: Response, status = 500) => (errorData: any): ApiError => {
-  if(res){
+export const error = (res?: Response, status = 500) => (
+  errorData: any
+): ApiError => {
+  if (res) {
     res.status(status);
   }
   return {
     success: false,
-    errorData,
-  }
-}
+    errorData
+  };
+};
 
-export function mapValues<T, R>(obj: {[key: string]: T}, fn: (arg: T) => R): {[key: string]: R} {
+export function mapValues<T, R>(
+  obj: { [key: string]: T },
+  fn: (arg: T) => R
+): { [key: string]: R } {
   return Object.entries(obj).reduce((acc, [key, val]) => {
     acc[key] = fn(val);
     return acc;
   }, {});
 }
 
-export const getNextDonationDate = (prev: Date, recurrence: DonationRecurrence) =>  {
+export const getNextDonationDate = (
+  prev: Date,
+  recurrence: DonationRecurrence
+) => {
   const date = new Date(prev.getTime());
-  const lookup: {[key in DonationRecurrence]: () => void} =  {
+  const lookup: { [key in DonationRecurrence]: () => void } = {
     WEEKLY: () => {
       date.setDate(date.getDate() + 7);
     },
@@ -41,8 +51,8 @@ export const getNextDonationDate = (prev: Date, recurrence: DonationRecurrence) 
     },
     YEARLY: () => {
       date.setFullYear(date.getFullYear() + 1);
-    },
+    }
   };
   lookup[recurrence]();
-  return date
-}
+  return date;
+};

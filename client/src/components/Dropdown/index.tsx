@@ -1,80 +1,94 @@
-import React, {FunctionComponent, useState, MouseEvent, ReactNode} from 'react';
-import ClickOutsideListener from './ClickOutsideListener';
-import { Link } from 'react-router-dom';
-import './Dropdown.css';
+import React, {
+  FunctionComponent,
+  useState,
+  MouseEvent,
+  ReactNode
+} from "react";
+import ClickOutsideListener from "./ClickOutsideListener";
+import { Link } from "react-router-dom";
+import "./Dropdown.css";
 
 interface DropdownProps {
-  contents: ReactNode,
+  contents: ReactNode;
 }
 
 interface ControlledDropdownProps extends DropdownProps {
-  isOpen: boolean,
-  onClose: () => unknown,
-  onContainerClick?: () => unknown,
+  isOpen: boolean;
+  onClose: () => unknown;
+  onContainerClick?: () => unknown;
 }
 
-export const DropdownLink: FunctionComponent<{to: string}> = ({to, children}) => (
+export const DropdownLink: FunctionComponent<{ to: string }> = ({
+  to,
+  children
+}) => (
   <Link className="dropdown-link" to={to}>
     {children}
   </Link>
 );
 
-export const DropdownExternalLink: FunctionComponent<{href: string}> = ({href, children}) => (
+export const DropdownExternalLink: FunctionComponent<{ href: string }> = ({
+  href,
+  children
+}) => (
   <a className="dropdown-link" href={href}>
     {children}
   </a>
 );
 
 type DropdownButtonProps = {
-  onClick?: (arg: MouseEvent) => void,
+  onClick?: (arg: MouseEvent) => void;
 };
 
-export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({onClick, children})  => (
-  <button onClick={onClick} className='dropdown-button'>
+export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
+  onClick,
+  children
+}) => (
+  <button onClick={onClick} className="dropdown-button">
     {children}
   </button>
 );
 
-export const ControlledDropdown: FunctionComponent<ControlledDropdownProps> = 
-({children, onContainerClick, onClose, isOpen, contents}) => {
+export const ControlledDropdown: FunctionComponent<ControlledDropdownProps> = ({
+  children,
+  onContainerClick,
+  onClose,
+  isOpen,
+  contents
+}) => {
   // TODO: Make it so that the dropdown doesn't always trigger on onClose on
   // any part of the window click. That's bad.
   return (
     <ClickOutsideListener
-      className={`dropdown-wrapper${isOpen ? ' dropdown-open' : ''}` } 
+      className={`dropdown-wrapper${isOpen ? " dropdown-open" : ""}`}
       onClickOutside={onClose}
     >
       <div className="dropdown-child-container" onClick={onContainerClick}>
         {children}
       </div>
-      {isOpen && (
-        <div className='dropdown'>
-          {contents}
-        </div>
-        )
-      }
+      {isOpen && <div className="dropdown">{contents}</div>}
     </ClickOutsideListener>
   );
-}
+};
 
 const Dropdown: FunctionComponent<DropdownProps> = props => {
   const [isOpen, setOpen] = useState(false);
   return (
-    <ControlledDropdown 
+    <ControlledDropdown
       isOpen={isOpen}
       onClose={() => {
-        console.log('onclose');
-        setOpen(false)
+        console.log("onclose");
+        setOpen(false);
       }}
       contents={props.contents}
       onContainerClick={() => {
-        console.log('beet ' + isOpen);
+        console.log("beet " + isOpen);
         setOpen(!isOpen);
       }}
     >
       {props.children}
     </ControlledDropdown>
-  )
+  );
 };
 
-  export default Dropdown;
+export default Dropdown;
