@@ -20,7 +20,7 @@ type UserRecord = {
 type DonationRecord = {
   id: number;
   charityId: number;
-  amount: string;
+  amount: number;
   currency: Currency;
 };
 
@@ -28,7 +28,7 @@ type DonationScheduleRecord = {
   id: number;
   charityId: number;
   recurrence: DonationRecurrence;
-  amount: string;
+  amount: number;
   currency: Currency;
   nextScheduledDonation: string;
 };
@@ -57,14 +57,14 @@ type CreateCharityResponse = {
 /* Request/Response pair for POST /donations */
 type CreateDonationRequest = {
   charityId: number;
-  amount: string;
+  amount: number;
 };
 
 type CreateDonationResponse = {
   id: number;
   userId: number;
   charityId: number;
-  amount: string;
+  amount: number;
   status: string;
 };
 
@@ -88,7 +88,7 @@ type ListDonationSchedulesResponse = {
 
 type CreateDonationScheduleRequest = {
   charityId: number;
-  amount: string;
+  amount: number;
   recurrence: DonationRecurrence;
 };
 
@@ -96,7 +96,7 @@ type CreateDonationScheduleResponse = {
   id: number;
   charityId: number;
   recurrence: DonationRecurrence;
-  amount: string;
+  amount: number;
   nextScheduledDonation: string;
   charity: ShortCharityRecord;
 };

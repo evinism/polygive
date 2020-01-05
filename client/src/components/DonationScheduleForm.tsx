@@ -16,7 +16,7 @@ export default function DonationScheduleForm({
   const [enabled, setEnabled] = useState(false);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const amount = (event.target as any).amount.value as string;
+    const amount = parseFloat((event.target as any).amount.value as string);
     const charityId =
       parentCharityId ||
       parseInt((event.target as any).charityId.value as string, 10);

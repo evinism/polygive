@@ -51,14 +51,14 @@ export const getCharity = (charityId: number) =>
     .get<"/charities/:id">(`/charities/${charityId}`)
     .then(x => getSuccess(x.data));
 
-export const createDonation = (charityId: number, amount: string) =>
+export const createDonation = (charityId: number, amount: number) =>
   client
     .post<"/donations">("/donations", { charityId, amount })
     .then(x => getSuccess(x.data));
 
 export const createDonationSchedule = (
   charityId: number,
-  amount: string,
+  amount: number,
   recurrence: DonationRecurrence
 ) =>
   client

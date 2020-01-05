@@ -7,16 +7,6 @@ import ensureConnection from "../connection";
 import { shortCharity } from "../projections";
 import { grabAllCharities } from "./controllerHelpers";
 
-// This is a nasty workaround
-const castAmountToString = (donation: Donation) => ({
-  id: donation.id,
-  userId: donation.userId,
-  charityId: donation.charityId,
-  amount: donation.amount.toString(),
-  currency: donation.currency,
-  status: donation.status
-});
-
 type CreateDonation = PolygiveApi["/donations"]["POST"];
 export const create: RTAuthedHandler<CreateDonation> = async (req, res) => {
   const body = req.body;
@@ -24,11 +14,10 @@ export const create: RTAuthedHandler<CreateDonation> = async (req, res) => {
   const donation = new Donation();
   donation.charityId = body.charityId;
   donation.userId = req.pgUser.id;
-  donation.amount = parseFloat(req.body.amount);
+  donation.amount = Math.floor(req.body.amount);
   donation.status = DonationStatus.DRAFT;
   return getRepository(Donation)
     .save(donation)
-    .then(castAmountToString)
     .then(success(res, 201))
     .catch(error());
 };
@@ -44,7 +33,7 @@ export const list: RTAuthedHandler<ListDonations> = async (req, res) => {
       relations: ["charity"]
     })
     .then(donations => ({
-      donations: donations.map(castAmountToString),
+      donations: donations,
       charities: mapValues(grabAllCharities(donations), shortCharity)
     }))
     .then(success())
@@ -57,7 +46,7 @@ export const all: RTSuperHandler<ListAllDonations> = async (_, res) => {
   return getRepository(Donation)
     .find()
     .then(donations => ({
-      donations: donations.map(castAmountToString),
+      donations: donations,
       charities: mapValues(grabAllCharities(donations), shortCharity)
     }))
     .then(success())
@@ -77,7 +66,7 @@ export const unflushed: RTSuperHandler<ListUnflushedDonations> = async (
       }
     })
     .then(donations => ({
-      donations: donations.map(castAmountToString),
+      donations: donations,
       charities: mapValues(grabAllCharities(donations), shortCharity)
     }))
     .then(success())

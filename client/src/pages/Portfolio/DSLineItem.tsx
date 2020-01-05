@@ -34,7 +34,7 @@ const DSLineItem = ({ donationSchedule, charity, onEdit }: DSLineItemProps) => {
       <h4>{charity.name}</h4>
       <div>Next donation on: {formattedDate}</div>
       <DonationScheduleAmount
-        amount={parseFloat(donationSchedule.amount)}
+        amount={donationSchedule.amount}
         currency={donationSchedule.currency}
         recurrence={donationSchedule.recurrence}
       />
@@ -82,13 +82,17 @@ const DSLineItem = ({ donationSchedule, charity, onEdit }: DSLineItemProps) => {
               editStatus: "draft",
               donationSchedule: {
                 ...donationSchedule,
-                amount: event.target.value
+                amount: event.target.valueAsNumber
               }
             });
           }}
         />
         <input type="submit" />
-        <input type="button" value="Cancel" />
+        <input
+          type="button"
+          onClick={() => setState({ editing: false })}
+          value="Cancel"
+        />
       </form>
     </>
   );

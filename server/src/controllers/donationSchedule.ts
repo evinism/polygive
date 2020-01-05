@@ -28,7 +28,7 @@ export const list: RTAuthedHandler<ListDonationSchedules> = async (
         id: schedule.id,
         charityId: schedule.charityId,
         recurrence: schedule.recurrence,
-        amount: schedule.amount.toString(),
+        amount: Math.floor(schedule.amount),
         currency: schedule.currency,
         nextScheduledDonation: schedule.nextScheduledDonation.toString()
       })),
@@ -48,7 +48,7 @@ export const create: RTAuthedHandler<CreateDonationSchedule> = async (
   const donationSchedule = new DonationSchedule();
   donationSchedule.charityId = body.charityId;
   donationSchedule.userId = req.pgUser.id;
-  donationSchedule.amount = parseFloat(req.body.amount);
+  donationSchedule.amount = Math.floor(req.body.amount);
   donationSchedule.recurrence = req.body.recurrence;
   donationSchedule.nextScheduledDonation = getNextDonationDate(
     new Date(),
@@ -70,7 +70,7 @@ export const create: RTAuthedHandler<CreateDonationSchedule> = async (
       charityId: donationSchedule.id,
       recurrence: donationSchedule.recurrence,
       nextScheduledDonation: donationSchedule.nextScheduledDonation.toString(),
-      amount: donationSchedule.amount.toString(),
+      amount: Math.floor(donationSchedule.amount),
       charity: shortCharity(charity)
     }))
     .then(success(res, 201))
@@ -98,7 +98,7 @@ export const patch: RTAuthedHandler<PatchDonationSchedule> = async (
       // For now, we don't allow nextScheduledDonation in the request.
       // Eventually, though, we will.
       // donationSchedule.nextScheduledDonation = body.nextScheduledDonation;
-      donationSchedule.amount = parseFloat(body.amount);
+      donationSchedule.amount = Math.floor(body.amount);
       donationSchedule.currency = body.currency;
       return dsRepository.save(donationSchedule);
     })
@@ -115,7 +115,7 @@ export const patch: RTAuthedHandler<PatchDonationSchedule> = async (
       charityId: donationSchedule.charityId,
       recurrence: donationSchedule.recurrence,
       nextScheduledDonation: donationSchedule.nextScheduledDonation.toString(),
-      amount: donationSchedule.amount.toString(),
+      amount: donationSchedule.amount,
       currency: donationSchedule.currency,
       charity: shortCharity(charity)
     }))

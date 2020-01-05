@@ -27,8 +27,7 @@ const getYearlyContributions = (
       if (!acc[cur.currency]) {
         acc[cur.currency] = 0;
       }
-      acc[cur.currency] +=
-        parseFloat(cur.amount) * timeMultiplier[cur.recurrence];
+      acc[cur.currency] += cur.amount * timeMultiplier[cur.recurrence];
       return acc;
     },
     {}
@@ -57,7 +56,6 @@ export default function Portfolio(_: PageProps<LoggedInAppState>) {
       <h2>Portfolio</h2>
       <WaitForLoaded item={state}>
         {state => {
-          // TODO: Convert the over-the-wire numbers to be in cents or something
           const contribs = getYearlyContributions(state.donationSchedules);
           return (
             <>
