@@ -9,6 +9,12 @@ import { Currency } from "./currency";
 type ShortCharityRecord = Temp1;
 type DonationRecurrence = Temp2;
 
+type Paginated<T> = {
+  page: number;
+  totalPages: number;
+  data: T;
+};
+
 /* Response type for /user/current */
 type UserRecord = {
   id: number;
@@ -107,11 +113,12 @@ export default interface PolygiveApi {
       query:
         | {
             search?: string;
+            page?: number;
           }
         | undefined;
       body: void;
       params: void;
-      response: ApiResponse<ListCharitiesResponse>;
+      response: ApiResponse<Paginated<ListCharitiesResponse>>;
     };
     POST: {
       query: void;

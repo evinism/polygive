@@ -1,10 +1,12 @@
-import { getRepository, QueryBuilder } from "typeorm";
+import { getRepository, QueryBuilder, SelectQueryBuilder } from "typeorm";
 import ensureConnection from "../connection";
 import Charity from "../entity/Charity";
 import PolygiveApi from "../../shared/polygiveApi";
 import { RTHandler, success, error } from "../util";
 import { RTSuperHandler } from "../types/RestypedHelpers";
 import { shortCharity } from "../projections";
+
+const CHARITY_RESULTS_PER_PAGE = 10;
 
 /** TODO: Remove the toStrings here */
 type CreateCharity = PolygiveApi["/charities"]["POST"];
@@ -26,22 +28,32 @@ export const create: RTSuperHandler<CreateCharity> = async (req, res) => {
 type ListCharity = PolygiveApi["/charities"]["GET"];
 export const list: RTHandler<ListCharity> = async (req, res) => {
   await ensureConnection();
-  const queryWithoutWhereClause = getRepository(Charity)
-    .createQueryBuilder("charity")
-    .take(10)
-    .orderBy("charity.id", "DESC");
-
+  const page = Math.max(Math.floor(req.query.page || 1), 1);
   const search = req.query.search;
-  // Really evin???
-  const fullQuery = search
-    ? queryWithoutWhereClause.where("charity.name like :query", {
-        query: "%" + (req.query.search || "") + "%"
-      })
-    : queryWithoutWhereClause;
+
+  const withWhereClause = (queryBuilder: SelectQueryBuilder<Charity>) => {
+    return search
+      ? queryBuilder.where("charity.name like :query", {
+          query: "%" + (req.query.search || "") + "%"
+        })
+      : queryBuilder;
+  };
+
+  const fullQuery = withWhereClause(
+    getRepository(Charity)
+      .createQueryBuilder("charity")
+      .skip(CHARITY_RESULTS_PER_PAGE * (page - 1))
+      .take(CHARITY_RESULTS_PER_PAGE)
+      .orderBy("charity.name", "DESC")
+  );
 
   return fullQuery
-    .getMany()
-    .then(charities => charities.map(shortCharity))
+    .getManyAndCount()
+    .then(([charities, totalCount]) => ({
+      page,
+      totalPages: Math.ceil(totalCount / CHARITY_RESULTS_PER_PAGE),
+      data: charities.map(shortCharity)
+    }))
     .then(success())
     .catch(error(res, 400));
 };
