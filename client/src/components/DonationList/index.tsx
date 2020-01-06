@@ -5,6 +5,7 @@ import {
   ShortCharityRecord
 } from "../../../../server/shared/polygiveApi";
 import { PaddedList, WaitForLoaded } from "../UIElements";
+import { formatMonetaryAmount } from "../../money";
 
 interface DonationListProps {
   charities: {
@@ -22,7 +23,8 @@ export const DonationsList: FunctionComponent<DonationListProps> = ({
       const charity = charities[donation.charityId];
       return (
         <div className="donation-li" key={donation.id}>
-          Donation to {charity.name}: ${donation.amount}
+          Donation to {charity.name}:
+          {formatMonetaryAmount(donation.amount, donation.currency)}
         </div>
       );
     })}

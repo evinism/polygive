@@ -1,4 +1,4 @@
-import { getRepository } from "typeorm";
+import { getRepository, QueryBuilder } from "typeorm";
 import ensureConnection from "../connection";
 import Charity from "../entity/Charity";
 import PolygiveApi from "../../shared/polygiveApi";
@@ -24,11 +24,23 @@ export const create: RTSuperHandler<CreateCharity> = async (req, res) => {
 };
 
 type ListCharity = PolygiveApi["/charities"]["GET"];
-export const list: RTHandler<ListCharity> = async (_, res) => {
+export const list: RTHandler<ListCharity> = async (req, res) => {
   await ensureConnection();
+  const queryWithoutWhereClause = getRepository(Charity)
+    .createQueryBuilder("charity")
+    .take(10)
+    .orderBy("charity.id", "DESC");
 
-  return getRepository(Charity)
-    .find()
+  const search = req.query.search;
+  // Really evin???
+  const fullQuery = search
+    ? queryWithoutWhereClause.where("charity.name like :query", {
+        query: "%" + (req.query.search || "") + "%"
+      })
+    : queryWithoutWhereClause;
+
+  return fullQuery
+    .getMany()
     .then(charities => charities.map(shortCharity))
     .then(success())
     .catch(error(res, 400));

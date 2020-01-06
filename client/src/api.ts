@@ -39,10 +39,13 @@ export const getDonationSchedules = () =>
     })
     .then(x => getSuccess(x.data));
 
-export const getCharities = () =>
+export const getCharities = (
+  query?: PolygiveApi["/charities"]["GET"]["query"]
+) =>
   client
     .request({
-      url: "/charities"
+      url: "/charities",
+      params: query
     })
     .then(x => getSuccess(x.data));
 

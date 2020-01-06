@@ -104,7 +104,11 @@ type CreateDonationScheduleResponse = {
 export default interface PolygiveApi {
   "/charities": {
     GET: {
-      query: void;
+      query:
+        | {
+            search?: string;
+          }
+        | undefined;
       body: void;
       params: void;
       response: ApiResponse<ListCharitiesResponse>;
