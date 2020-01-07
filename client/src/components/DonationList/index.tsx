@@ -3,7 +3,7 @@ import {
   ListDonationsResponse,
   DonationRecord,
   ShortCharityRecord
-} from "../../../../server/shared/polygiveApi";
+} from "../../shared/polygiveApi";
 import { PaddedList, WaitForLoaded } from "../UIElements";
 import { formatMonetaryAmount } from "../../money";
 

@@ -9,3 +9,5 @@ export interface MonetaryAmount {
   amount: number; // Any non-integer should be treated as the FLOOR of the value.
   currency: Currency;
 }
+
+export default Currency;

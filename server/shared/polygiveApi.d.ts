@@ -1,13 +1,19 @@
 import ApiResponse from "./workarounds/ApiResponse";
-import { ShortCharityRecord as Temp1 } from "../src/projections";
+import {
+  ShortCharityRecord as TempShortCharityRecord,
+  PaymentConfigurationRecord as TempPaymentConfigurationRecord
+} from "../src/projections";
 import Charity from "../src/entity/Charity";
 import DonationSchedule, {
-  DonationRecurrence as Temp2
+  DonationRecurrence as TempDonationRecurrence
 } from "../src/entity/DonationSchedule";
 import { Currency } from "./currency";
+import PaymentConfiguration from "../src/entity/PaymentConfiguration";
 
-type ShortCharityRecord = Temp1;
-type DonationRecurrence = Temp2;
+// Garbage workaround-- I really should fix this
+type ShortCharityRecord = TempShortCharityRecord;
+type PaymentConfigurationRecord = TempPaymentConfigurationRecord;
+type DonationRecurrence = TempDonationRecurrence;
 
 type Paginated<T> = {
   page: number;
@@ -46,6 +52,7 @@ type LoggedOutResponse = {
 type LoggedInResponse = {
   loggedIn: true;
   user: UserRecord;
+  paymentConfiguration?: PaymentConfigurationRecord;
 };
 
 type CurrentUserResponse = LoggedOutResponse | LoggedInResponse;

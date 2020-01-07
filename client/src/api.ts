@@ -2,8 +2,8 @@ import restypedAxios from "restyped-axios";
 import PolygiveApi, {
   DonationRecurrence,
   DonationScheduleRecord
-} from "../../server/shared/polygiveApi";
-import ApiResponse from "../../server/shared/workarounds/ApiResponse";
+} from "./shared/polygiveApi";
+import ApiResponse from "./shared/workarounds/ApiResponse";
 
 export const baseURL = process.env.REACT_APP_BACKEND_URL;
 export const client = restypedAxios.create<PolygiveApi>({

@@ -1,4 +1,4 @@
-import { UserRecord } from "../../server/shared/polygiveApi";
+import { UserRecord, PaymentConfigurationRecord } from "./shared/polygiveApi";
 import { ReactNode } from "react";
 
 /** App State stuff */
@@ -13,6 +13,7 @@ export type LoggedOutAppState = {
 export type LoggedInAppState = {
   status: "LOGGED_IN";
   user: UserRecord;
+  paymentConfiguration?: PaymentConfigurationRecord;
 };
 
 export type AppState =

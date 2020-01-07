@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import LogInToContinue from "./pages/LogInToContiinue";
 import PublicBarebones from "./layouts/PublicBarebones";
 import CharityDescription from "./pages/CharityDescription";
+import Payments from "./pages/Payments";
 
 export const pageManifest: PageManifest = {
   index: {
@@ -29,6 +30,13 @@ export const pageManifest: PageManifest = {
     exact: true,
     name: "Charities",
     component: CharitiesList,
+    layout: Home
+  },
+  payment: {
+    path: "/payment",
+    exact: true,
+    name: "Payment",
+    component: Payments,
     layout: Home
   },
   charityDescription: {

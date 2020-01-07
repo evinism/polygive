@@ -5,13 +5,13 @@ import {
   ListDonationSchedulesResponse,
   DonationRecurrence,
   DonationScheduleRecord
-} from "../../../../server/shared/polygiveApi";
+} from "../../shared/polygiveApi";
 import { PageProps, LoggedInAppState } from "../../clientTypes";
 import { PaddedList, WaitForLoaded } from "../../components/UIElements";
 import DonationScheduleAmount from "./DonationScheduleAmount";
 import DSLineItem from "./DSLineItem";
 import "./Portfolio.css";
-import { Currency } from "../../../../server/shared/currency";
+import { Currency } from "../../shared/currency";
 
 const timeMultiplier: { [key in DonationRecurrence]: number } = {
   WEEKLY: 52,

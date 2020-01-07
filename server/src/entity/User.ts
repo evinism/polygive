@@ -2,9 +2,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToMany,
+  OneToOne,
   JoinColumn
 } from "typeorm";
+import PaymentConfiguration from "./PaymentConfiguration";
 
 @Entity()
 export default class User {
@@ -25,4 +26,11 @@ export default class User {
 
   @Column()
   super: boolean;
+
+  @Column({ nullable: true })
+  paymentConfigurationId: number;
+
+  @OneToOne(type => PaymentConfiguration, { nullable: true })
+  @JoinColumn()
+  user: PaymentConfiguration;
 }

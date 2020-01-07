@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from "react";
 import { createDonationSchedule } from "../api";
-import { DonationRecurrence } from "../../../server/shared/polygiveApi";
+import { DonationRecurrence } from "../shared/polygiveApi";
 
 const recurrenceLabel: { [key in DonationRecurrence]: string } = {
   WEEKLY: "Weekly",

@@ -1,4 +1,4 @@
-import { Currency } from "../../server/shared/currency";
+import { Currency } from "./shared/currency";
 
 /* all of these are based in the smallest possible whole-number amounts
  * possible, e.g. USD is represented in cents. We assume all values are
@@ -8,27 +8,32 @@ import { Currency } from "../../server/shared/currency";
 const currencyDetails: {
   [key in Currency]: {
     symbol: string;
+    humanReadable: string;
     postfix: boolean;
     displayMultiplier: number;
   };
 } = {
   USD: {
     symbol: "$",
+    humanReadable: "$ (US)",
     postfix: false,
     displayMultiplier: 100
   },
   EUR: {
     symbol: "€",
+    humanReadable: "€",
     postfix: false,
     displayMultiplier: 100
   },
   JPY: {
     symbol: "¥",
+    humanReadable: "¥",
     postfix: false,
     displayMultiplier: 1
   },
   GBP: {
     symbol: "£",
+    humanReadable: "£",
     postfix: false,
     displayMultiplier: 100
   }

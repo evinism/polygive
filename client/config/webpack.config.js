@@ -294,7 +294,9 @@ module.exports = function(webpackEnv) {
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
         // guards against forgotten dependencies and such.
         PnpWebpackPlugin
-      ]
+      ],
+      // Allows webpack to resolve the shared folder in simlink form
+      symlinks: false
     },
     resolveLoader: {
       plugins: [

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getCharities } from "../../api";
-import {
-  ListCharitiesResponse,
-  Paginated
-} from "../../../../server/shared/polygiveApi";
+import { ListCharitiesResponse, Paginated } from "../../shared/polygiveApi";
 import DonationForm from "../../components/DonationForm";
 import { PaddedList, WaitForLoaded } from "../../components/UIElements";
 import { PageProps, LoggedInAppState } from "../../clientTypes";
