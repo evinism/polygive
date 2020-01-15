@@ -1,7 +1,8 @@
 import restypedAxios from "restyped-axios";
 import PolygiveApi, {
   DonationRecurrence,
-  DonationScheduleRecord
+  DonationScheduleRecord,
+  PaymentConfigurationRecord
 } from "./shared/polygiveApi";
 import ApiResponse from "./shared/workarounds/ApiResponse";
 
@@ -91,4 +92,14 @@ export const getUnflushedDonations = () =>
 export const createCharity = (name: string) =>
   client
     .post<"/charities">("/charities", { name })
+    .then(x => getSuccess(x.data));
+
+export const createPaymentConfig = (
+  paymentConfig: PaymentConfigurationRecord
+) =>
+  client
+    .post<"/user/current/payment_configuration">(
+      "/user/current/payment_configuration",
+      paymentConfig
+    )
     .then(x => getSuccess(x.data));

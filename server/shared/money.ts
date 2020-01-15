@@ -1,10 +1,19 @@
-import { Currency } from "./shared/currency";
+export enum Currency {
+  USD = "USD", // in Cents
+  EUR = "EUR", // Euro Cents
+  JPY = "JPY", // Single yen
+  GBP = "GBP" // pennny
+}
+
+export interface MonetaryAmount {
+  amount: number; // Any non-integer should be treated as the FLOOR of the value.
+  currency: Currency;
+}
 
 /* all of these are based in the smallest possible whole-number amounts
  * possible, e.g. USD is represented in cents. We assume all values are
  * below 2^53.
  */
-
 const currencyDetails: {
   [key in Currency]: {
     symbol: string;

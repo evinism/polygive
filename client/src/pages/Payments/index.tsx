@@ -6,7 +6,6 @@ export default function Payments(props: PageProps<LoggedInAppState>) {
   return (
     <>
       <h3>Payments</h3>
-      {props.state.user}
       <CreatePaymentConfigWidget />
     </>
   );

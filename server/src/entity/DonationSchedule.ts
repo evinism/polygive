@@ -6,7 +6,7 @@ import {
   JoinColumn
 } from "typeorm";
 import Charity from "./Charity";
-import { Currency } from "../../shared/currency";
+import { Currency } from "../../shared/money";
 
 export enum DonationRecurrence {
   WEEKLY = "WEEKLY",

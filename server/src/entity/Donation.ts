@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import User from "./User";
 import Charity from "./Charity";
-import { Currency } from "../../shared/currency";
+import { Currency } from "../../shared/money";
 
 export enum DonationStatus {
   DRAFT = "DRAFT", // To the user, this hasn't been processed yet

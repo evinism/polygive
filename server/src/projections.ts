@@ -1,6 +1,6 @@
 import Charity from "./entity/Charity";
 import { charityLink } from "./links";
-import { Currency } from "../shared/currency";
+import { Currency } from "../shared/money";
 import PaymentConfiguration from "./entity/PaymentConfiguration";
 
 // TODO: We should really move these to their appropriate entity files

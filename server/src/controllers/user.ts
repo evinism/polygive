@@ -2,11 +2,12 @@ import PolygiveApi, {
   CurrentUserResponse,
   PaymentConfigurationRecord
 } from "../../shared/polygiveApi";
-import { RTHandler, success } from "../util";
+import { success, error } from "../util";
 import { proveAuthed } from "../routes/accessControl";
 import { getRepository } from "typeorm";
 import PaymentConfiguration from "../entity/PaymentConfiguration";
 import { paymentConfigurationRecord } from "../projections";
+import { RTHandler, RTAuthedHandler } from "../types/RestypedHelpers";
 
 type GetCurrentUser = PolygiveApi["/user/current"]["GET"];
 const current: RTHandler<GetCurrentUser> = async req => {
@@ -42,4 +43,18 @@ const current: RTHandler<GetCurrentUser> = async req => {
   }
 };
 
-export default { current };
+type CreatePaymentConfiguration = PolygiveApi["/user/current/payment_configuration"]["POST"];
+const createPaymentConfiguration: RTAuthedHandler<CreatePaymentConfiguration> = (
+  req,
+  res
+) => {
+  const paymentConfig = new PaymentConfiguration();
+  paymentConfig.defaultCurrency = req.body.defaultCurrency;
+  paymentConfig.userId = req.pgUser.id;
+  return getRepository(PaymentConfiguration)
+    .save(paymentConfig)
+    .then(success())
+    .catch(error());
+};
+
+export default { current, createPaymentConfiguration };

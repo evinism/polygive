@@ -6,7 +6,7 @@ import {
   JoinColumn
 } from "typeorm";
 import User from "./User";
-import { Currency } from "../../shared/currency";
+import { Currency } from "../../shared/money";
 
 @Entity()
 export default class PaymentConfiguration {

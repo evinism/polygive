@@ -11,7 +11,7 @@ import { PaddedList, WaitForLoaded } from "../../components/UIElements";
 import DonationScheduleAmount from "./DonationScheduleAmount";
 import DSLineItem from "./DSLineItem";
 import "./Portfolio.css";
-import { Currency } from "../../shared/currency";
+import { Currency } from "../../shared/money";
 
 const timeMultiplier: { [key in DonationRecurrence]: number } = {
   WEEKLY: 52,

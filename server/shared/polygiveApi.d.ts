@@ -7,7 +7,7 @@ import Charity from "../src/entity/Charity";
 import DonationSchedule, {
   DonationRecurrence as TempDonationRecurrence
 } from "../src/entity/DonationSchedule";
-import { Currency } from "./currency";
+import { Currency } from "./money";
 import PaymentConfiguration from "../src/entity/PaymentConfiguration";
 
 // Garbage workaround-- I really should fix this
@@ -196,6 +196,14 @@ export default interface PolygiveApi {
       params: void;
       body: void;
       response: ApiResponse<CurrentUserResponse>;
+    };
+  };
+  "/user/current/payment_configuration": {
+    POST: {
+      query: void;
+      params: void;
+      body: PaymentConfigurationRecord;
+      response: ApiResponse<PaymentConfigurationRecord>;
     };
   };
   "/unflushed_donations": {

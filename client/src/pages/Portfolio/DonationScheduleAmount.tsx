@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { DonationRecurrence } from "../../shared/polygiveApi";
-import { formatMonetaryAmount } from "../../money";
+import { formatMonetaryAmount, Currency } from "../../shared/money";
 import "./DonationScheduleAmount.css";
-import { Currency } from "../../shared/currency";
 
 const timeDurationLabel: { [key in DonationRecurrence]: string } = {
   WEEKLY: " / wk.",

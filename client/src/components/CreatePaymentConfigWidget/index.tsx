@@ -1,6 +1,5 @@
 import React from "react";
-import { Currency } from "../../shared/currency";
-import { getCurrencyDetails } from "../../money";
+import { Currency, getCurrencyDetails } from "../../shared/money";
 
 const CreatePaymentConfigWidget = () => (
   <div>

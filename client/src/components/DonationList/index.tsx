@@ -5,7 +5,7 @@ import {
   ShortCharityRecord
 } from "../../shared/polygiveApi";
 import { PaddedList, WaitForLoaded } from "../UIElements";
-import { formatMonetaryAmount } from "../../money";
+import { formatMonetaryAmount } from "../../shared/money";
 
 interface DonationListProps {
   charities: {
