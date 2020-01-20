@@ -1,37 +1,83 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent, ChangeEvent } from "react";
 import { createDonation } from "../api";
+import InputMoney from "./InputMoney";
+import { Currency } from "../shared/money";
+
+interface DonationsFormProps {
+  charityId?: number;
+  currency?: Currency;
+}
+
+type DonationsFormState =
+  | {
+      enabled: false;
+    }
+  | {
+      enabled: true;
+      charityId: number | undefined;
+      amount: number | undefined;
+    };
 
 export default function DonationsForm({
-  charityId: parentCharityId
-}: {
-  charityId?: number;
-}) {
-  const [enabled, setEnabled] = useState(false);
+  charityId: parentCharityId,
+  currency = Currency.USD // Big oof here
+}: DonationsFormProps) {
+  const [state, setState] = useState<DonationsFormState>({
+    enabled: false
+  });
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const amount = parseFloat((event.target as any).amount.value as string);
-    const charityId =
-      parentCharityId ||
-      parseInt((event.target as any).charityId.value as string, 10);
-    createDonation(charityId, amount).then(() => setEnabled(false));
+    if (state.enabled && state.charityId && state.amount !== undefined) {
+      createDonation(state.charityId, state.amount).then(() =>
+        setState({ enabled: false })
+      );
+    } else {
+      throw "Validation Error!";
+    }
   };
 
-  return enabled ? (
+  return state.enabled ? (
     <div>
       <form onSubmit={handleSubmit}>
         {!parentCharityId && (
           <label>
-            Charity Id: <input name="charityId" type="text" />
+            Charity Id:
+            <input
+              name="charityId"
+              type="text"
+              value={state.charityId}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                setState({
+                  ...state,
+                  charityId: event.target.valueAsNumber
+                });
+              }}
+            />
           </label>
         )}
         <label>
-          $<input name="amount" type="number" />
+          <InputMoney
+            amount={state.amount}
+            currency={currency}
+            onChangeAmount={amount =>
+              setState({
+                ...state,
+                amount: amount
+              })
+            }
+          />
         </label>
         <input type="submit" />
       </form>
-      <button onClick={() => setEnabled(false)}>Close</button>
+      <button onClick={() => setState({ enabled: false })}>Close</button>
     </div>
   ) : (
-    <button onClick={() => setEnabled(true)}>Create a Donation!</button>
+    <button
+      onClick={() =>
+        setState({ enabled: true, charityId: parentCharityId, amount: 0 })
+      }
+    >
+      Create a Donation!
+    </button>
   );
 }

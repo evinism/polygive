@@ -1,6 +1,8 @@
 import React, { useState, FormEvent } from "react";
 import { createDonationSchedule } from "../api";
 import { DonationRecurrence } from "../shared/polygiveApi";
+import InputMoney from "./InputMoney";
+import { Currency } from "../shared/money";
 
 const recurrenceLabel: { [key in DonationRecurrence]: string } = {
   WEEKLY: "Weekly",
@@ -8,26 +10,45 @@ const recurrenceLabel: { [key in DonationRecurrence]: string } = {
   YEARLY: "Yearly"
 };
 
+type DonationsFormState =
+  | {
+      enabled: false;
+    }
+  | {
+      enabled: true;
+      charityId: number | undefined;
+      amount: number | undefined;
+      recurrence: DonationRecurrence;
+    };
+
 export default function DonationScheduleForm({
   charityId: parentCharityId
 }: {
   charityId?: number;
 }) {
-  const [enabled, setEnabled] = useState(false);
+  const [state, setState] = useState<DonationsFormState>({
+    enabled: false
+  });
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const amount = parseFloat((event.target as any).amount.value as string);
-    const charityId =
-      parentCharityId ||
-      parseInt((event.target as any).charityId.value as string, 10);
-    const recurrence = (event.target as any).recurrence
-      .value as DonationRecurrence;
-    createDonationSchedule(charityId, amount, recurrence).then(() =>
-      setEnabled(false)
-    );
+    if (
+      state.enabled &&
+      state.charityId !== undefined &&
+      state.amount !== undefined
+    ) {
+      createDonationSchedule(
+        state.charityId,
+        state.amount,
+        state.recurrence
+      ).then(() =>
+        setState({
+          enabled: false
+        })
+      );
+    }
   };
 
-  return enabled ? (
+  return state.enabled ? (
     <div>
       <form onSubmit={handleSubmit}>
         {!parentCharityId && (
@@ -36,11 +57,28 @@ export default function DonationScheduleForm({
           </label>
         )}
         <label>
-          $<input name="amount" type="number" />
+          <InputMoney
+            currency={Currency.USD}
+            amount={state.amount}
+            onChangeAmount={newAmount => {
+              setState({
+                ...state,
+                amount: newAmount
+              });
+            }}
+          />
         </label>
         <label>
           Recurrence:
-          <select name="recurrence">
+          <select
+            name="recurrence"
+            onChange={event => {
+              setState({
+                ...state,
+                recurrence: event.target.value
+              });
+            }}
+          >
             {Object.entries(recurrenceLabel).map(entry => (
               <option value={entry[0]}>{entry[1]}</option>
             ))}
@@ -48,9 +86,20 @@ export default function DonationScheduleForm({
         </label>
         <input type="submit" />
       </form>
-      <button onClick={() => setEnabled(false)}>Close</button>
+      <button onClick={() => setState({ enabled: false })}>Close</button>
     </div>
   ) : (
-    <button onClick={() => setEnabled(true)}>Start a Recurring Donation</button>
+    <button
+      onClick={() =>
+        setState({
+          enabled: true,
+          charityId: parentCharityId,
+          amount: 0,
+          recurrence: "monthly"
+        })
+      }
+    >
+      Start a Recurring Donation
+    </button>
   );
 }

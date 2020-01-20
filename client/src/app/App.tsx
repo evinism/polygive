@@ -2,8 +2,9 @@ import React, { useState, useEffect, ReactElement } from "react";
 import Routes from "./Routes";
 import { getCurrentUser } from "../api";
 import { AppState } from "../clientTypes";
-import "./App.css";
 import { WaitForLoaded } from "../components/UIElements";
+import "./App.css";
+import "antd/dist/antd.css";
 
 const initialState: AppState = {
   status: "LOADING_USER"
