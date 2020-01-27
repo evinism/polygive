@@ -1,9 +1,10 @@
 import restypedAxios from "restyped-axios";
-import PolygiveApi, {
+import PolygiveApi from "./shared/polygiveApi";
+import {
   DonationRecurrence,
   DonationScheduleRecord,
   PaymentConfigurationRecord
-} from "./shared/polygiveApi";
+} from "./shared/entityRecords";
 import ApiResponse from "./shared/workarounds/ApiResponse";
 
 export const baseURL = process.env.REACT_APP_BACKEND_URL;

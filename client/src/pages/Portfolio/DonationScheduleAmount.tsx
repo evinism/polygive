@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { DonationRecurrence } from "../../shared/polygiveApi";
+import { DonationRecurrence } from "../../shared/entityRecords";
 import { formatMonetaryAmount, Currency } from "../../shared/money";
 import "./DonationScheduleAmount.css";
 

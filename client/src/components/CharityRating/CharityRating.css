@@ -1,0 +1,15 @@
+.charity-rating.superb {
+  color: green;
+}
+
+.charity-rating.good {
+  color: green;
+}
+
+.charity-rating.borderline {
+  color: goldenrod;
+}
+
+.charity-rating.bad {
+  color: crimson;
+}

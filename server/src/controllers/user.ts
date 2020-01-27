@@ -1,7 +1,5 @@
-import PolygiveApi, {
-  CurrentUserResponse,
-  PaymentConfigurationRecord
-} from "../../shared/polygiveApi";
+import PolygiveApi from "../../shared/polygiveApi";
+import { PaymentConfigurationRecord } from "../../shared/entityRecords";
 import { success, error } from "../util";
 import { proveAuthed } from "../routes/accessControl";
 import { getRepository } from "typeorm";

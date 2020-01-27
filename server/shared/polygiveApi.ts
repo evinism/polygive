@@ -1,118 +1,87 @@
 import ApiResponse from "./workarounds/ApiResponse";
 import {
-  ShortCharityRecord as TempShortCharityRecord,
-  PaymentConfigurationRecord as TempPaymentConfigurationRecord
-} from "../src/projections";
-import Charity from "../src/entity/Charity";
-import DonationSchedule, {
-  DonationRecurrence as TempDonationRecurrence
-} from "../src/entity/DonationSchedule";
-import { Currency } from "./money";
-import PaymentConfiguration from "../src/entity/PaymentConfiguration";
+  ShortCharityRecord,
+  PaymentConfigurationRecord,
+  UserRecord,
+  DonationRecord,
+  DonationRecurrence,
+  DonationScheduleRecord
+} from "./entityRecords";
 
-// Garbage workaround-- I really should fix this
-type ShortCharityRecord = TempShortCharityRecord;
-type PaymentConfigurationRecord = TempPaymentConfigurationRecord;
-type DonationRecurrence = TempDonationRecurrence;
-
-type Paginated<T> = {
+export interface Paginated<T> {
   page: number;
   totalPages: number;
   data: T;
-};
+}
 
-/* Response type for /user/current */
-type UserRecord = {
-  id: number;
-  email: string;
-  name: string;
-  isSuper: boolean;
-};
-
-type DonationRecord = {
-  id: number;
-  charityId: number;
-  amount: number;
-  currency: Currency;
-};
-
-type DonationScheduleRecord = {
-  id: number;
-  charityId: number;
-  recurrence: DonationRecurrence;
-  amount: number;
-  currency: Currency;
-  nextScheduledDonation: string;
-};
-
-type LoggedOutResponse = {
+export interface LoggedOutResponse {
   loggedIn: false;
-};
+}
 
-type LoggedInResponse = {
+export interface LoggedInResponse {
   loggedIn: true;
   user: UserRecord;
   paymentConfiguration?: PaymentConfigurationRecord;
-};
+}
 
-type CurrentUserResponse = LoggedOutResponse | LoggedInResponse;
+export type CurrentUserResponse = LoggedOutResponse | LoggedInResponse;
 
 /* Request/Response pair for POST /charities */
-type CreateCharityRequest = {
+interface CreateCharityRequest {
   name: string;
-};
+}
 
-type CreateCharityResponse = {
+interface CreateCharityResponse {
   id: number;
   name: string;
-};
+}
 
 /* Request/Response pair for POST /donations */
-type CreateDonationRequest = {
+interface CreateDonationRequest {
   charityId: number;
   amount: number;
-};
+}
 
-type CreateDonationResponse = {
+interface CreateDonationResponse {
   id: number;
   userId: number;
   charityId: number;
   amount: number;
   status: string;
-};
+}
 
 /* Request/Response pair for GET /charities */
-type ListCharitiesResponse = ShortCharityRecord[];
+export type ListCharitiesResponse = ShortCharityRecord[];
 
 /* Request/Response pair for GET /donations */
-type ListDonationsResponse = {
+export interface ListDonationsResponse {
   donations: DonationRecord[];
   charities: {
     [id: number]: ShortCharityRecord;
   };
-};
+}
 
-type ListDonationSchedulesResponse = {
+export interface ListDonationSchedulesResponse {
   donationSchedules: DonationScheduleRecord[];
   charities: {
     [id: number]: ShortCharityRecord;
   };
-};
+}
 
-type CreateDonationScheduleRequest = {
+export interface CreateDonationScheduleRequest {
   charityId: number;
   amount: number;
   recurrence: DonationRecurrence;
-};
+}
 
-type CreateDonationScheduleResponse = {
+export interface CreateDonationScheduleResponse {
   id: number;
   charityId: number;
   recurrence: DonationRecurrence;
   amount: number;
   nextScheduledDonation: string;
   charity: ShortCharityRecord;
-};
+}
 
 export default interface PolygiveApi {
   "/charities": {

@@ -4,9 +4,7 @@ import { success, error, mapValues, getNextDonationDate } from "../util";
 import { RTAuthedHandler } from "../types/RestypedHelpers";
 import ensureConnection from "../connection";
 import { shortCharity } from "../projections";
-import DonationSchedule, {
-  DonationRecurrence
-} from "../entity/DonationSchedule";
+import DonationSchedule from "../entity/DonationSchedule";
 import { grabAllCharities } from "./controllerHelpers";
 import Charity from "../entity/Charity";
 

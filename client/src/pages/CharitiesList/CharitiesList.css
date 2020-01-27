@@ -1,3 +1,11 @@
 .charities-list h3 {
   margin: 0 0 10px 0;
 }
+
+.charity-list-entry-description {
+  display: flex;
+}
+
+.charity-list-entry-description>h3 {
+  flex-grow: 1;
+}

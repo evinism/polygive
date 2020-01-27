@@ -7,12 +7,7 @@ import {
 } from "typeorm";
 import Charity from "./Charity";
 import { Currency } from "../../shared/money";
-
-export enum DonationRecurrence {
-  WEEKLY = "WEEKLY",
-  MONTHLY = "MONTHLY",
-  YEARLY = "YEARLY"
-}
+import { DonationRecurrence } from "../../shared/entityRecords";
 
 @Entity()
 export default class DonationSchedule {

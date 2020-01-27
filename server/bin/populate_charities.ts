@@ -7,6 +7,8 @@ import lineReader from "line-reader";
 function save(record: string[]) {
   const charity = new Charity();
   charity.name = record[3];
+  charity.category = record[13];
+  charity.score = parseFloat(record[1]);
   ensureConnection().then(() => getRepository(Charity).save(charity));
 }
 

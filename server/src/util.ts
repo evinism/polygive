@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { ApiSuccess, ApiError } from "../shared/workarounds/ApiResponse";
-import { DonationRecurrence } from "./entity/DonationSchedule";
+import { DonationRecurrence } from "../shared/entityRecords";
 export { RTHandler } from "./types/RestypedHelpers";
 
 export const success = (res?: Response, status = 200) => <T>(

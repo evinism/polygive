@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import DonationScheduleForm from "../../components/DonationScheduleForm";
 import { getDonationSchedules, patchDonationSchedule } from "../../api";
+import { ListDonationSchedulesResponse } from "../../shared/polygiveApi";
 import {
-  ListDonationSchedulesResponse,
   DonationRecurrence,
   DonationScheduleRecord
-} from "../../shared/polygiveApi";
+} from "../../shared/entityRecords";
 import { PageProps, LoggedInAppState } from "../../clientTypes";
 import { PaddedList, WaitForLoaded } from "../../components/UIElements";
 import DonationScheduleAmount from "./DonationScheduleAmount";

@@ -4,7 +4,7 @@ import DonationScheduleAmount from "./DonationScheduleAmount";
 import {
   ShortCharityRecord,
   DonationScheduleRecord
-} from "../../shared/polygiveApi";
+} from "../../shared/entityRecords";
 
 interface DSLineItemProps {
   donationSchedule: DonationScheduleRecord;

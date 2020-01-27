@@ -1,4 +1,4 @@
-import { UserRecord, PaymentConfigurationRecord } from "./shared/polygiveApi";
+import { UserRecord, PaymentConfigurationRecord } from "./shared/entityRecords";
 import { ReactNode } from "react";
 
 /** App State stuff */

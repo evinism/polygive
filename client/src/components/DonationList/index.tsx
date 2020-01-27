@@ -1,11 +1,8 @@
 import React, { useState, useEffect, FunctionComponent } from "react";
-import {
-  ListDonationsResponse,
-  DonationRecord,
-  ShortCharityRecord
-} from "../../shared/polygiveApi";
+import { ListDonationsResponse } from "../../shared/polygiveApi";
 import { PaddedList, WaitForLoaded } from "../UIElements";
 import { formatMonetaryAmount } from "../../shared/money";
+import { DonationRecord, ShortCharityRecord } from "../../shared/entityRecords";
 
 interface DonationListProps {
   charities: {

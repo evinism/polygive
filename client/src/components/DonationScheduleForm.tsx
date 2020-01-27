@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from "react";
 import { createDonationSchedule } from "../api";
-import { DonationRecurrence } from "../shared/polygiveApi";
+import { DonationRecurrence } from "../shared/entityRecords";
 import InputMoney from "./InputMoney";
 import { Currency } from "../shared/money";
 
@@ -75,7 +75,7 @@ export default function DonationScheduleForm({
             onChange={event => {
               setState({
                 ...state,
-                recurrence: event.target.value
+                recurrence: event.target.value as DonationRecurrence
               });
             }}
           >
@@ -95,7 +95,7 @@ export default function DonationScheduleForm({
           enabled: true,
           charityId: parentCharityId,
           amount: 0,
-          recurrence: "monthly"
+          recurrence: DonationRecurrence.MONTHLY
         })
       }
     >

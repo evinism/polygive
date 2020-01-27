@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { PageProps, LoggedInAppState } from "../../clientTypes";
 import { getCharity } from "../../api";
-import { ShortCharityRecord } from "../../shared/polygiveApi";
+import { ShortCharityRecord } from "../../shared/entityRecords";
 import { WaitForLoaded } from "../../components/UIElements";
 
 type State = ShortCharityRecord | undefined;

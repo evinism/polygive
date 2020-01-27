@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { getCharities } from "../../api";
 import { ListCharitiesResponse, Paginated } from "../../shared/polygiveApi";
-import DonationForm from "../../components/DonationForm";
 import { PaddedList, WaitForLoaded } from "../../components/UIElements";
 import { PageProps, LoggedInAppState } from "../../clientTypes";
-import DonationScheduleForm from "../../components/DonationScheduleForm";
 import "./CharitiesList.css";
-import { Link } from "react-router-dom";
 import SearchBar from "../../components/SearchBar";
 import Paginator from "../../components/Paginator";
+import CharityListEntry from "./CharityListEntry";
 
 interface CharitiesListState {
   response?: Paginated<ListCharitiesResponse>;
@@ -70,13 +68,7 @@ export default function CharitiesList(_: PageProps<LoggedInAppState>) {
         {response => (
           <PaddedList
             items={response.data.map(charity => (
-              <div key={charity.id}>
-                <h3>
-                  <Link to={`/charities/${charity.id}`}>{charity.name}</Link>
-                </h3>
-                <DonationForm charityId={charity.id} />
-                <DonationScheduleForm charityId={charity.id} />
-              </div>
+              <CharityListEntry charity={charity} />
             ))}
           />
         )}
