@@ -1,3 +1,6 @@
+
+# TO ALL LOOKING: https://www.nfggive.com/home is a reasonable version of what this was going for.
+
 # polygive: ode to chaotic good
 
 polygive is a WIP donations platform
