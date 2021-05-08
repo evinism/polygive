@@ -40,7 +40,7 @@
     "restyped-express-async": "^0.6.1",
     "ts-node": "^8.3.0",
     "tslint": "^5.19.0",
-    "typeorm": "0.2.18",
+    "typeorm": "0.2.25",
     "typescript": "^3.5.3"
   },
   "devDependencies": {
